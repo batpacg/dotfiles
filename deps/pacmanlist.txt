@@ -85,7 +85,6 @@ python
 ipython
 python-pip
 python-numpy
-python-sounddevice
 python-scipy
 python-pandas
 python-matplotlib
