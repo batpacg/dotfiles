@@ -1,12 +1,10 @@
 [Unit]
-Description=Kanata Service
-# Requires=local-fs.target
-# After=local-fs.target
+Description=Cross-platform software keyboard remapper
+Documentation=https://github.com/jtroo/kanata
 
 [Service]
-ExecStartPre=/usr/bin/modprobe uinput
 ExecStart=/usr/bin/kanata
 Restart=no
 
-# [Install]
-# WantedBy=sysinit.target
+[Install]
+WantedBy=default.target
