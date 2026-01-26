@@ -1,0 +1,13 @@
+set default-bg "#282828"
+set font "monospace normal 10"
+set selection-clipboard "clipboard"
+set selection-notification false
+set recolor-lightcolor "#282828"
+set recolor-darkcolor "#fbf1c7"
+set recolor true
+
+map h navigate previous
+map l navigate next
+map <C-o> file_chooser
+map gx follow
+map . toggle_statusbar

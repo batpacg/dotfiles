@@ -1,0 +1,5 @@
+com.github.tchx84.Flatseal
+com.github.taiko2k.tauonmb
+dev.vencord.Vesktop
+net.pcsx2.PCSX2
+org.vinegarhq.Sober

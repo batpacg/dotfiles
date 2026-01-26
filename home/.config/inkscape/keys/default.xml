@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<keys
+   name="User Shortcuts">
+  <bind
+     gaction="win.select-none"
+     keys="q" />
+  <bind
+     gaction="app.path-intersection"
+     keys="&lt;Primary&gt;3" />
+  <bind
+     gaction="app.selection-raise"
+     keys="2" />
+  <bind
+     gaction="app.selection-lower"
+     keys="1" />
+  <bind
+     gaction="app.path-difference"
+     keys="&lt;Primary&gt;2" />
+  <bind
+     gaction="app.path-union"
+     keys="&lt;Primary&gt;1" />
+  <bind
+     gaction="app.org.inkscape.generate.pdf-latex"
+     keys="&lt;Primary&gt;e" />
+</keys>

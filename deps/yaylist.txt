@@ -1,0 +1,10 @@
+zen-browser-bin
+kanata-bin
+
+noctalia-shell
+
+epson-inkjet-printer-escpr
+
+lib32-nvidia-580xx-utils
+nvidia-580xx-dkms
+nvidia-580xx-utils

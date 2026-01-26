@@ -1,0 +1,148 @@
+;;
+;; My configuration for kanata.
+;; Pressing the left or right alt keys enable different layers.
+;; Capslock is mapped to left control.
+;; The literal ' key is mapped to escape.
+;; The literal [ key is mapped to '.
+;; The left control key is mapped to escape.
+;; The tab key is interpreted as the left alt key when used as a modifier, but
+;; still works as a normal tab key if tapped.
+;; Pressing the pause key disables or re-enables these modifications.
+;; Docs: https://jtroo.github.io/config.html
+;;
+
+(defcfg process-unmapped-keys yes)
+
+(defsrc
+  pause
+  tab  q w e r t y u i o p [
+  caps a s d f g h j k l ; '
+  lsft z x c v b n m , . / rsft
+  lctl lmet lalt spc ralt rctl)
+
+(defvirtualkeys
+  ;; Used for emulating alt+tab.
+  alt lalt)
+
+(defalias
+  valttab (macro (on-press press-virtualkey alt) 5 tab)
+
+  ;; Source: https://github.com/jtroo/kanata/discussions/1164
+  ;; Alias for the navigation layer command + wrapping to enable using the same
+  ;; key for alt+tab.
+  navlk (tap-hold-press
+          200
+          200
+          lalt
+          (multi (layer-while-held navigation)
+                 (on-release release-virtualkey alt)))
+  ;; symlk (layer-while-held symbol)
+  symlk (tap-hold-press
+          200
+          200
+          ralt
+          (layer-while-held symbol))
+
+  ;; The cedilha symbol combination in the US intl. keyboard layout.
+  ced RA-,
+
+  ;; Shifted Symbols
+
+  + S-=
+  ~ S-`
+  ! S-1
+  @ S-2
+  # S-3
+  $ S-4
+  % S-5
+  ^ S-6
+  & S-7
+  * S-8
+  paro S-9
+  parc S-0
+  { S-[
+  } S-]
+  | S-\
+  _ S--)
+
+(deflayermap (default)
+  pause (layer-switch pure)
+
+  caps lctl
+  lctl (tap-hold-press 200 200 esc lmet)
+
+  [ '
+  ' (tap-hold 0 300 esc lmet)
+
+  tab (tap-hold-press 0 300 tab lalt)
+
+  ralt @symlk
+  lalt @navlk)
+
+(deflayer pure
+  (layer-switch default)
+  tab  q w e r t y u i o p [
+  caps a s d f g h j k l ; '
+  lsft z x c v b n m , . / rsft
+  lctl lmet lalt spc ralt rctl)
+
+(deflayermap (symbol)
+  q @!
+  w @+
+  e @@
+  r @%
+  t @~
+
+  a @#
+  s -
+  d @*
+  f =
+  g @&
+
+  z \
+  x @_
+  c @^
+  v @$
+  b @|
+
+  u @^
+  i @$
+
+  h `
+  j @}
+  k @{
+  l ]
+  ; [
+
+  m @parc
+  , @paro
+  . @ced)
+
+(deflayermap (navigation)
+  ;; Live reload of the kanata config.
+  r lrld
+
+
+  y pgup
+  u volu
+  i tab
+
+  tab @valttab
+  o @valttab
+
+  p vold
+
+  h left
+  j down
+  k up
+  l right
+  ; ret
+  ' bspc
+
+  n pgdn
+  m home
+  , end
+  . caps
+  / prtsc)
+
+;; vi:ft=lisp:

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+alias ..="cd .."
+alias ....="cd ../.."
+
+alias ls="ls --color=auto -F1 --group-directories-first"
+alias la="ls --color=auto -FA1 --group-directories-first"
+alias ll="ls --color=auto -FAl1 --group-directories-first"
+
+alias clera="clear"
+alias clare="clear"
+alias claer="clear"
+alias cler="clear"
+alias clar="clear"
+
+alias e="\$EDITOR"
+alias ve="\$VISUAL"
+alias b="\$BROWSER"
+
+alias fl="yazi_wrapper"
+alias diff="colordiff -u"
+
+alias notes="cd ~/sync/notes && \$EDITOR"
+alias n="cd ~/sync/notes && \$EDITOR"
+alias bookmarks="\$EDITOR ~/sync/notes/bookmarks.md"
+alias b="\$EDITOR ~/sync/notes/bookmarks.md"
+alias refile="\$EDITOR ~/sync/notes/refile.md"
+alias r="\$EDITOR ~/sync/notes/refile.md"
+
+alias ffc="fc-list :family | sed -e 's/.*\///' | fzf"
+
+alias ta="tmux attach || tmux"
+alias tks="tmux kill-server"
+alias tls="tmux list-sessions"
+
+alias ipy="ipython"
+alias py="python"
+
+alias ssh="TERM=xterm-256color ssh"
+
+alias open="xdg-open"

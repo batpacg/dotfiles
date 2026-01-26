@@ -1,0 +1,20 @@
+#
+# ~/.inputrc
+#
+
+# Docs:
+# https://wiki.archlinux.org/title/Readline
+
+$include /etc/inputrc
+
+set colored-stats on
+set visible-stats on
+set mark-symlinked-directories on
+
+set completion-prefix-display-length 3
+set completion-ignore-case on
+set show-all-if-ambiguous on
+
+C-o: clear-screen
+C-f: "yazi_wrapper && clear\n"
+C-u: kill-whole-line

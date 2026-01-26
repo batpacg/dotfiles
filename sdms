@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+ME="$(basename "$(readlink -f "$0")")"
+HERE="$(dirname "$(readlink -f "$0")")"
+SDMS_SOURCE="${SDMS_SOURCE:-"$HERE/home"}"
+SDMS_TARGET="${SDMS_TARGET:-"$HOME"}"
+
+green() {
+	echo "$(tput setaf 2)$*$(tput sgr0)"
+}
+
+yellow() {
+	echo "$(tput setaf 3)$*$(tput sgr0)"
+}
+
+usage() {
+	cat <<- EOF
+		$(yellow Usage:) $ME [OPTIONS] [SUBCOMMAND]
+
+		$(yellow Options:)
+		    $(green '--target, -t')  Set the target directory (SDMS_TARGET).
+		    $(green '--source, -s')  Set the source directory (SDMS_SOURCE).
+		    $(green '--help  , -h')  Print this message.
+
+		$(yellow Subcommands:)
+		    $(green 'link  , l')  Create symlinks of files on SDMS_SOURCE in
+		               SDMS_TARGET.
+		    $(green 'unlink, u')  Unlink all symlinks on SDMS_TARGET and
+		               remove empty directories (rm -d).
+		    $(green 'help  , h')  Print this message.
+	EOF
+}
+
+sdms_link() {
+	find "$SDMS_SOURCE" -type f -print0 | while IFS= read -d $'\0' -r file; do
+		local link
+		link="${file/"${SDMS_SOURCE}"/$SDMS_TARGET}"
+		local linkdir
+		linkdir="$(dirname "$link")"
+		mkdir -pv "$linkdir"
+		# If link already exists and points to a file inside source, skip.
+		[ -L "$link" ] && [ "$(readlink -f "$link")" = "$file" ] && continue
+		ln -srbv "$file" "$link"
+	done
+}
+
+sdms_unlink() {
+	find "$SDMS_SOURCE" -type f -print0 | while IFS= read -d $'\0' -r file; do
+		local link
+		link="${file/"${SDMS_SOURCE}"/$SDMS_TARGET}"
+		local linkdir
+		linkdir="$(dirname "$link")"
+		unlink "$link"
+
+		# Restore old files/symlinks that were substituted.
+		[ -f "$link~" ] && mv "$link~" "$link"
+
+		# Remove empty directories
+		if test -z "$(ls "$linkdir")"; then
+			if test "$linkdir" != "$SDMS_TARGET"; then
+				rm -dv "$linkdir"
+			fi
+		fi
+	done
+}
+
+# ==============================================================================
+
+test -z "$1" && usage && exit 1
+
+while test -n "$1"; do
+	case "$1" in
+		# Options
+		--source*)
+			SDMS_SOURCE="${1#*=}"
+			SDMS_SOURCE="${SDMS_SOURCE/#\~/$HOME}"
+			SDMS_SOURCE="$(readlink -f "$SDMS_SOURCE")"
+			;;
+		-s)
+			SDMS_SOURCE="$2"
+			SDMS_SOURCE="$(readlink -f "$SDMS_SOURCE")"
+			shift
+			;;
+		--target*)
+			SDMS_TARGET="${1#*=}"
+			SDMS_TARGET="${SDMS_TARGET/#\~/$HOME}"
+			SDMS_TARGET="$(readlink -f "$SDMS_TARGET")"
+			;;
+		-t)
+			SDMS_TARGET="$2"
+			SDMS_TARGET="$(readlink -f "$SDMS_TARGET")"
+			shift
+			;;
+		--help | -h)
+			usage
+			exit 0
+			;;
+		-*)
+			echo "Unkown option: $1" >&2
+			exit 1
+			;;
+
+		# Subcommands
+		l | link) sdms_link "$@" ;;
+		u | unlink) sdms_unlink "$@" ;;
+		h | help)
+			usage
+			exit 0
+			;;
+		*)
+			usage
+			exit 1
+			;;
+	esac
+	shift
+done
+
+exit 0
