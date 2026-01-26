@@ -44,6 +44,7 @@ zstd
 
 sddm
 niri
+wl-clipboard
 xwayland-satellite
 xdg-desktop-portal-gtk
 xdg-desktop-portal-gnome
@@ -52,6 +53,8 @@ nwg-look
 nautilus
 quickshell
 vimix-cursors
+breeze-gtk
+adw-gtk-theme
 
 kitty
 neovide
