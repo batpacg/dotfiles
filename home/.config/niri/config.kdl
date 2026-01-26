@@ -8,7 +8,8 @@
 // Miscellaneous
 // =============================================================================
 
-spawn-sh-at-startup "qs -c noctalia-shell"
+// Prefer to use 'systemctl --user add-wants niri.service noctalia.service'
+// spawn-sh-at-startup "qs -c noctalia-shell"
 
 hotkey-overlay {
     skip-at-startup
@@ -390,7 +391,8 @@ binds {
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    // Suggested binds for running programs: terminal, app launcher, screen locker.
+    Mod+E hotkey-overlay-title="Open a File Explorer" { spawn "nautilus"; }
+    // Mod+W hotkey-overlay-title="Open a Browser" { spawn "zen"; }
     Mod+A hotkey-overlay-title="Open a Terminal" { spawn "kitty"; }
     Mod+Space hotkey-overlay-title="Application Launcher" { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
