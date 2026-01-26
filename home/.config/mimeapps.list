@@ -193,6 +193,7 @@ x-scheme-handler/https=zen.desktop;firefox.desktop;userapp-Firefox-SX1VT2.deskto
 x-scheme-handler/mailto=firefox.desktop;
 
 [Default Applications]
+application/pdf=org.pwmt.zathura-pdf-poppler.desktop;
 application/appinstaller=zen.desktop
 application/atom+xml=zen.desktop
 application/geo+json=nvim.desktop
