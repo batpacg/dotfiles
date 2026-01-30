@@ -7,7 +7,7 @@ return {
         return {
             name = name,
             cmd  = "live-server",
-            args = { "--index", "--hard", "--port", "8000", "--open" },
+            args = { "--index", "--port", "8000", "--open" },
         }
     end,
 }

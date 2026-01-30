@@ -35,7 +35,7 @@
     "bar": {
         "backgroundOpacity": 0.93,
         "capsuleOpacity": 1,
-        "density": "mini",
+        "density": "default",
         "exclusive": true,
         "floating": false,
         "hideOnOverview": true,
@@ -44,7 +44,7 @@
         "monitors": [
         ],
         "outerCorners": false,
-        "position": "top",
+        "position": "bottom",
         "showCapsule": false,
         "showOutline": false,
         "useSeparateOpacity": false,
@@ -56,31 +56,18 @@
                     "usePrimaryColor": false
                 },
                 {
-                    "characterCount": 2,
+                    "characterCount": 4,
                     "colorizeIcons": false,
                     "enableScrollWheel": true,
                     "followFocusedScreen": false,
                     "groupedBorderOpacity": 1,
                     "hideUnoccupied": false,
-                    "iconScale": 0.8,
-                    "id": "Workspace",
-                    "labelMode": "index",
-                    "showApplications": false,
-                    "showLabelsOnlyWhenOccupied": true,
-                    "unfocusedIconsOpacity": 1
-                },
-                {
-                    "colorizeIcons": false,
-                    "hideMode": "hidden",
                     "iconScale": 0.9,
-                    "id": "Taskbar",
-                    "maxTaskbarWidth": 40,
-                    "onlyActiveWorkspaces": false,
-                    "onlySameOutput": true,
-                    "showPinnedApps": true,
-                    "showTitle": false,
-                    "smartWidth": true,
-                    "titleWidth": 120
+                    "id": "Workspace",
+                    "labelMode": "name",
+                    "showApplications": true,
+                    "showLabelsOnlyWhenOccupied": false,
+                    "unfocusedIconsOpacity": 1
                 }
             ],
             "left": [
@@ -116,6 +103,10 @@
                     "showNoctaliaPerformance": false,
                     "showPowerProfiles": false,
                     "warningThreshold": 30
+                },
+                {
+                    "displayMode": "onhover",
+                    "id": "Network"
                 }
             ],
             "right": [
@@ -466,7 +457,7 @@
         "fontDefaultScale": 1,
         "fontFixed": "JetBrainsMono NF",
         "fontFixedScale": 1,
-        "networkPanelView": "wifi",
+        "networkPanelView": "ethernet",
         "panelBackgroundOpacity": 1,
         "panelsAttachedToBar": true,
         "settingsPanelMode": "attached",

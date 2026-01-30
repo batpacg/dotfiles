@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-ME="$(basename "$(readlink -f "$0")")"
-HERE="$(dirname "$(readlink -f "$0")")"
+FULL="$(readlink -f "$0")"
+HERE="$(dirname "$FULL")"
+ME="$(basename "$FULL")"
 SDMS_SOURCE="${SDMS_SOURCE:-"$HERE/home"}"
 SDMS_TARGET="${SDMS_TARGET:-"$HOME"}"
 
@@ -66,34 +67,22 @@ sdms_unlink() {
 
 # ==============================================================================
 
-test -z "$1" && usage && exit 1
+[ -z "$1" ] && usage && exit 1
 
-while test -n "$1"; do
+while [ -n "$1" ]; do
 	case "$1" in
+		--help | -h | help) usage ;;
+
 		# Options
-		--source*)
-			SDMS_SOURCE="${1#*=}"
-			SDMS_SOURCE="${SDMS_SOURCE/#\~/$HOME}"
-			SDMS_SOURCE="$(readlink -f "$SDMS_SOURCE")"
-			;;
-		-s)
+		--source | -s)
 			SDMS_SOURCE="$2"
 			SDMS_SOURCE="$(readlink -f "$SDMS_SOURCE")"
 			shift
 			;;
-		--target*)
-			SDMS_TARGET="${1#*=}"
-			SDMS_TARGET="${SDMS_TARGET/#\~/$HOME}"
-			SDMS_TARGET="$(readlink -f "$SDMS_TARGET")"
-			;;
-		-t)
+		--target | -t)
 			SDMS_TARGET="$2"
 			SDMS_TARGET="$(readlink -f "$SDMS_TARGET")"
 			shift
-			;;
-		--help | -h)
-			usage
-			exit 0
 			;;
 		-*)
 			echo "Unkown option: $1" >&2
@@ -103,10 +92,6 @@ while test -n "$1"; do
 		# Subcommands
 		l | link) sdms_link "$@" ;;
 		u | unlink) sdms_unlink "$@" ;;
-		h | help)
-			usage
-			exit 0
-			;;
 		*)
 			usage
 			exit 1

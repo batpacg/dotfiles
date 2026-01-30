@@ -139,6 +139,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.lsp.buf.format { async = false }
         end, { buffer = args.buf })
 
-        vim.keymap.set({ "n" }, "<Leader>tl", ":LspStop<CR>")
+        vim.keymap.set({ "n" }, "<Leader>tL", ":LspStop<CR>")
     end,
 })

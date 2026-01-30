@@ -336,6 +336,8 @@
        id="nodes"
        selcue="1"
        gradientdrag="1"
+       changelayer="0"
+       changepage="0"
        pathflash_enabled="1"
        pathflash_unselected="0"
        pathflash_timeout="500"
@@ -1028,7 +1030,9 @@
        id="boot"
        theme="custom"
        canvas="dark"
-       mode="0">
+       mode="0"
+       showsplash="0"
+       showwelcome="0">
       <group
          id="shown"
          ver1.4.2="1" />
@@ -1185,7 +1189,8 @@
        iconsize="16"
        width="26">
       <group
-         id="buttons" />
+         id="buttons"
+         showLPETool="0" />
     </group>
     <group
        id="controlbars"
@@ -1270,7 +1275,7 @@
      id="theme"
      defaultPreferDarkTheme="1"
      defaultIconTheme="breeze-dark"
-     defaultGtkTheme="Breeze"
+     defaultGtkTheme="adw-gtk3-dark"
      narrowSpinButton="1"
      preferDarkTheme="1"
      darkTheme="1"
