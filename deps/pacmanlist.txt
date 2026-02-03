@@ -56,6 +56,10 @@ vimix-cursors
 breeze-gtk
 adw-gtk-theme
 
+pipewire-alsa
+pipewire-pulse
+pipewire-jack
+
 kitty
 neovide
 zed
