@@ -16,6 +16,7 @@ vim.keymap.set({ "n", "x", "v" }, "x", ":")
 vim.keymap.set({ "n", "x", "v" }, "<S-x>", ":<Up><CR>")
 vim.keymap.set({ "n", "x", "v" }, "s", "<Nop>")
 -- vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
+vim.keymap.set({ "n", "x", "v" }, "<Leader>m", "<CMD>make<CR>")
 
 vim.keymap.set({ "v" }, ">", ">gv")
 vim.keymap.set({ "v" }, "<", "<gv")
