@@ -43,59 +43,99 @@ add {
     end,
 }
 
-local CwdComponent = function()
-    if vim.bo.filetype == "man" or vim.bo.filetype == "help" then
-        return ""
-    end
-
-    local cwd = vim.fn.getcwd()
-    local home = vim.fn.getenv "HOME"
-    local result = cwd:gsub(home, "~")
-
-    local dirs = vim.split(result, "/")
-    if #dirs >= 7 then
-        result = table.concat(dirs, "/", 1, 2)
-            .. "/.../"
-            .. table.concat(dirs, "/", 7)
-    end
-
-    return result
-end
-
 add {
-    "nvim-lualine/lualine.nvim",
+    "rebelot/heirline.nvim",
     event = "UIEnter",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-        options = {
-            component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
-        },
-        sections = {
-            lualine_a = { "mode" },
-            lualine_b = { "location" },
-            lualine_c = {},
-            lualine_x = {
-                {
-                    "diff",
-                    source = function()
-                        local gitstatus = vim.b.gitsigns_status_dict or {}
-                        return {
-                            added = gitstatus.added,
-                            removed = gitstatus.removed,
-                            modified = gitstatus.changed,
-                        }
-                    end,
-                },
+    config = function()
+        local conditions = require "heirline.conditions"
+        local utils = require "heirline.utils"
+
+        local PositionComponent = {
+            provider = "(" .. "%l,%c" .. ")",
+        }
+
+        local CwdComponent = {
+            init = function(self)
+                self.cwd = vim.fn.getcwd()
+                self.cwd = self.cwd:gsub(vim.fn.getenv "HOME", "~")
+
+                self.dirs = vim.split(self.cwd, "/")
+                self.dirs_max = 3
+                if #self.dirs >= 7 then
+                    self.cwd = self.dirs[1]
+                        .. "/.../"
+                        .. table.concat(
+                            self.dirs,
+                            "/",
+                            #self.dirs - self.dirs_max + 1,
+                            #self.dirs
+                        )
+                end
+            end,
+            provider = function(self)
+                return self.cwd
+            end,
+        }
+
+        local FileNameComponent = {
+            init = function(self)
+                self.filename = vim.api.nvim_buf_get_name(0)
+            end,
+            provider = function(self)
+                local filename = vim.fn.fnamemodify(self.filename, ":t")
+                if filename == "" then
+                    return "[No Name]"
+                end
+                return filename
+            end,
+        }
+
+        local GitComponent = {
+            condition = conditions.is_git_repo,
+
+            init = function(self)
+                self.statusdict = vim.b.gitsigns_status_dict
+                self.has_changes = self.statusdict ~= 0
+                    or self.statusdict.removed
+            end,
+
+            { -- Git Repo Name
+                provider = function(self)
+                    return "" .. self.statusdict.head
+                end,
             },
-            lualine_y = { "branch" },
-            lualine_z = { CwdComponent },
-        },
-        tabline = {
-            lualine_a = { "buffers" },
-            lualine_x = { "lsp_status", "diagnostics", "filesize" },
-        },
-    },
+
+            { -- Git Diff
+                condition = function(self)
+                    return self.has_changes
+                end,
+                provider = function(self)
+                    return "("
+                        .. "+"
+                        .. (self.statusdict.added or 0)
+                        .. ",-"
+                        .. (self.statusdict.removed or 0)
+                        .. ",~"
+                        .. (self.statusdict.changed or 0)
+                        .. ")"
+                end,
+            },
+        }
+
+        require("heirline").setup {
+            statusline = {
+                { provider = " " },
+                PositionComponent,
+                { provider = " : " },
+                FileNameComponent,
+                { provider = " @ " },
+                CwdComponent,
+                { provider = "%=" },
+                GitComponent,
+                { provider = " " },
+            },
+        }
+    end,
 }
 
 add {
