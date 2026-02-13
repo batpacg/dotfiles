@@ -1,103 +1,258 @@
 #!/usr/bin/env bash
 
-FULL="$(readlink -f "$0")"
-HERE="$(dirname "$FULL")"
-ME="$(basename "$FULL")"
-SDMS_SOURCE="${SDMS_SOURCE:-"$HERE/home"}"
+full="$(readlink -f "$0")"
+here="$(dirname "$full")"
+me="$(basename "$full")"
+SDMS_SOURCE="${SDMS_SOURCE:-"$here/home"}"
 SDMS_TARGET="${SDMS_TARGET:-"$HOME"}"
 
-green() {
-	echo "$(tput setaf 2)$*$(tput sgr0)"
+# Helper Functions =============================================================
+
+error() {
+	echo "error: $*" >&2
+	exit 1
 }
 
-yellow() {
-	echo "$(tput setaf 3)$*$(tput sgr0)"
+is_in_sdms_source() {
+	#shellcheck disable=SC2076
+	if [[ "$1" =~ "$SDMS_SOURCE" ]]; then
+		return 0
+	else
+		return 1
+	fi
 }
 
-usage() {
+is_in_sdms_target() {
+	#shellcheck disable=SC2076
+	if [[ "$1" =~ "$SDMS_TARGET" ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+# Commands =====================================================================
+
+# Help Command -----------------------------------------------------------------
+
+sdms_help_cmd() {
 	cat <<- EOF
-		$(yellow Usage:) $ME [OPTIONS] [SUBCOMMAND]
+		Simple Dotfiles Management Script
 
-		$(yellow Options:)
-		    $(green '--target, -t')  Set the target directory (SDMS_TARGET).
-		    $(green '--source, -s')  Set the source directory (SDMS_SOURCE).
-		    $(green '--help  , -h')  Print this message.
+		Usage: $me [options]... [command] [args]...
 
-		$(yellow Subcommands:)
-		    $(green 'link  , l')  Create symlinks of files on SDMS_SOURCE in
-		               SDMS_TARGET.
-		    $(green 'unlink, u')  Unlink all symlinks on SDMS_TARGET and
-		               remove empty directories (rm -d).
-		    $(green 'help  , h')  Print this message.
+		Options:
+		  -t, --target  Set the target directory
+		  -s, --source  Set the source directory
+		  -h, --help    Print help
+
+		Commands:
+		  l, link    Link the files in source to target
+		  u, unlink  Unlink the links in target that are from source
+		  a, add     Add given file to the source directory and link
+		     cd      Enter a subshell inside the source directory
+
+		Examples:
+		  sdms link
+		  sdms unlink
+
+		  sdms link .config/mimeapps.list
+		  sdms unlink .config/mimeapps.list
+
+		  sdms link .config/nvim/
+		  sdms unlink .config/nvim/
+
+		  sdms add ./.config/starship.toml
+		  sdms add ./.config/emacs/
+
+		  sdms cd
 	EOF
 }
 
-sdms_link() {
-	find "$SDMS_SOURCE" -type f -print0 | while IFS= read -d $'\0' -r file; do
-		local link
-		link="${file/"${SDMS_SOURCE}"/$SDMS_TARGET}"
-		local linkdir
-		linkdir="$(dirname "$link")"
-		mkdir -pv "$linkdir"
-		# If link already exists and points to a file inside source, skip.
-		[ -L "$link" ] && [ "$(readlink -f "$link")" = "$file" ] && continue
-		ln -srbv "$file" "$link"
-	done
-}
+# Link Command -----------------------------------------------------------------
 
-sdms_unlink() {
-	find "$SDMS_SOURCE" -type f -print0 | while IFS= read -d $'\0' -r file; do
-		local link
-		link="${file/"${SDMS_SOURCE}"/$SDMS_TARGET}"
-		local linkdir
-		linkdir="$(dirname "$link")"
-		unlink "$link"
+sdms_link_cmd() {
+	local fullpath path="$1"
+	fullpath="$(readlink -f "$path")"
 
-		# Restore old files/symlinks that were substituted.
-		[ -f "$link~" ] && mv "$link~" "$link"
-
-		# Remove empty directories
-		if test -z "$(ls "$linkdir")"; then
-			if test "$linkdir" != "$SDMS_TARGET"; then
-				rm -dv "$linkdir"
-			fi
+	# shellcheck disable=SC2076
+	if [ $# -eq 0 ]; then
+		sdms_link_dir "$SDMS_SOURCE"
+	elif is_in_sdms_source "$fullpath"; then
+		if [ -f "$fullpath" ]; then
+			sdms_link_file "$fullpath"
+		elif [ -d "$fullpath" ]; then
+			sdms_link_dir "$fullpath"
 		fi
-	done
+	else
+		local file="$SDMS_SOURCE/$path"
+		if [ -f "$file" ]; then
+			sdms_link_file "$file"
+		elif [ -d "$file" ]; then
+			sdms_link_dir "$file"
+		fi
+	fi
 }
 
-# ==============================================================================
+sdms_link_dir() {
+	while IFS= read -d $'\0' -r file; do
+		sdms_link_file "$file"
+	done < <(find "$1" -type f -print0)
+}
 
-[ -z "$1" ] && usage && exit 1
+sdms_link_file() {
+	local file="$1" link linkdir
+	link="${file/"${SDMS_SOURCE}"/$SDMS_TARGET}"
+	linkdir="$(dirname "$link")"
 
+	[ -d "$linkdir" ] || mkdir -pv "$linkdir"
+
+	# If link already exists and points to a file inside source, skip.
+	[ -L "$link" ] && [ "$(readlink -f "$link")" = "$file" ] && return
+
+	ln -srbv "$file" "$link"
+}
+
+# Unlink Command ---------------------------------------------------------------
+
+sdms_unlink_cmd() {
+	local fullpath path="$1"
+	fullpath="$(readlink -f "$path")"
+
+	# shellcheck disable=SC2076
+	if [ $# -eq 0 ]; then
+		sdms_unlink_dir "$SDMS_SOURCE"
+	elif is_in_sdms_source "$fullpath"; then
+		if [ -f "$fullpath" ]; then
+			sdms_unlink_file "$fullpath"
+		elif [ -d "$fullpath" ]; then
+			sdms_unlink_dir "$fullpath"
+		fi
+	else
+		local file="$SDMS_SOURCE/$path"
+		if [ -f "$file" ]; then
+			sdms_unlink_file "$file"
+		elif [ -d "$file" ]; then
+			sdms_unlink_dir "$file"
+		fi
+	fi
+}
+
+sdms_unlink_dir() {
+	while IFS= read -r -d $'\0' file; do
+		sdms_unlink_file "$file"
+	done < <(find "$SDMS_SOURCE" -type f -print0 | sort -rz)
+}
+
+sdms_unlink_file() {
+	local file="$1"
+	local link="${file/"${SDMS_SOURCE}"/$SDMS_TARGET}" linkdir
+	linkdir="$(dirname "$link")"
+
+	[ -L "$link" ] && unlink "$link"
+
+	# Restore old files/symlinks that were substituted.
+	[ -f "$link~" ] && mv "$link~" "$link"
+
+	# Remove empty directories. Restore the target directory if it was deleted
+	# in the process of deleting empty directories.
+	rmdir -pv "$linkdir" 2> /dev/null || true
+	[ -d "$SDMS_TARGET" ] || mkdir "$SDMS_TARGET"
+}
+
+# Add Command ------------------------------------------------------------------
+
+sdms_add_cmd() {
+	local path="$1" fullpath
+	fullpath="$(readlink -f "$path")"
+	# shellcheck disable=SC2076
+	if [ -L "$path" ]; then
+		error "'$path' is a symlink."
+	elif ! is_in_sdms_target "$fullpath"; then
+		error "'$path' is not inside the target directory."
+	elif [ -f "$fullpath" ]; then
+		sdms_add_file "$fullpath"
+	elif [ -d "$fullpath" ]; then
+		sdms_add_dir "$fullpath"
+	fi
+}
+
+sdms_add_dir() {
+	local dir="$1"
+	while IFS= read -r -d $'\0' file; do
+		sdms_add_file "$file"
+	done < <(find "$dir" -type f -print0)
+}
+
+sdms_add_file() {
+	local link="$1" filedir file
+	file="${1/"$SDMS_TARGET"/"$SDMS_SOURCE"}"
+	filedir="$(dirname "$file")"
+	[ -d "$filedir" ] || mkdir -pv "$filedir"
+	mv "$link" "$file"
+	sdms_link_file "$file"
+}
+
+# Change Directory Command -----------------------------------------------------
+
+sdms_cd_cmd() {
+	[ -d "$SDMS_SOURCE" ] || error "'$SDMS_SOURCE' is not a valid directory"
+
+	local temp_bashrc
+	temp_bashrc="$(mktemp)"
+
+	# shellcheck disable=SC2016
+	{
+		echo 'source "$HOME"/.bashrc'
+		echo 'PS1="(sdms) $PS1"'
+		printf 'rm -f "%s"' "$temp_bashrc"
+	} > "$temp_bashrc"
+
+	(cd "$SDMS_SOURCE" && bash --rcfile "$temp_bashrc")
+}
+
+# Main =========================================================================
+
+if [ $# -eq 0 ]; then
+	sdms_help_cmd
+	exit 1
+fi
+
+args=()
 while [ -n "$1" ]; do
 	case "$1" in
-		--help | -h | help) usage ;;
+		--help | -h)
+			sdms_help_cmd
+			exit 0
+			;;
 
-		# Options
 		--source | -s)
-			SDMS_SOURCE="$2"
-			SDMS_SOURCE="$(readlink -f "$SDMS_SOURCE")"
+			SDMS_SOURCE="$(readlink -f "$2")"
 			shift
-			;;
-		--target | -t)
-			SDMS_TARGET="$2"
-			SDMS_TARGET="$(readlink -f "$SDMS_TARGET")"
-			shift
-			;;
-		-*)
-			echo "Unkown option: $1" >&2
-			exit 1
 			;;
 
-		# Subcommands
-		l | link) sdms_link "$@" ;;
-		u | unlink) sdms_unlink "$@" ;;
-		*)
-			usage
-			exit 1
+		--target | -t)
+			SDMS_TARGET="$(readlink -f "$2")"
+			shift
 			;;
+
+		-*) error "Unknown option: '$1'" ;;
+
+		*) args+=("$1") ;;
 	esac
 	shift
 done
+
+if [ -z "${args[*]}" ]; then
+	error "$me expects a command"
+fi
+
+case "$args" in
+	l | link) sdms_link_cmd "${args[@]:1}" ;;
+	u | unlink) sdms_unlink_cmd "${args[@]:1}" ;;
+	a | add) sdms_add_cmd "${args[@]:1}" ;;
+	cd) sdms_cd_cmd ;;
+	*) error "Unknown command: '${args[0]}'" ;;
+esac
 
 exit 0

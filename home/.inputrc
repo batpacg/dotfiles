@@ -15,6 +15,4 @@ set completion-prefix-display-length 3
 set completion-ignore-case on
 set show-all-if-ambiguous on
 
-C-o: clear-screen
-C-f: "yazi_wrapper && clear\n"
-C-u: kill-whole-line
+C-f: "yacd && clear\n"

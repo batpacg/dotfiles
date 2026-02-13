@@ -62,7 +62,6 @@ pipewire-jack
 
 kitty
 neovide
-zed
 chromium
 qalculate-gtk
 noto-fonts
@@ -81,11 +80,8 @@ scrcpy
 flatpak
 
 
-make
-just
-
 base-devel
-gcc
+just
 cmake
 
 python

@@ -6,10 +6,10 @@ local M = {}
 
 M.gruvbox = {
     -- stylua: ignore start
-    dark0_supersoft  = "#2b2b2b",
     dark0_hard       = "#1d2021",
-    dark0            = "#282828",
+    dark0_supersoft  = "#2b2b2b",
     dark0_soft       = "#32302f",
+    dark0            = "#282828",
     dark1            = "#3c3836",
     dark2            = "#504945",
     dark3            = "#665c54",

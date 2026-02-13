@@ -16,7 +16,6 @@ hotkey-overlay {
 }
 
 environment {
-    TERMINAL "kitty"
     QT_QPA_PLATFORMTHEME "gtk3"
 }
 
@@ -165,7 +164,7 @@ input {
 
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 6
+    gaps 0
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -177,14 +176,9 @@ layout {
 
     // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
     preset-column-widths {
-        // Proportion sets the width as a fraction of the output width, taking gaps into account.
-        // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
-        // The default preset widths are 1/3, 1/2 and 2/3 of the output.
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
-
-        // Fixed sets the width in logical pixels exactly.
         // fixed 1920
     }
 
@@ -210,10 +204,10 @@ layout {
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
-        // off
+        off
 
         // How many logical pixels the ring extends out from the windows.
-        width 1
+        width 2
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -249,11 +243,11 @@ layout {
     border {
         // The settings are the same as for the focus ring.
         // If you enable the border, you probably want to disable the focus ring.
-        off
+        // off
 
-        width 4
-        active-color "#ffc87f"
-        inactive-color "#505050"
+        width 2
+        active-color "#7c6f64"
+        inactive-color "#3c3836"
 
         // Color of the border around windows that request your attention.
         urgent-color "#9b0000"
@@ -337,8 +331,9 @@ animations {
 // =============================================================================
 
 window-rule {
-    match app-id=r#"^steam_app_default$"# title=""
+    match app-id=r#"^steam_app_default$"#
     open-floating false
+    default-column-width { proportion 0.6667; }
 }
 
 // Work around WezTerm's initial configure bug
@@ -573,7 +568,7 @@ binds {
     // a matching layout switch hotkey configured in xkb options above.
     // Having both at once on the same hotkey will break the switching,
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    Mod+Period       { switch-layout "next"; }
+    // Mod+Period       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Print { screenshot; }

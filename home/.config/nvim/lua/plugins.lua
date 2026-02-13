@@ -16,7 +16,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out,                            "WarningMsg" },
+            { out, "WarningMsg" },
             { "\nPress any key to exit..." },
         }, true, {})
         vim.fn.getchar()
@@ -32,32 +32,15 @@ local add = function(args)
     table.insert(plugin_list, args)
 end
 
-local colors = require("colors").gruvbox
-
 add {
-    "ellisonleao/gruvbox.nvim",
+    "zenbones-theme/zenbones.nvim",
+    dependencies = "rktjmp/lush.nvim",
+    lazy = false,
     priority = 1000,
     init = function()
-        vim.cmd.colorscheme "gruvbox"
+        -- Depends on '~/.config/nvim/colors/gruvbones.lua'.
+        vim.cmd.colorscheme "gruvbones"
     end,
-    opts = {
-        italic = {
-            strings = false,
-            comments = false,
-            folds = false,
-            emphasis = false,
-        },
-        overrides = {
-            Whitespace = { fg = colors.dark0_soft },
-            NonText = { fg = colors.dark0_soft },
-            ColorColumn = { bg = colors.dark0_soft },
-            CursorLine = { bg = colors.dark0_soft },
-            SignColumn = { bg = colors.dark0 },
-            NormalFloat = { bg = colors.dark0 },
-            Pmenu = { bg = colors.dark0 },
-            PmenuSel = { fg = colors.dark0_hard, bg = colors.neutral_yellow },
-        },
-    },
 }
 
 local CwdComponent = function()
@@ -115,27 +98,6 @@ add {
     },
 }
 
--- add {
---     "jpalardy/vim-slime",
---     config = function()
---         vim.g.slime_target = "kitty"
---     end,
--- }
-
--- add {
---     "mikesmithgh/kitty-scrollback.nvim",
---     lazy = true,
---     event = { "User KittyScrollbackLaunch" },
---     -- version = '*', -- latest stable version, may have breaking changes if major version changed
---     version = "^6.0.0", -- pin major version, include fixes and features that do not have breaking changes
---     cmd = {
---         "KittyScrollbackGenerateKittens",
---         "KittyScrollbackCheckHealth",
---         "KittyScrollbackGenerateCommandLineEditing",
---     },
---     opts = {},
--- }
-
 add {
     "knubie/vim-kitty-navigator",
     build = "cp ./*.py ~/.config/kitty/",
@@ -143,9 +105,9 @@ add {
         vim.g.kitty_navigator_no_mappings = 1
     end,
     keys = {
-        { "<M-h>", ":KittyNavigateLeft<CR>",  silent = true },
-        { "<M-j>", ":KittyNavigateDown<CR>",  silent = true },
-        { "<M-k>", ":KittyNavigateUp<CR>",    silent = true },
+        { "<M-h>", ":KittyNavigateLeft<CR>", silent = true },
+        { "<M-j>", ":KittyNavigateDown<CR>", silent = true },
+        { "<M-k>", ":KittyNavigateUp<CR>", silent = true },
         { "<M-l>", ":KittyNavigateRight<CR>", silent = true },
     },
 }
@@ -307,7 +269,7 @@ add {
     "stevearc/overseer.nvim",
     cmd = { "OverseerRun" },
     keys = {
-        { "<Leader>r",     ":OverseerReRun<CR>" },
+        { "<Leader>r", ":OverseerReRun<CR>" },
         { "<Leader><S-r>", ":OverseerToggle!<CR>" },
         { "<Leader><C-r>", ":OverseerTaskAction<CR>" },
     },

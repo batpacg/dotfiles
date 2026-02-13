@@ -7,7 +7,7 @@ vim.g.maplocalleader = ","
 vim.opt.timeoutlen = 2000
 vim.opt.ttimeoutlen = 100
 
--- QoL -------------------------------------------------------------------------
+-- QoL =========================================================================
 
 vim.keymap.set({ "n" }, "<Leader>q", ":quitall!<CR>")
 vim.keymap.set({ "n", "v", "i" }, "<Esc>", "<CMD>noh<CR><Esc>")
@@ -21,35 +21,6 @@ vim.keymap.set({ "n", "x", "v" }, "<Leader>m", "<CMD>make<CR>")
 vim.keymap.set({ "v" }, ">", ">gv")
 vim.keymap.set({ "v" }, "<", "<gv")
 
--- local autopair = function(keys)
---     local lk = keys[1]
---     local rk = keys[2]
---     -- '{' => '{}'
---     vim.keymap.set("i", lk, lk .. rk .. "<Left>", { silent = true })
---     -- '{}' => '{}'
---     vim.keymap.set("i", lk .. rk, lk .. rk, { silent = true })
---     -- '{<BS>' => ''
---     vim.keymap.set("i", lk .. "<BS>", "", { silent = true })
---     -- '{<CR>' => '{\n\tab\n}'
---     vim.keymap.set(
---         "i",
---         lk .. "<CR>",
---         lk .. "<CR>" .. rk .. "<Up><End><CR>",
---         { silent = true }
---     )
---     -- '{ ' => '{  }'
---     vim.keymap.set(
---         "i",
---         lk .. " ",
---         lk .. "  " .. rk .. "<Left><Left>",
---         { silent = true }
---     )
--- end
---
--- autopair { "{", "}" }
--- autopair { "(", ")" }
--- autopair { '"', '"' }
-
 -- Automatically center the screen when possible.
 vim.keymap.set({ "n" }, "n", "nzz")
 vim.keymap.set({ "n" }, "N", "Nzz")
@@ -58,17 +29,17 @@ vim.keymap.set({ "n", "v", "x" }, "<C-d>", "<C-d>zz")
 vim.keymap.set({ "n", "v", "x" }, "j", "gjzz")
 vim.keymap.set({ "n", "v", "x" }, "k", "gkzz")
 
--- Marks -----------------------------------------------------------------------
+-- Marks =======================================================================
 
 vim.keymap.set({ "n" }, "m", "`")
 vim.keymap.set({ "n" }, "M", "m")
 
--- Macros ----------------------------------------------------------------------
+-- Macros ======================================================================
 
 vim.keymap.set({ "n" }, "q", "@")
 vim.keymap.set({ "n" }, "<C-q>", "q")
 
--- Windows ---------------------------------------------------------------------
+-- Windows =====================================================================
 
 vim.keymap.set({ "n" }, "<Leader>w", "")
 
@@ -88,21 +59,11 @@ vim.keymap.set({ "n" }, "<Leader>wj", "<C-w>j")
 vim.keymap.set({ "n" }, "<Leader>wk", "<C-w>k")
 vim.keymap.set({ "n" }, "<Leader>wl", "<C-w>l")
 
-vim.keymap.set({ "n" }, "<M-h>", "<C-w>h")
-vim.keymap.set({ "n" }, "<M-j>", "<C-w>j")
-vim.keymap.set({ "n" }, "<M-k>", "<C-w>k")
-vim.keymap.set({ "n" }, "<M-l>", "<C-w>l")
-
 -- Move windows.
 vim.keymap.set({ "n" }, "<Leader>wH", "<C-w>H")
 vim.keymap.set({ "n" }, "<Leader>wJ", "<C-w>J")
 vim.keymap.set({ "n" }, "<Leader>wK", "<C-w>K")
 vim.keymap.set({ "n" }, "<Leader>wL", "<C-w>L")
-
-vim.keymap.set({ "n" }, "<M-H>", "<C-w>H")
-vim.keymap.set({ "n" }, "<M-J>", "<C-w>J")
-vim.keymap.set({ "n" }, "<M-K>", "<C-w>K")
-vim.keymap.set({ "n" }, "<M-L>", "<C-w>L")
 
 -- Resize windows.
 vim.keymap.set({ "n" }, "<Leader>w<", "<C-w><<Leader>w", { remap = true })
@@ -110,12 +71,7 @@ vim.keymap.set({ "n" }, "<Leader>w+", "<C-w>+<Leader>w", { remap = true })
 vim.keymap.set({ "n" }, "<Leader>w-", "<C-w>-<Leader>w", { remap = true })
 vim.keymap.set({ "n" }, "<Leader>w>", "<C-w>><Leader>w", { remap = true })
 
-vim.keymap.set({ "n" }, "<M-<C-h>>", "<C-w><")
-vim.keymap.set({ "n" }, "<M-<C-j>>", "<C-w>+")
-vim.keymap.set({ "n" }, "<M-<C-k>>", "<C-w>-")
-vim.keymap.set({ "n" }, "<M-<C-l>>", "<C-w>>")
-
--- Buffers ---------------------------------------------------------------------
+-- Buffers =====================================================================
 
 local smart_bd = function(args)
     -- Get window and buffer info
@@ -159,7 +115,7 @@ vim.keymap.set({ "n" }, "<Leader><C-s>", ":write ++p<CR>")
 vim.keymap.set({ "n" }, "<S-h>", ":bp<CR>")
 vim.keymap.set({ "n" }, "<S-l>", ":bn<CR>")
 
--- Surround Selection ----------------------------------------------------------
+-- Surround Selection ==========================================================
 
 vim.keymap.set({ "v", "x" }, "s<", "c" .. "<>" .. "<Esc>P")
 vim.keymap.set({ "v", "x" }, "s>", "c" .. "<>" .. "<Esc>P")
@@ -183,7 +139,7 @@ vim.keymap.set({ "v", "x" }, "s*", "c" .. "**" .. "<Esc>P")
 
 vim.keymap.set({ "v", "x" }, "s_", "c" .. "__" .. "<Esc>P")
 
--- Toggle ----------------------------------------------------------------------
+-- Toggle ======================================================================
 
 local toggle_option = function(opt)
     local new_opt = vim.wo[opt] == true and ("no" .. opt) or opt
@@ -202,7 +158,7 @@ vim.keymap.set({ "n" }, "<Leader>tn", function()
     toggle_option "number"
 end)
 
--- G Commands ------------------------------------------------------------------
+-- G Commands ==================================================================
 
 vim.keymap.set({ "n" }, "gs", 'viwy:%s/<C-r>"//g<Left><Left>')
 vim.keymap.set({ "v", "x" }, "gs", 'y:%s/<C-r>"//g<Left><Left>')
