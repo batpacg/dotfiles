@@ -16,7 +16,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out, "WarningMsg" },
+            { out,                            "WarningMsg" },
             { "\nPress any key to exit..." },
         }, true, {})
         vim.fn.getchar()
@@ -51,7 +51,12 @@ add {
         local utils = require "heirline.utils"
 
         local PositionComponent = {
-            provider = "(" .. "%l,%c" .. ")",
+            provider = "(" .. "%3l,%2c" .. ")",
+            { -- Separator
+                provider = function()
+                    return " "
+                end,
+            },
         }
 
         local CwdComponent = {
@@ -75,6 +80,11 @@ add {
             provider = function(self)
                 return self.cwd
             end,
+            { -- Separator
+                provider = function()
+                    return " "
+                end,
+            },
         }
 
         local FileNameComponent = {
@@ -88,6 +98,11 @@ add {
                 end
                 return filename
             end,
+            { -- Separator
+                provider = function()
+                    return " "
+                end,
+            },
         }
 
         local GitComponent = {
@@ -101,7 +116,7 @@ add {
 
             { -- Git Repo Name
                 provider = function(self)
-                    return "" .. self.statusdict.head
+                    return "> " .. self.statusdict.head
                 end,
             },
 
@@ -120,19 +135,22 @@ add {
                         .. ")"
                 end,
             },
+            { -- Separator
+                provider = function()
+                    return " "
+                end,
+            },
         }
 
         require("heirline").setup {
             statusline = {
                 { provider = " " },
-                PositionComponent,
-                { provider = " : " },
                 FileNameComponent,
-                { provider = " @ " },
+                { provider = "@ " },
                 CwdComponent,
-                { provider = "%=" },
                 GitComponent,
-                { provider = " " },
+                { provider = "%=" },
+                PositionComponent,
             },
         }
     end,
@@ -145,9 +163,9 @@ add {
         vim.g.kitty_navigator_no_mappings = 1
     end,
     keys = {
-        { "<M-h>", ":KittyNavigateLeft<CR>", silent = true },
-        { "<M-j>", ":KittyNavigateDown<CR>", silent = true },
-        { "<M-k>", ":KittyNavigateUp<CR>", silent = true },
+        { "<M-h>", ":KittyNavigateLeft<CR>",  silent = true },
+        { "<M-j>", ":KittyNavigateDown<CR>",  silent = true },
+        { "<M-k>", ":KittyNavigateUp<CR>",    silent = true },
         { "<M-l>", ":KittyNavigateRight<CR>", silent = true },
     },
 }
@@ -309,7 +327,7 @@ add {
     "stevearc/overseer.nvim",
     cmd = { "OverseerRun" },
     keys = {
-        { "<Leader>r", ":OverseerReRun<CR>" },
+        { "<Leader>r",     ":OverseerReRun<CR>" },
         { "<Leader><S-r>", ":OverseerToggle!<CR>" },
         { "<Leader><C-r>", ":OverseerTaskAction<CR>" },
     },
