@@ -51,7 +51,6 @@ xdg-desktop-portal-gnome
 gnome-keyring
 nwg-look
 nautilus
-quickshell
 vimix-cursors
 breeze-gtk
 adw-gtk-theme
@@ -121,6 +120,7 @@ jre17-openjdk
 jre21-openjdk
 
 
+linux-headers
 mesa
 mesa-utils
 lib32-mesa
