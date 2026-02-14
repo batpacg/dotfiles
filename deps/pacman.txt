@@ -53,6 +53,7 @@ nwg-look
 nautilus
 vimix-cursors
 breeze-gtk
+breeze-icons
 adw-gtk-theme
 
 pipewire-alsa

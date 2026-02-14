@@ -51,21 +51,6 @@ sdms_help_cmd() {
 		  u, unlink  Unlink the links in target that are from source
 		  a, add     Add given file to the source directory and link
 		     cd      Enter a subshell inside the source directory
-
-		Examples:
-		  sdms link
-		  sdms unlink
-
-		  sdms link .config/mimeapps.list
-		  sdms unlink .config/mimeapps.list
-
-		  sdms link .config/nvim/
-		  sdms unlink .config/nvim/
-
-		  sdms add ./.config/starship.toml
-		  sdms add ./.config/emacs/
-
-		  sdms cd
 	EOF
 }
 
