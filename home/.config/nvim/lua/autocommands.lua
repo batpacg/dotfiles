@@ -23,3 +23,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
         vim.cmd "checktime"
     end,
 })
+
+-- vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+--     group = user_augroup,
+--     callback = function()
+--         vim.cmd.normal { "zz", bang = true }
+--     end,
+-- })

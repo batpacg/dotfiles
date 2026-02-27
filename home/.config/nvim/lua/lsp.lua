@@ -27,7 +27,8 @@ LspConfig.servers = {
             "--fallback-style=webkit",
         },
     },
-    ["pyright"] = {},
+    ["zuban"] = {},
+    ["shellcheck"] = {},
     ["ruff"] = {},
     ["bashls"] = {},
     ["ts_ls"] = {},
@@ -46,6 +47,7 @@ NoneLS.formatters = {
     },
     ["stylua"] = {},
     ["shfmt"] = { extra_args = { "-ci", "-sr" } },
+    ["typstyle"] = {},
 }
 
 -- lsp-config setup ============================================================

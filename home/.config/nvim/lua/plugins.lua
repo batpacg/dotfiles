@@ -16,7 +16,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out,                            "WarningMsg" },
+            { out, "WarningMsg" },
             { "\nPress any key to exit..." },
         }, true, {})
         vim.fn.getchar()
@@ -48,7 +48,7 @@ add {
     event = "UIEnter",
     config = function()
         local conditions = require "heirline.conditions"
-        local utils = require "heirline.utils"
+        -- local utils = require "heirline.utils"
 
         local PositionComponent = {
             provider = "(" .. "%3l,%2c" .. ")",
@@ -77,8 +77,11 @@ add {
                         )
                 end
             end,
+            condition = function()
+                return not vim.bo.readonly
+            end,
             provider = function(self)
-                return self.cwd
+                return "@ " .. self.cwd
             end,
             { -- Separator
                 provider = function()
@@ -89,14 +92,41 @@ add {
 
         local FileNameComponent = {
             init = function(self)
-                self.filename = vim.api.nvim_buf_get_name(0)
+                local cwd = vim.fn.getcwd()
+                local filename = vim.api.nvim_buf_get_name(0)
+                local maybe_cwd = filename:sub(1, #cwd)
+                if maybe_cwd == cwd then
+                    self.filename = filename:sub(#cwd + 2, #filename)
+                else
+                    self.filename = filename
+                end
             end,
             provider = function(self)
-                local filename = vim.fn.fnamemodify(self.filename, ":t")
-                if filename == "" then
+                if self.filename == "" then
                     return "[No Name]"
                 end
-                return filename
+                return self.filename
+            end,
+            { -- Separator
+                provider = function()
+                    return " "
+                end,
+            },
+        }
+
+        local FileStatusComponent = {
+            init = function(self)
+                self.modified = vim.bo.modified
+                self.readonly = vim.bo.readonly
+            end,
+            provider = function(self)
+                if self.readonly then
+                    return "[R]"
+                elseif self.modified then
+                    return "[+]"
+                end
+
+                return "[-]"
             end,
             { -- Separator
                 provider = function()
@@ -128,9 +158,9 @@ add {
                     return "("
                         .. "+"
                         .. (self.statusdict.added or 0)
-                        .. ",-"
+                        .. "-"
                         .. (self.statusdict.removed or 0)
-                        .. ",~"
+                        .. "~"
                         .. (self.statusdict.changed or 0)
                         .. ")"
                 end,
@@ -146,7 +176,7 @@ add {
             statusline = {
                 { provider = " " },
                 FileNameComponent,
-                { provider = "@ " },
+                FileStatusComponent,
                 CwdComponent,
                 GitComponent,
                 { provider = "%=" },
@@ -163,9 +193,9 @@ add {
         vim.g.kitty_navigator_no_mappings = 1
     end,
     keys = {
-        { "<M-h>", ":KittyNavigateLeft<CR>",  silent = true },
-        { "<M-j>", ":KittyNavigateDown<CR>",  silent = true },
-        { "<M-k>", ":KittyNavigateUp<CR>",    silent = true },
+        { "<M-h>", ":KittyNavigateLeft<CR>", silent = true },
+        { "<M-j>", ":KittyNavigateDown<CR>", silent = true },
+        { "<M-k>", ":KittyNavigateUp<CR>", silent = true },
         { "<M-l>", ":KittyNavigateRight<CR>", silent = true },
     },
 }
@@ -327,7 +357,7 @@ add {
     "stevearc/overseer.nvim",
     cmd = { "OverseerRun" },
     keys = {
-        { "<Leader>r",     ":OverseerReRun<CR>" },
+        { "<Leader>r", ":OverseerReRun<CR>" },
         { "<Leader><S-r>", ":OverseerToggle!<CR>" },
         { "<Leader><C-r>", ":OverseerTaskAction<CR>" },
     },

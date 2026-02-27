@@ -10,9 +10,9 @@ vim.opt.number         = false
 vim.opt.relativenumber = false
 vim.opt.cursorline     = true
 vim.opt.wrap           = false
-vim.opt.scrolloff      = 16
-vim.opt.sidescrolloff  = 8
-vim.opt.modeline       = true
+vim.opt.scrolloff      = 1000
+-- vim.opt.sidescrolloff  = 8
+vim.opt.modeline       = false
 
 -- Identation ------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ vim.opt.matchtime      = 2
 vim.opt.cmdheight      = 1
 vim.opt.laststatus     = 3
 vim.opt.completeopt    = "menuone,noinsert,noselect"
-vim.opt.showmode       = true
+vim.opt.showmode       = false
 vim.opt.ruler          = true
 vim.opt.pumheight      = 10
 vim.opt.pumblend       = 10

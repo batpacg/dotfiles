@@ -1,5 +1,5 @@
 -- Refs:
--- 'https://github.com/zenbones-theme/zenbones.nvim/blob/main/doc/zenbones.md#create-your-own-colorscheme'
+-- https://github.com/zenbones-theme/zenbones.nvim/blob/main/doc/zenbones.md#create-your-own-colorscheme
 
 local colors_name = "gruvbones"
 vim.g.colors_name = colors_name

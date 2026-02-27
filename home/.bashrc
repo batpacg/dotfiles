@@ -65,6 +65,10 @@ export LUA_CPATH="$LUA_CPATH;/usr/lib/lua/5.3/?.so"
 export LUA_CPATH="$LUA_CPATH;/usr/lib/lua/5.3/loadall.so"
 export LUA_CPATH="$LUA_CPATH;$LUAROCKS_HOME/lib/lua/5.3/?.so"
 
+export npm_config_prefix="$XDG_DATA_HOME/npm"
+export npm_config_cache="$XDG_CACHE_HOME/npm"
+appendpath "${npm_config_prefix}/bin"
+
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 appendpath "$PNPM_HOME"
 
@@ -113,41 +117,6 @@ alias tks="tmux kill-server"
 alias tls="tmux list-sessions"
 
 # Functions ====================================================================
-
-notes() {
-	local selection
-	selection="$(
-		find ~/sync/notes \
-			-maxdepth 1 \
-			-type f \
-			! -name "*.pdf" \
-			-print0 |
-			fzf --reverse \
-				--read0 \
-				--preview "bat --color always -p {}" \
-				--preview-border left \
-				--delimiter / \
-				--with-nth -1
-	)"
-	$EDITOR "$selection"
-}
-
-books() {
-	local selection
-	selection="$(
-		find ~/sync/books \
-			-maxdepth 1 \
-			-type f \
-			-name "*.pdf" \
-			-print0 |
-			fzf --reverse \
-				--read0 \
-				--delimiter / \
-				--with-nth -1
-	)"
-	xdg-open "$selection" &
-	disown
-}
 
 fe() {
 	local selected
@@ -239,6 +208,14 @@ norm() {
 	)"
 
 	mv "$file" "$newname"
+}
+
+fserv() {
+	systemctl list-units | grep .service | sed 's/ \{2,\}/\t/g' | cut -d $'\t' -f 2- | fzf
+}
+
+fuserv() {
+	systemctl --user list-units | grep .service | sed 's/ \{2,\}/\t/g' | cut -d $'\t' -f 2- | fzf
 }
 
 # Prompt =======================================================================

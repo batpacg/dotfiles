@@ -13,6 +13,7 @@ tmux
 git
 man-db
 man-pages
+pacman-contrib
 
 github-cli
 aria2
@@ -50,11 +51,12 @@ xdg-desktop-portal-gtk
 xdg-desktop-portal-gnome
 gnome-keyring
 nwg-look
-nautilus
 vimix-cursors
 breeze-gtk
 breeze-icons
 adw-gtk-theme
+nautilus
+feh
 
 pipewire-alsa
 pipewire-pulse

@@ -12,22 +12,18 @@ vim.opt.ttimeoutlen = 100
 vim.keymap.set({ "n" }, "<Leader>q", ":quitall!<CR>")
 vim.keymap.set({ "n", "v", "i" }, "<Esc>", "<CMD>noh<CR><Esc>")
 vim.keymap.set({ "t" }, "<Esc>", "<C-\\><C-n>")
-vim.keymap.set({ "n", "x", "v" }, "x", ":")
-vim.keymap.set({ "n", "x", "v" }, "<S-x>", ":<Up><CR>")
-vim.keymap.set({ "n", "x", "v" }, "s", "<Nop>")
+vim.keymap.set({ "n", "x" }, "x", ":")
+vim.keymap.set({ "n", "x" }, "<S-x>", ":<Up><CR>")
+vim.keymap.set({ "n", "x" }, "s", "<Nop>")
 -- vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
-vim.keymap.set({ "n", "x", "v" }, "<Leader>m", "<CMD>make<CR>")
+vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
 
-vim.keymap.set({ "v" }, ">", ">gv")
-vim.keymap.set({ "v" }, "<", "<gv")
+vim.keymap.set({ "x" }, ">", ">gv")
+vim.keymap.set({ "x" }, "<", "<gv")
 
 -- Automatically center the screen when possible.
 vim.keymap.set({ "n" }, "n", "nzz")
 vim.keymap.set({ "n" }, "N", "Nzz")
-vim.keymap.set({ "n", "v", "x" }, "<C-u>", "<C-u>zz")
-vim.keymap.set({ "n", "v", "x" }, "<C-d>", "<C-d>zz")
-vim.keymap.set({ "n", "v", "x" }, "j", "gjzz")
-vim.keymap.set({ "n", "v", "x" }, "k", "gkzz")
 
 -- Marks =======================================================================
 
@@ -110,7 +106,7 @@ vim.keymap.set({ "n" }, "<Leader><Leader>", ":b#<CR>")
 vim.keymap.set({ "n" }, "<Leader>d", function()
     smart_bd { force = true }
 end)
-vim.keymap.set({ "n" }, "<Leader>s", ":w<CR>")
+vim.keymap.set({ "n" }, "<Leader>s", ":silent w<CR>", { silent = true })
 vim.keymap.set({ "n" }, "<Leader><C-s>", ":write ++p<CR>")
 vim.keymap.set({ "n" }, "<S-h>", ":bp<CR>")
 vim.keymap.set({ "n" }, "<S-l>", ":bn<CR>")
@@ -156,6 +152,15 @@ vim.keymap.set({ "n" }, "<Leader>tl", function()
 end)
 vim.keymap.set({ "n" }, "<Leader>tn", function()
     toggle_option "number"
+end)
+
+vim.keymap.set({ "n" }, "<Leader>ts", function()
+    -- scl
+    if vim.o.signcolumn == "yes" then
+        vim.cmd "setlocal signcolumn=no"
+    else
+        vim.cmd "setlocal signcolumn=yes"
+    end
 end)
 
 -- G Commands ==================================================================
