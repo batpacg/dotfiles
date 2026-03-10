@@ -1,7 +1,4 @@
-;;
-;; ~/.config/kanata/kanata.kbd
-;;
-
+;; vim: set ft=lisp:
 ;; Docs: https://jtroo.github.io/config.html
 
 (defcfg process-unmapped-keys yes)
@@ -36,11 +33,7 @@
   ;;         ralt
   ;;         (layer-while-held symbol))
 
-  ;; The cedilha symbol combination in the US intl. keyboard layout.
-  ced RA-,
-
   ;; Shifted Symbols
-
   + S-=
   ~ S-`
   ! S-1
@@ -111,7 +104,7 @@
 
   m @parc
   , @paro
-  . @ced)
+  )
 
 (deflayermap (navigation)
   ;; Live reload of the kanata config.
@@ -138,5 +131,3 @@
   , end
   . caps
   / prtsc)
-
-;; vi:ft=lisp:

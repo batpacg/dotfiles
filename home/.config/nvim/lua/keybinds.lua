@@ -17,9 +17,11 @@ vim.keymap.set({ "n", "x" }, "<S-x>", ":<Up><CR>")
 vim.keymap.set({ "n", "x" }, "s", "<Nop>")
 -- vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
 vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
-
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
+
+vim.keymap.set({ "x" }, "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set({ "x" }, "K", ":m '<-2<CR>gv=gv")
 
 -- Automatically center the screen when possible.
 vim.keymap.set({ "n" }, "n", "nzz")
@@ -70,41 +72,41 @@ vim.keymap.set({ "n" }, "<Leader>w>", "<C-w>><Leader>w", { remap = true })
 -- Buffers =====================================================================
 
 local smart_bd = function(args)
-    -- Get window and buffer info
-    local winids = vim.api.nvim_list_wins()
-    local listed_bufs = {}
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.api.nvim_get_option_value("buflisted", { buf = buf }) then
-            table.insert(listed_bufs, buf)
-        end
+  -- Get window and buffer info
+  local winids = vim.api.nvim_list_wins()
+  local listed_bufs = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_get_option_value("buflisted", { buf = buf }) then
+      table.insert(listed_bufs, buf)
     end
-    local cbuf = vim.api.nvim_get_current_buf()
-    local ft = vim.api.nvim_get_option_value(
-        "filetype",
-        { scope = "local", buf = cbuf }
-    )
+  end
+  local cbuf = vim.api.nvim_get_current_buf()
+  local ft = vim.api.nvim_get_option_value(
+    "filetype",
+    { scope = "local", buf = cbuf }
+  )
 
-    -- Decide close command
-    local close_cmd = args.force and "bd!" or "bd"
+  -- Decide close command
+  local close_cmd = args.force and "bd!" or "bd"
 
-    -- Close buffer
-    if #winids == 1 or ft == "help" then
-        vim.cmd(close_cmd)
-    elseif #winids > 1 then
-        for _, winid in ipairs(winids) do
-            if vim.api.nvim_win_get_buf(winid) == cbuf then
-                vim.api.nvim_win_call(winid, function()
-                    vim.cmd "bn"
-                end)
-            end
-        end
-        vim.cmd(close_cmd .. " #")
+  -- Close buffer
+  if #winids == 1 or ft == "help" then
+    vim.cmd(close_cmd)
+  elseif #winids > 1 then
+    for _, winid in ipairs(winids) do
+      if vim.api.nvim_win_get_buf(winid) == cbuf then
+        vim.api.nvim_win_call(winid, function()
+          vim.cmd "bn"
+        end)
+      end
     end
+    vim.cmd(close_cmd .. " #")
+  end
 end
 
 vim.keymap.set({ "n" }, "<Leader><Leader>", ":b#<CR>")
 vim.keymap.set({ "n" }, "<Leader>d", function()
-    smart_bd { force = true }
+  smart_bd { force = true }
 end)
 vim.keymap.set({ "n" }, "<Leader>s", ":silent w<CR>", { silent = true })
 vim.keymap.set({ "n" }, "<Leader><C-s>", ":write ++p<CR>")
@@ -138,29 +140,29 @@ vim.keymap.set({ "v", "x" }, "s_", "c" .. "__" .. "<Esc>P")
 -- Toggle ======================================================================
 
 local toggle_option = function(opt)
-    local new_opt = vim.wo[opt] == true and ("no" .. opt) or opt
-    local cmd = "setlocal " .. new_opt
-    vim.cmd(cmd)
+  local new_opt = vim.wo[opt] == true and ("no" .. opt) or opt
+  local cmd = "setlocal " .. new_opt
+  vim.cmd(cmd)
 end
 
 vim.keymap.set({ "n" }, "<Leader>t", "")
 vim.keymap.set({ "n" }, "<Leader>tw", function()
-    toggle_option "wrap"
+  toggle_option "wrap"
 end)
 vim.keymap.set({ "n" }, "<Leader>tl", function()
-    toggle_option "list"
+  toggle_option "list"
 end)
 vim.keymap.set({ "n" }, "<Leader>tn", function()
-    toggle_option "number"
+  toggle_option "number"
 end)
 
 vim.keymap.set({ "n" }, "<Leader>ts", function()
-    -- scl
-    if vim.o.signcolumn == "yes" then
-        vim.cmd "setlocal signcolumn=no"
-    else
-        vim.cmd "setlocal signcolumn=yes"
-    end
+  -- scl
+  if vim.o.signcolumn == "yes" then
+    vim.cmd "setlocal signcolumn=no"
+  else
+    vim.cmd "setlocal signcolumn=yes"
+  end
 end)
 
 -- G Commands ==================================================================

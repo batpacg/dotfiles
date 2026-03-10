@@ -1,28 +1,28 @@
 vim.api.nvim_create_user_command("TypstOpenPdf", function()
-    local filepath = vim.api.nvim_buf_get_name(0)
-    if filepath:match "%.typ$" then
-        local pdf_path = filepath:gsub("%.typ$", ".pdf")
-        vim.system { "xdg-open", pdf_path }
-    end
+  local filepath = vim.api.nvim_buf_get_name(0)
+  if filepath:match "%.typ$" then
+    local pdf_path = filepath:gsub("%.typ$", ".pdf")
+    vim.system { "xdg-open", pdf_path }
+  end
 end, {})
 
 vim.api.nvim_create_user_command("TypstCompile", function()
-    local filename = vim.fn.expandcmd "%"
-    vim.fn.system { "typst", "c", filename }
+  local filename = vim.fn.expandcmd "%"
+  vim.fn.system { "typst", "c", filename }
 end, {})
 
 vim.api.nvim_create_user_command("TypstSvg", function()
-    local current_line = vim.api.nvim_get_current_line()
-    local svg = string.match(current_line, "%./(.*%.svg)")
-    if not svg then
-        vim.notify(
-            "Error: no svg file found in current line!",
-            vim.log.levels.ERROR
-        )
-    end
-    if vim.fn.filereadable(svg) ~= 1 then
-        vim.system { "touch", svg }
-        local svg_template = ([[
+  local current_line = vim.api.nvim_get_current_line()
+  local svg = string.match(current_line, "%./(.*%.svg)")
+  if not svg then
+    vim.notify(
+      "Error: no svg file found in current line!",
+      vim.log.levels.ERROR
+    )
+  end
+  if vim.fn.filereadable(svg) ~= 1 then
+    vim.system { "touch", svg }
+    local svg_template = ([[
         <svg
            width="512"
            height="512"
@@ -56,9 +56,9 @@ vim.api.nvim_create_user_command("TypstSvg", function()
              inkscape:current-layer="layer1" />
         </svg>
         ]]):format(svg)
-        vim.system({ "tee", svg }, { stdin = svg_template })
-    end
-    vim.system { "inkscape", svg }
+    vim.system({ "tee", svg }, { stdin = svg_template })
+  end
+  vim.system { "inkscape", svg }
 end, {})
 
 vim.keymap.set({ "n" }, "<LocalLeader>c", ":TypstCompile<CR>")

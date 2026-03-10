@@ -36,7 +36,7 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export ANSIBLE_CONFIG="$XDG_CONFIG_HOME/ansible/ansible.cfg"
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
+# export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 
@@ -232,6 +232,8 @@ eval "$(zoxide init bash)"
 command -v z > /dev/null 2>&1 && alias cd="z"
 
 # Keybinds =====================================================================
+
+stty -ixon
 
 # To yank the current line to the system's clipboard using OSC52.
 yank_like_to_cb() {

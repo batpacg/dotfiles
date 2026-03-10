@@ -7,13 +7,13 @@ local_by_default = true
 -- lua_interpreter = "lua5.3"
 
 rocks_trees = {
-    {
-        name = "user",
-        root = home .. "/.local/share/luarocks",
-    },
+	{
+		name = "user",
+		root = home .. "/.local/share/luarocks",
+	},
 
-    {
-        name = "system",
-        root = "/usr",
-    },
+	{
+		name = "system",
+		root = "/usr",
+	},
 }

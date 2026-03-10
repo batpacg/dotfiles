@@ -1,0 +1,63 @@
+include "%L"
+
+# ==============================================================================
+
+<Multi_key> <a> <c> : "ç" ccedilla
+<Multi_key> <a> <C> : "Ç" Ccedilla
+
+<Multi_key> <f> <a> : "á" aacute
+<Multi_key> <f> <A> : "Á" Aacute
+
+<Multi_key> <f> <e> : "é" eacute
+<Multi_key> <f> <E> : "É" Eacute
+
+<Multi_key> <f> <i> : "í" iacute
+<Multi_key> <f> <I> : "Í" Iacute
+
+<Multi_key> <f> <o> : "ó" oacute
+<Multi_key> <f> <O> : "Ó" Oacute
+
+<Multi_key> <f> <u> : "ú" uacute
+<Multi_key> <f> <U> : "Ú" Uacute
+
+<Multi_key> <d> <a> : "ã" atilde
+<Multi_key> <d> <A> : "Ã" Atilde
+
+<Multi_key> <d> <i> : "ĩ" itilde
+<Multi_key> <d> <I> : "Ĩ" Itilde
+
+<Multi_key> <d> <o> : "õ" otilde
+<Multi_key> <d> <O> : "Õ" Otilde
+
+<Multi_key> <d> <u> : "ũ" utilde
+<Multi_key> <d> <U> : "Ũ" Utilde
+
+<Multi_key> <s> <a> : "â" acircumflex
+<Multi_key> <s> <A> : "Â" Acircumflex
+
+<Multi_key> <s> <e> : "ê" ecircumflex
+<Multi_key> <s> <E> : "Ê" Ecircumflex
+
+<Multi_key> <s> <i> : "î" icircumflex
+<Multi_key> <s> <I> : "Î" Icircumflex
+
+<Multi_key> <s> <o> : "ô" ocircumflex
+<Multi_key> <s> <O> : "Ô" Ocircumflex
+
+<Multi_key> <s> <u> : "û" ucircumflex
+<Multi_key> <s> <U> : "Û" Ucircumflex
+
+<Multi_key> <a> <a> : "à" agrave
+<Multi_key> <a> <A> : "À" Agrave
+
+<Multi_key> <a> <e> : "è" egrave
+<Multi_key> <a> <E> : "È" Egrave
+
+<Multi_key> <a> <i> : "ì" igrave
+<Multi_key> <a> <I> : "Ì" Igrave
+
+<Multi_key> <a> <o> : "ò" ograve
+<Multi_key> <a> <O> : "Ò" Ograve
+
+<Multi_key> <a> <u> : "ù" ugrave
+<Multi_key> <a> <U> : "Ù" Ugrave

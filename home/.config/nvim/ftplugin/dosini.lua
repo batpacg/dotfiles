@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function()
-        vim.cmd [[setlocal commentstring=#\ %s]]
-    end,
+  callback = function()
+    vim.cmd [[setlocal commentstring=#\ %s]]
+  end,
 })

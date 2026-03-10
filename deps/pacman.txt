@@ -74,6 +74,7 @@ ttf-jetbrains-mono-nerd
 cups
 cups-pdf
 zathura
+zathura-djvu
 zathura-pdf-poppler
 typst
 libreoffice
@@ -90,6 +91,7 @@ python
 ipython
 python-pip
 python-numpy
+python-simpy
 python-scipy
 python-pandas
 python-matplotlib
