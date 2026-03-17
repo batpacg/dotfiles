@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd "$HOME/Sync/books"
+selected="$(ls | fuzzel --dmenu)"
+[ -n "$selected" ] && xdg-open "$selected"

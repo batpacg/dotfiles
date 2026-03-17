@@ -1,0 +1,27 @@
+pkgname='python-matplotlib-backend-kitty-git'
+_module='matplotlib-backend-kitty'
+pkgver=r21.cbe4fe2
+pkgrel=1
+pkgdesc="Show matplotlib plots directly in your kitty terminal (Git version)"
+url="https://github.com/jktr/matplotlib-backend-kitty"
+depends=('python' 'python-matplotlib')
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+license=('CC0-1.0')
+arch=('any')
+source=("git+https://github.com/jktr/matplotlib-backend-kitty.git")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$_module"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "${_module}"
+	python -m build --wheel --no-isolation
+}
+
+package() {
+	cd "${_module}"
+	python -m installer --destdir="${pkgdir}" dist/*.whl
+}

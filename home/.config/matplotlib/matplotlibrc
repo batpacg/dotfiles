@@ -18,8 +18,8 @@ lines.linewidth: 1
 lines.markeredgecolor: 'none'
 
 ## Ticks
-xtick.top: True
-ytick.right: True
+xtick.top: False
+ytick.right: False
 
 xtick.color: "#fbf1c7"
 xtick.labelsize: 11

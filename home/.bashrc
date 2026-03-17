@@ -186,7 +186,10 @@ pac() {
 			;;
 		u | update) sudo pacman -Syyu ;;
 		r | remove) sudo pacman -Rs "$@" ;;
-		*) exit 1 ;;
+		*)
+			local selected
+			selected="$(pacman -Qs | fzf)"
+			;;
 	esac
 }
 

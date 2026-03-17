@@ -12,11 +12,10 @@ vim.opt.ttimeoutlen = 100
 vim.keymap.set({ "n" }, "<Leader>q", ":quitall!<CR>")
 vim.keymap.set({ "n", "v", "i" }, "<Esc>", "<CMD>noh<CR><Esc>")
 vim.keymap.set({ "t" }, "<Esc>", "<C-\\><C-n>")
-vim.keymap.set({ "n", "x" }, "x", ":")
-vim.keymap.set({ "n", "x" }, "<S-x>", ":<Up><CR>")
+vim.keymap.set({ "n", "x" }, "x", "<Nop>")
 vim.keymap.set({ "n", "x" }, "s", "<Nop>")
 -- vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
-vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
+vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>silent make<CR>")
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
 

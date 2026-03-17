@@ -186,6 +186,30 @@ add {
 }
 
 add {
+  "folke/flash.nvim",
+  event = "VeryLazy",
+  opts = {},
+  keys = {
+    {
+      "x",
+      mode = { "n", "o" },
+      function()
+        require("flash").jump()
+      end,
+      desc = "Flash",
+    },
+    {
+      "X",
+      mode = { "n", "o" },
+      function()
+        require("flash").remote()
+      end,
+      desc = "Remote Flash",
+    },
+  },
+}
+
+add {
   "knubie/vim-kitty-navigator",
   build = "cp ./*.py ~/.config/kitty/",
   init = function()
@@ -222,6 +246,35 @@ add {
       hovered_buffer_in_same_directory = {},
     },
   },
+}
+
+add {
+  "Vigemus/iron.nvim",
+  config = function()
+    local view = require "iron.view"
+    require("iron").setup {
+      keymaps = {
+        toggle_repl = "<Leader>it",
+        visual_send = "<Leader>iv",
+        send_file = "<Leader>if",
+        restart_repl = "<Leader>ir",
+        clear = "<Leader>il",
+        exit = "<Leader>iq",
+        interrupt = "<Leader>i<Leader>",
+        cr = "<Leader>i<cr>",
+      },
+      config = {
+        repl_open_cmd = view.split "30%",
+        repl_definition = {
+          python = {
+            command = { "ipython", "--no-autoindent" },
+            format = require("iron.fts.common").bracketed_paste,
+            block_dividers = { "#%%", "# %%" },
+          },
+        },
+      },
+    }
+  end,
 }
 
 -- https://github.com/amitds1997/remote-nvim.nvim
