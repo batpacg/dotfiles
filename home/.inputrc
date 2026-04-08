@@ -16,4 +16,3 @@ set completion-ignore-case on
 set show-all-if-ambiguous on
 
 C-f: "yacd && clear\n"
-C-s: "nvim && clear\n"

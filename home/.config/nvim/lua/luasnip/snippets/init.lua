@@ -20,7 +20,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 -- local conds_expand = require "luasnip.extras.conditions.expand"
 
 ls.add_snippets("all", {
-  s("+h2", {
+  s("+h1", {
     f(function()
       local commentstring = vim.bo.commentstring:gsub("%%s", "")
       local delimiter = "="
@@ -28,10 +28,18 @@ ls.add_snippets("all", {
     end),
     t { "", "" },
   }),
-  s("+h3", {
+  s("+h2", {
     f(function()
       local commentstring = vim.bo.commentstring:gsub("%%s", "")
       local delimiter = "-"
+      return commentstring .. delimiter:rep(80 - #commentstring)
+    end),
+    t { "", "" },
+  }),
+  s("+h3", {
+    f(function()
+      local commentstring = vim.bo.commentstring:gsub("%%s", "")
+      local delimiter = "."
       return commentstring .. delimiter:rep(80 - #commentstring)
     end),
     t { "", "" },

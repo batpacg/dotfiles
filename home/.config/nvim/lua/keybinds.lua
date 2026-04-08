@@ -15,9 +15,19 @@ vim.keymap.set({ "t" }, "<Esc>", "<C-\\><C-n>")
 vim.keymap.set({ "n", "x" }, "x", "<Nop>")
 vim.keymap.set({ "n", "x" }, "s", "<Nop>")
 -- vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
-vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>silent make<CR>")
+vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
+
+local terminal = function()
+  -- check for the existance of a terminal window
+  -- if not, create a new one
+  -- if yes, check if we are in it
+  -- if in it, swap to last window <C-6>
+  -- if not in it, go to the terminal window
+end
+
+vim.keymap.set({ "n" }, "<C-j>", ":split | term")
 
 vim.keymap.set({ "x" }, "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set({ "x" }, "K", ":m '<-2<CR>gv=gv")
@@ -80,10 +90,8 @@ local smart_bd = function(args)
     end
   end
   local cbuf = vim.api.nvim_get_current_buf()
-  local ft = vim.api.nvim_get_option_value(
-    "filetype",
-    { scope = "local", buf = cbuf }
-  )
+  local ft =
+      vim.api.nvim_get_option_value("filetype", { scope = "local", buf = cbuf })
 
   -- Decide close command
   local close_cmd = args.force and "bd!" or "bd"

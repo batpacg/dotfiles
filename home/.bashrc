@@ -180,6 +180,7 @@ pac() {
 		fs | fsync)
 			local pkg
 			pkg="$(pacman -Ss "$@" --color=always | paste - - | $fzf)"
+			[ -z "$pkg" ] && return
 			pkg="${pkg#*/}"  # trim left
 			pkg="${pkg%% *}" # trim right
 			sudo pacman -S "$pkg"

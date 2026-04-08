@@ -13,6 +13,7 @@ vim.opt.wrap           = false
 vim.opt.scrolloff      = 1000
 -- vim.opt.sidescrolloff  = 8
 vim.opt.modeline       = true
+vim.opt.gdefault       = true
 
 -- Identation ------------------------------------------------------------------
 

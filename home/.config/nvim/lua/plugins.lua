@@ -210,6 +210,21 @@ add {
 }
 
 add {
+  "folke/which-key.nvim",
+  event = "VeryLazy",
+  opts = {},
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show { global = false }
+      end,
+      desc = "Buffer Local Keymaps (which-key)",
+    },
+  },
+}
+
+add {
   "knubie/vim-kitty-navigator",
   build = "cp ./*.py ~/.config/kitty/",
   init = function()
@@ -234,13 +249,11 @@ add {
 add {
   "mikavilpas/yazi.nvim",
   dependencies = { { "nvim-lua/plenary.nvim", lazy = true } },
-  keys = {
-    { "<Leader>e", "<cmd>Yazi<CR>" },
-  },
+  keys = { { mode = { "n", "v" }, "<Leader>e", "<cmd>Yazi<CR>" } },
   opts = {
     yazi_floating_window_border = "single",
     floating_window_scaling_factor = 0.8,
-    keymaps = { change_working_directory = "g." },
+    keymaps = { change_working_directory = "<C-.>" },
     highlight_groups = {
       hovered_buffer = {},
       hovered_buffer_in_same_directory = {},
@@ -250,19 +263,63 @@ add {
 
 add {
   "Vigemus/iron.nvim",
+  keys = {
+    {
+      mode = { "n" },
+      "<Leader>is",
+      function()
+        require("iron.core").send_file()
+      end,
+    },
+    {
+      mode = { "v" },
+      "<Leader>is",
+      function()
+        require("iron.core").visual_send()
+      end,
+    },
+    {
+      mode = { "n" },
+      "<Leader>ii",
+      ":IronFocus<CR>",
+    },
+    {
+      mode = { "n" },
+      "<Leader>ir",
+      ":IronRestart<CR>",
+    },
+    {
+      mode = { "n" },
+      "<Leader>il",
+      function()
+        require("iron.core").send_line()
+      end,
+    },
+    {
+      mode = { "n" },
+      "<Leader>ic",
+      function()
+        require("iron.core").send(nil, string.char(12))
+      end,
+    },
+    {
+      mode = { "n" },
+      "<Leader>iC",
+      function()
+        require("iron.core").send(nil, string.char(03))
+      end,
+    },
+    {
+      mode = { "n" },
+      "<Leader>i<CR>",
+      function()
+        require("iron.core").send(nil, string.char(13))
+      end,
+    },
+  },
   config = function()
     local view = require "iron.view"
     require("iron").setup {
-      keymaps = {
-        toggle_repl = "<Leader>it",
-        visual_send = "<Leader>iv",
-        send_file = "<Leader>if",
-        restart_repl = "<Leader>ir",
-        clear = "<Leader>il",
-        exit = "<Leader>iq",
-        interrupt = "<Leader>i<Leader>",
-        cr = "<Leader>i<cr>",
-      },
       config = {
         repl_open_cmd = view.split "30%",
         repl_definition = {

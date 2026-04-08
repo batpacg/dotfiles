@@ -27,14 +27,7 @@ LspConfig.servers = {
       "--fallback-style=llvm",
     },
   },
-  ["zuban"] = {
-    settings = {
-      zuban = {
-        diagnoistics = { ignore = { "E731" } },
-        mypy_compat = { disable_error_code = { "E731" } },
-      },
-    },
-  },
+  ["pyright"] = {},
   ["shellcheck"] = {},
   ["ruff"] = {},
   ["bashls"] = {},

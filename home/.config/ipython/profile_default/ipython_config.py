@@ -12,8 +12,10 @@ config.TerminalIPythonApp.display_banner = False
 config.InteractiveShellApp.exec_lines = [
     "import numpy as np",
     "import matplotlib.pyplot as plt",
-    "import sympy as sm",
     "import scipy as sc",
+    "import sympy as sm",
+    "sm.init_printing(use_unicode=True)",
+    "s, t, x, y, z = sm.symbols('s t x y z')",
 ]
 
 config.TerminalInteractiveShell.editing_mode = "vi"

@@ -92,16 +92,17 @@ python
 ipython
 python-pip
 python-numpy
-python-simpy
+python-sympy
 python-scipy
 python-pandas
 python-matplotlib
 python-pygame
-python-pillow
 python-pyserial
 python-pynvim
 python-pyperclip
 python-jupyter-client
+python-pillow
+python-pypdf
 
 nodejs
 npm

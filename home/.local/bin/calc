@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# https://github.com/ClemaX/menu-qalc-wayland/blob/master/%3D
+
+cmd='fuzzel --minimal-lines -p (calc)>  --dmenu'
+
+prompt="$($cmd)"
+while [ -n "$prompt" ]; do
+	answer="$(qalc +u8 -color=never --terse "$prompt")"
+	prompt="$(echo "$answer" | $cmd)"
+done
+
+exit 0

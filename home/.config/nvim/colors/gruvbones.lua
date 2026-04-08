@@ -61,6 +61,3 @@ end)
 
 -- Pass the specs to lush to apply.
 lush(specs)
-
--- Optionally set term colors.
-require("zenbones.term").apply_colors(palette)
