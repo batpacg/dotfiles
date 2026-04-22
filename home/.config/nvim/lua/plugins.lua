@@ -94,6 +94,10 @@ add {
       init = function(self)
         local cwd = vim.fn.getcwd()
         local filename = vim.api.nvim_buf_get_name(0)
+        if string.sub(filename, 1, 4) == "term" then
+          self.filename = "term"
+          return
+        end
         local maybe_cwd = filename:sub(1, #cwd)
         if maybe_cwd == cwd then
           self.filename = filename:sub(#cwd + 2, #filename)
@@ -101,12 +105,14 @@ add {
           self.filename = filename
         end
       end,
+
       provider = function(self)
         if self.filename == "" then
           return "[No Name]"
         end
         return self.filename
       end,
+
       { -- Separator
         provider = function()
           return " "
@@ -518,9 +524,11 @@ add {
     -- task to be restarted.
     vim.api.nvim_create_user_command("OverseerReRun", function()
       local tasks = overseer.list_tasks()
+      -- local buf = vim.api.nvim_win_get_buf(0)
       if vim.tbl_isempty(tasks) then
         vim.cmd "OverseerRun"
       else
+        vim.fn.execute "write"
         overseer.run_action(tasks[1], "restart")
       end
     end, {})

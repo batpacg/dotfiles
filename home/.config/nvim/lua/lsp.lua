@@ -17,7 +17,9 @@ LspConfig.default.capabilities.textDocument.completion.completionItem.snippetSup
 
 LspConfig.servers = {
   ["lua_ls"] = {},
-  ["html"] = {},
+  ["html"] = {
+    filetypes = { "html", "htmldjango" },
+  },
   ["cssls"] = {},
   ["emmet_ls"] = {},
   ["clangd"] = {

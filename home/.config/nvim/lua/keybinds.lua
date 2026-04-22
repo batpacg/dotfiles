@@ -19,15 +19,24 @@ vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
 
-local terminal = function()
-  -- check for the existance of a terminal window
-  -- if not, create a new one
-  -- if yes, check if we are in it
-  -- if in it, swap to last window <C-6>
-  -- if not in it, go to the terminal window
+function toggle_terminal()
+  for i, buffer in ipairs(vim.api.nvim_list_bufs()) do
+    local buffer_name = vim.api.nvim_buf_get_name(buffer)
+    if string.sub(buffer_name, 1, 7) == "term://" then
+      -- if not vim.fn.getbufinfo(buffer).windows then
+      --   return
+      -- end
+      vim.api.nvim_open_win(buffer, true, { split = "below" })
+      vim.api.nvim_feedkeys("i", "n", false)
+      return
+    end
+  end
+  vim.api.nvim_command ":split | terminal"
+  vim.api.nvim_feedkeys("i", "n", false)
 end
 
-vim.keymap.set({ "n" }, "<C-j>", ":split | term")
+vim.keymap.set({ "n" }, "<C-j>", toggle_terminal)
+vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
 
 vim.keymap.set({ "x" }, "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set({ "x" }, "K", ":m '<-2<CR>gv=gv")
@@ -91,7 +100,7 @@ local smart_bd = function(args)
   end
   local cbuf = vim.api.nvim_get_current_buf()
   local ft =
-      vim.api.nvim_get_option_value("filetype", { scope = "local", buf = cbuf })
+    vim.api.nvim_get_option_value("filetype", { scope = "local", buf = cbuf })
 
   -- Decide close command
   local close_cmd = args.force and "bd!" or "bd"
@@ -174,7 +183,7 @@ end)
 
 -- G Commands ==================================================================
 
-vim.keymap.set({ "n" }, "gs", 'viwy:%s/<C-r>"//g<Left><Left>')
-vim.keymap.set({ "v", "x" }, "gs", 'y:%s/<C-r>"//g<Left><Left>')
+vim.keymap.set({ "n" }, "gs", 'viwy:%s/\\<<C-r>"\\>//g<Left><Left>')
+vim.keymap.set({ "v", "x" }, "gs", 'y:%s/\\<<C-r>"\\>//g<Left><Left>')
 vim.keymap.set({ "n" }, "ga", "ggVG")
 vim.keymap.set({ "n" }, "g.", "ga")

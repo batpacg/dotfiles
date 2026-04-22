@@ -111,6 +111,9 @@ alias clar="clear"
 
 alias diff="colordiff -u"
 
+alias venvon="source ./.venv/bin/activate"
+alias venvoff="deactivate"
+
 alias ssh="TERM=xterm-256color ssh"
 alias ta="tmux new -s main -A"
 alias tks="tmux kill-server"
@@ -224,9 +227,29 @@ fuserv() {
 
 # Prompt =======================================================================
 
+shopt -s checkwinsize
+
+GRAY='\[\e[37m\]'
+BOLD='\[\e[1m\]'
+RESET='\[\e[0m\]'
+
+_prompt_exitcode() {
+	last=$?
+	[ $last -eq 0 ] || echo -e "\e[31m$last\e[0m"
+}
+
+_prompt_separator() {
+	local sepchar="—"
+	printf -v sepstring "%${COLUMNS}s" ""
+	echo -e "\e[37m${sepstring// /${sepchar}}\e[0m"
+}
+
 PROMPT_DIRTRIM=4
-PROMPT_COMMAND+=(echo)
-PS1='\[\e[37m\]\[\e[1m\]\w\[\e[0m\] $(last=$?; [ $last -eq 0 ] || echo -e "\e[31m$last\e[0m")\n\[\e[37m\]\$\[\e[0m\] '
+PROMPT_COMMAND+=(echo _prompt_separator)
+PS1="$GRAY$BOLD\w$RESET \$(_prompt_exitcode)\n$GRAY\$$RESET "
+unset GREEN
+unset BOLD
+unset RESET
 
 # Plugins ======================================================================
 
