@@ -1,4 +1,5 @@
 zen-browser-bin
+firefoxpwa
 kanata-bin
 
 noctalia-shell

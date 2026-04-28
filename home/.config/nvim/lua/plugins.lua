@@ -474,6 +474,7 @@ add {
   cmd = { "OverseerRun" },
   keys = {
     { "<Leader>r",     ":OverseerReRun<CR>" },
+    { "<CR>",          ":OverseerReRun<CR>" },
     { "<Leader><S-r>", ":OverseerToggle!<CR>" },
     { "<Leader><C-r>", ":OverseerTaskAction<CR>" },
   },

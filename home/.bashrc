@@ -112,7 +112,6 @@ alias clar="clear"
 alias diff="colordiff -u"
 
 alias venvon="source ./.venv/bin/activate"
-alias venvoff="deactivate"
 
 alias ssh="TERM=xterm-256color ssh"
 alias ta="tmux new -s main -A"
@@ -166,6 +165,14 @@ tfont() {
 	echo -e "\x1B[31mError? Text\e[0m"
 	echo -e "Ligatures:== != >= <= => === !=== --- ___ $ & % @ ^"
 	echo -e "Icons:契          勒 鈴 "
+	echo "Box characters:"
+	for i in {0..127}; do
+		printf -v hex "%02x" "$i"
+		printf "\u25$hex "
+		if [ $(((i + 1) % 16)) -eq 0 ]; then
+			echo
+		fi
+	done
 }
 
 pac() {
@@ -239,6 +246,7 @@ _prompt_exitcode() {
 }
 
 _prompt_separator() {
+	[ -z "$COLUMNS" ] && return
 	local sepchar="—"
 	printf -v sepstring "%${COLUMNS}s" ""
 	echo -e "\e[37m${sepstring// /${sepchar}}\e[0m"

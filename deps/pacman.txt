@@ -66,6 +66,7 @@ pipewire-jack
 kitty
 neovide
 chromium
+firefoxpwa
 qalculate-gtk
 noto-fonts
 gnu-free-fonts
