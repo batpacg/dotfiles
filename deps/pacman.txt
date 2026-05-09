@@ -65,8 +65,8 @@ pipewire-jack
 
 kitty
 neovide
+discord
 chromium
-firefoxpwa
 qalculate-gtk
 noto-fonts
 gnu-free-fonts

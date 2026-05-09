@@ -1,3 +1,5 @@
+no-multigrid = true
+
 [font]
 normal = "JetBrainsMono Nerd Font"
 size = 9

@@ -231,20 +231,6 @@ add {
 }
 
 add {
-  "knubie/vim-kitty-navigator",
-  build = "cp ./*.py ~/.config/kitty/",
-  init = function()
-    vim.g.kitty_navigator_no_mappings = 1
-  end,
-  keys = {
-    { "<M-h>", ":KittyNavigateLeft<CR>",  silent = true },
-    { "<M-j>", ":KittyNavigateDown<CR>",  silent = true },
-    { "<M-k>", ":KittyNavigateUp<CR>",    silent = true },
-    { "<M-l>", ":KittyNavigateRight<CR>", silent = true },
-  },
-}
-
-add {
   "brenton-leighton/multiple-cursors.nvim",
   keys = {
     { "<C-n>", ":MultipleCursorsAddJumpNextMatch<CR>zz" },
