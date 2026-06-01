@@ -4,8 +4,10 @@
 
 # Enable needed services
 sudo systemctl enable sddm.service
-systemctl --user add-wants niri.service noctalia.service
-systemctl --user enable noctalia.service
+
+# Prefer to use niri 'spawn at startup' option instead.
+# systemctl --user add-wants niri.service noctalia.service
+# systemctl --user enable noctalia.service
 
 # Since niri uses the gtk/gnome portal, if we prefer a dark theme we need to
 # use this command.

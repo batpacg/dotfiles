@@ -8,8 +8,7 @@
 // Miscellaneous
 // =============================================================================
 
-// Prefer to use 'systemctl --user add-wants niri.service noctalia.service'
-// spawn-sh-at-startup "qs -c noctalia-shell"
+spawn-at-startup "qs" "-c" "noctalia-shell"
 
 hotkey-overlay {
   skip-at-startup
@@ -321,7 +320,7 @@ animations {
   // off
 
   // Slow down all animations by this factor. Values below 1 speed them up instead.
-  // slowdown 0.5
+  // slowdown 2.0
 }
 
 // =============================================================================
