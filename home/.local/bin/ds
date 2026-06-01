@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+case "$1" in
+	--help | -h | '')
+		cat <<- EOF
+			A program to run other programs in CWD in place of './program' (dot slash).
+
+			Usage: ds [FILE] [ARGS]
+		EOF
+		exit 0
+		;;
+esac
+
+file="$1"
+shift
+
+if [ ! -x "$file" ]; then
+	echo "'$file' is not an executable or does not exist."
+	exit 100
+fi
+
+./"$file" "$@"
+
+exit 0

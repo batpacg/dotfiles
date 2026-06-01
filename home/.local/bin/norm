@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+file="$1"
+newname="$(
+	echo "$file" |
+		tr '[:upper:]' '[:lower:]' |
+		tr ' ' '-' |
+		tr '(' '_' |
+		tr '[' '_' |
+		tr -d '\\' |
+		tr -d ')' |
+		tr -d ']' |
+		tr -d ',' |
+		sed 's/-_/_/g; s/_-/_/g'
+)"
+
+mv "$file" "$newname"

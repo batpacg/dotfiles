@@ -175,55 +175,6 @@ tfont() {
 	done
 }
 
-pac() {
-	local subcommand="$1"
-	local fzf="fzf --reverse --wrap"
-
-	shift
-	case "$subcommand" in
-		-*) sudo pacman "$subcommand" "$@" ;;
-		q | query) pacman -Ss "$@" ;;
-		fq | fquery)
-			pacman -Ss "$@" --color=always | paste - - | $fzf
-			;;
-		s | sync) sudo pacman -S "$@" ;;
-		fs | fsync)
-			local pkg
-			pkg="$(pacman -Ss "$@" --color=always | paste - - | $fzf)"
-			[ -z "$pkg" ] && return
-			pkg="${pkg#*/}"  # trim left
-			pkg="${pkg%% *}" # trim right
-			sudo pacman -S "$pkg"
-			;;
-		u | update) sudo pacman -Syyu ;;
-		r | remove) sudo pacman -Rs "$@" ;;
-		*)
-			local selected
-			selected="$(pacman -Qs | fzf)"
-			;;
-	esac
-}
-
-norm() {
-	local file="$1"
-
-	local newname
-	newname="$(
-		echo "$file" |
-			tr '[:upper:]' '[:lower:]' |
-			tr ' ' '-' |
-			tr '(' '_' |
-			tr '[' '_' |
-			tr -d '\\' |
-			tr -d ')' |
-			tr -d ']' |
-			tr -d ',' |
-			sed 's/-_/_/g; s/_-/_/g'
-	)"
-
-	mv "$file" "$newname"
-}
-
 fserv() {
 	systemctl list-units | grep .service | sed 's/ \{2,\}/\t/g' | cut -d $'\t' -f 2- | fzf
 }

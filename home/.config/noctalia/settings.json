@@ -68,11 +68,6 @@
         "widgets": {
             "center": [
                 {
-                    "icon": "rocket",
-                    "iconColor": "none",
-                    "id": "Launcher"
-                },
-                {
                     "characterCount": 4,
                     "colorizeIcons": false,
                     "emptyColor": "none",
@@ -552,7 +547,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/mrcapivaro/Pictures/Wallpapers",
+        "directory": "/home/batpacg/Sync/pictures/Wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
@@ -571,13 +566,13 @@
         "showHiddenFiles": false,
         "skipStartupTransition": false,
         "solidColor": "#1a1a2e",
-        "sortOrder": "name",
+        "sortOrder": "date_desc",
         "transitionDuration": 1500,
         "transitionEdgeSmoothness": 0.05,
         "transitionType": "random",
         "useSolidColor": false,
         "useWallhaven": false,
-        "viewMode": "single",
+        "viewMode": "recursive",
         "wallhavenApiKey": "",
         "wallhavenCategories": "111",
         "wallhavenOrder": "desc",

@@ -30,7 +30,7 @@ ytick.labelsize: 11
 ## Grid
 # Can lead to problems with routines that automatically turn this on.
 # axes.grid: True
-axes.axisbelow: True
+# axes.axisbelow: True
 grid.color: "#3c3836"
 grid.linewidth: 0.5
 
