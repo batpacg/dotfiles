@@ -99,10 +99,6 @@ fi
 alias ..="cd .."
 alias ....="cd ../.."
 
-alias ls="ls --color=auto -F1 --group-directories-first"
-alias la="ls --color=auto -FA1 --group-directories-first"
-alias ll="ls --color=auto -FAl1 --group-directories-first"
-
 alias clera="clear"
 alias clare="clear"
 alias claer="clear"
@@ -114,9 +110,26 @@ alias diff="colordiff -u"
 alias venvon="source ./.venv/bin/activate"
 
 alias ssh="TERM=xterm-256color ssh"
-alias ta="tmux new -s main -A"
-alias tks="tmux kill-server"
-alias tls="tmux list-sessions"
+
+if command -v tmux > /dev/null 2>&1; then
+	alias ta="tmux new -s main -A"
+	alias tks="tmux kill-server"
+	alias tls="tmux list-sessions"
+fi
+
+if command -v eza > /dev/null 2>&1; then
+	alias ls='eza -1 --icons=always --group-directories-first'
+	alias ll='eza -a -lg --no-time --icons=always --group-directories-first'
+else
+	alias ls="ls --color=auto -F1 --group-directories-first"
+	alias la="ls --color=auto -FA1 --group-directories-first"
+	alias ll="ls --color=auto -FAl1 --group-directories-first"
+fi
+
+# https://aria2.org/
+if command -v aria2c > /dev/null 2>&1; then
+	alias aria="aria2c -x 16 -s 16 --enable-dht=true --bt-enable-lpd=true"
+fi
 
 # Functions ====================================================================
 
@@ -185,37 +198,45 @@ fuserv() {
 
 # Prompt =======================================================================
 
-shopt -s checkwinsize
+# shopt -s checkwinsize
+#
+# _prompt_separator() {
+# 	[ -z "$COLUMNS" ] && return
+# 	local sepchar="—"
+# 	printf -v sepstring "%${COLUMNS}s" ""
+# 	echo -e "\e[37m${sepstring// /${sepchar}}\e[0m"
+# }
+#
+# # http://heyrod.com/snippets/how-to-right-align-bash-prompt.html
+# _prompt_pwd_exitcode_hr() {
+# 	local sepchar="—"
+# 	local dir="${1/"${HOME}"/\~} "
+# 	printf -v hr "%${COLUMNS}s" ""
+# 	hr="${hr// /${sepchar}}"
+# 	echo -en "$dir${hr:${#dir}}"
+# }
+#
+# PROMPT_COMMAND+=(echo)
+
+_prompt_exitcode() {
+	last=$?
+	[ $last -ne 0 ] && echo -en "\e[31m$last\e[0m"
+}
 
 GRAY='\[\e[37m\]'
 BOLD='\[\e[1m\]'
 RESET='\[\e[0m\]'
 
-_prompt_exitcode() {
-	last=$?
-	[ $last -eq 0 ] || echo -e "\e[31m$last\e[0m"
-}
-
-_prompt_separator() {
-	[ -z "$COLUMNS" ] && return
-	local sepchar="—"
-	printf -v sepstring "%${COLUMNS}s" ""
-	echo -e "\e[37m${sepstring// /${sepchar}}\e[0m"
-}
-
 PROMPT_DIRTRIM=4
-PROMPT_COMMAND+=(echo _prompt_separator)
-PS1="$GRAY$BOLD\w$RESET \$(_prompt_exitcode)\n$GRAY\$$RESET "
+PS1="${GRAY}${BOLD}\w${RESET} \$(_prompt_exitcode)\n${GRAY}»${RESET} "
+
 unset GREEN
 unset BOLD
 unset RESET
 
-# Plugins ======================================================================
-
-eval "$(fzf --bash)"
-eval "$(direnv hook bash)"
-eval "$(zoxide init bash)"
-command -v z > /dev/null 2>&1 && alias cd="z"
+# https://stackoverflow.com/questions/19609770/add-newline-after-output-of-every-bash-command
+PROMPT_COMMAND="export PROMPT_COMMAND=echo"
+alias clear="unset PROMPT_COMMAND; clear; PROMPT_COMMAND='export PROMPT_COMMAND=echo'"
 
 # Keybinds =====================================================================
 
@@ -227,3 +248,11 @@ yank_like_to_cb() {
 }
 
 bind -x '"\C-y": yank_like_to_cb'
+
+# Plugins ======================================================================
+
+eval "$(fzf --bash)"
+eval "$(direnv hook bash)"
+eval "$(zoxide init bash)"
+command -v z > /dev/null 2>&1 && alias cd="z"
+_ZO_DOCTOR=0

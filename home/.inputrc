@@ -16,3 +16,4 @@ set completion-ignore-case on
 set show-all-if-ambiguous on
 
 C-f: "yacd && clear\n"
+C-o: "nvim +'FzfLua files' && clear\n"

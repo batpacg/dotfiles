@@ -19,6 +19,12 @@ if [ ! -x "$file" ]; then
 	exit 100
 fi
 
+if [ -d "$file" ]; then
+	xdg-open "$file" &
+	disown
+	exit 0
+fi
+
 ./"$file" "$@"
 
 exit 0

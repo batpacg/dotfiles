@@ -27,6 +27,7 @@ yq
 colordiff
 tree
 zoxide
+eza
 direnv
 yazi
 htop
