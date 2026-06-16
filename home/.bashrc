@@ -25,8 +25,6 @@ export BROWSER=zen-browser
 export TERMINAL=kitty
 export TERMINAL_PROG=kitty
 
-export FZF_DEFAULT_OPTS="--reverse --ansi"
-
 export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
 
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
@@ -133,22 +131,6 @@ fi
 
 # Functions ====================================================================
 
-fe() {
-	local selected
-	selected="$(fd . "$@" --follow --hidden --type file | fzf --reverse)"
-	if [ -n "$selected" ]; then
-		$EDITOR "$selected"
-	fi
-}
-
-fcd() {
-	local selected
-	selected="$(
-		fd . "$@" --follow --hidden --type dir --exclude ".git" | fzf --reverse
-	)"
-	[ -n "$selected" ] && cd "$selected" || return
-}
-
 yacd() {
 	local tmp cwd
 	tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -186,6 +168,30 @@ tfont() {
 			echo
 		fi
 	done
+}
+
+export FZF_DEFAULT_OPTS="--reverse --ansi --prompt='» '"
+
+fe() {
+	local selected
+	selected="$(fd . "$@" --follow --hidden --type file | fzf --reverse)"
+	if [ -n "$selected" ]; then
+		$EDITOR "$selected"
+	fi
+}
+
+fcd() {
+	local selected
+	selected="$(
+		fd . "$@" --follow --hidden --type dir --exclude ".git" | fzf --reverse
+	)"
+	[ -n "$selected" ] && cd "$selected" || return
+}
+
+fkill() {
+	local pid
+	pid="$(ps -e | fzf --accept-nth=1)"
+	[ -n "$pid" ] && kill "$pid"
 }
 
 fserv() {
