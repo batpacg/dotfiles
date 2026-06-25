@@ -255,6 +255,11 @@ yank_like_to_cb() {
 
 bind -x '"\C-y": yank_like_to_cb'
 
+# bind "set keyseq-timeout 5"
+# bind '"\e":   "yacd; clear\n"'
+bind '"\C-f": "yacd; clear\n"'
+bind '"\C-o": "nvim +Yazi; clear\n"'
+
 # Plugins ======================================================================
 
 eval "$(fzf --bash)"

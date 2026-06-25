@@ -116,7 +116,7 @@ input {
 // https://yalter.github.io/niri/Configuration:-Layout
 
 layout {
-  gaps 0
+  gaps 5
   center-focused-column "always"
   default-column-display "tabbed"
   default-column-width { proportion 0.33333; }
@@ -128,14 +128,12 @@ layout {
 
   focus-ring {
     off
-
     active-color "#665c54"
     inactive-color "#3c3836"
   }
 
   border {
     on
-    // off
     width 2
     active-color "#7c6f64"
     inactive-color "#3c3836"
@@ -143,13 +141,13 @@ layout {
   }
 
   tab-indicator {
-    on
+    off
     hide-when-single-tab
-    // place-within-column
+    place-within-column
     gap 0
     width 10
     length total-proportion=1.0
-    position "right"
+    position "bottom"
     gaps-between-tabs 0
     corner-radius 0
     active-color "#7c6f64"
@@ -158,7 +156,6 @@ layout {
   }
 
   shadow {
-    // on
     off
     softness 30
     spread 5
@@ -187,9 +184,10 @@ animations {
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 
 window-rule {
-  match app-id=r#"^steam_app_default$"#
+  match app-id=r#"^com.hypixel.HytaleLauncher$"#
+  match app-id=r#"PrismLauncher"#
+  match title=r#"Schematic Editor$"#
   open-floating false
-  default-column-width { proportion 0.6667; }
 }
 
 window-rule {
@@ -199,15 +197,14 @@ window-rule {
 }
 
 window-rule {
-  match app-id=r#"^com.hypixel.HytaleLauncher$"#
-  match app-id=r#"^HytaleClient$"#
+  match app-id=r#"^steam_app_default$"#
   open-floating false
-  default-column-width { proportion 0.6667; }
+  default-column-width { proportion 0.66667; }
 }
 
 window-rule {
-  match app-id=r#"PrismLauncher"#
-  open-floating false
+  match app-id=r#"^HytaleClient$"#
+  default-column-width { proportion 0.66667; }
 }
 
 // Keybinds ====================================================================

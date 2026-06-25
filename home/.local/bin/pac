@@ -13,7 +13,6 @@ case "$subcommand" in
 		;;
 	s | sync) sudo pacman -S "$@" ;;
 	fs | fsync)
-		pkg
 		pkg="$(pacman -Ss "$@" --color=always | paste - - | $fzf)"
 		[ -z "$pkg" ] && return
 		pkg="${pkg#*/}"  # trim left

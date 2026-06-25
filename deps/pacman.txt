@@ -63,6 +63,7 @@ feh
 pipewire-alsa
 pipewire-pulse
 pipewire-jack
+noise-suppression-for-voice
 
 kitty
 neovide
@@ -78,7 +79,7 @@ cups
 cups-pdf
 zathura
 zathura-djvu
-zathura-pdf-poppler
+zathura-pdf-mupdf
 typst
 libreoffice
 

@@ -47,6 +47,7 @@ add {
   "rebelot/heirline.nvim",
   event = "UIEnter",
   config = function()
+    local heirline = require "heirline"
     local conditions = require "heirline.conditions"
     -- local utils = require "heirline.utils"
 
@@ -102,7 +103,7 @@ add {
         if maybe_cwd == cwd then
           self.filename = filename:sub(#cwd + 2, #filename)
         else
-          self.filename = filename
+          self.filename = filename:gsub(vim.fn.getenv "HOME", "~")
         end
       end,
 
@@ -177,8 +178,14 @@ add {
       },
     }
 
-    require("heirline").setup {
+    local colors = require "colors"
+    heirline.setup {
+      ---@diagnostic disable-next-line: missing-fields
       statusline = {
+        hl = {
+          bg = colors.gruvbox.dark0_hard,
+          bold = true,
+        },
         { provider = " " },
         FileNameComponent,
         FileStatusComponent,
@@ -187,6 +194,9 @@ add {
         { provider = "%=" },
         PositionComponent,
       },
+      -- winbar = {
+      --   heirline.winbar.
+      -- },
     }
   end,
 }
@@ -296,8 +306,8 @@ add {
   dependencies = { { "nvim-lua/plenary.nvim", lazy = true } },
   keys = { { mode = { "n", "v" }, "<Leader>e", "<cmd>Yazi<CR>" } },
   opts = {
-    yazi_floating_window_border = "single",
-    floating_window_scaling_factor = 0.8,
+    yazi_floating_window_border = "none",
+    floating_window_scaling_factor = 1.0,
     keymaps = { change_working_directory = "<C-.>" },
     highlight_groups = {
       hovered_buffer = {},
