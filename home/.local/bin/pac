@@ -2,26 +2,30 @@
 
 fzf="fzf --reverse --wrap"
 
-subcommand="$1"
-shift
+main() {
+	local subcommand="$1"
+	shift
+	case "$subcommand" in
+		-*) sudo pacman "$subcommand" "$@" ;;
+		q | query) pacman -Ss "$@" ;;
+		fq | fquery)
+			pacman -Ss "$@" --color=always | paste - - | $fzf
+			;;
+		s | sync) sudo pacman -S "$@" ;;
+		fs | fsync)
+			local pkg
+			pkg="$(pacman -Ss "$@" --color=always | paste - - | $fzf)"
+			[ -z "$pkg" ] && return
+			pkg="${pkg#*/}"  # trim left
+			pkg="${pkg%% *}" # trim right
+			sudo pacman -S "$pkg"
+			;;
+		u | update) sudo pacman -Syyu ;;
+		r | remove) sudo pacman -Rs "$@" ;;
+		*) exit 1 ;;
+	esac
+}
 
-case "$subcommand" in
-	-*) sudo pacman "$subcommand" "$@" ;;
-	q | query) pacman -Ss "$@" ;;
-	fq | fquery)
-		pacman -Ss "$@" --color=always | paste - - | $fzf
-		;;
-	s | sync) sudo pacman -S "$@" ;;
-	fs | fsync)
-		pkg="$(pacman -Ss "$@" --color=always | paste - - | $fzf)"
-		[ -z "$pkg" ] && return
-		pkg="${pkg#*/}"  # trim left
-		pkg="${pkg%% *}" # trim right
-		sudo pacman -S "$pkg"
-		;;
-	u | update) sudo pacman -Syyu ;;
-	r | remove) sudo pacman -Rs "$@" ;;
-	*) exit 1 ;;
-esac
+main "$@"
 
 exit 0

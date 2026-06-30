@@ -47,17 +47,13 @@ add {
   "rebelot/heirline.nvim",
   event = "UIEnter",
   config = function()
+    -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md
     local heirline = require "heirline"
     local conditions = require "heirline.conditions"
     -- local utils = require "heirline.utils"
 
     local PositionComponent = {
       provider = "(" .. "%3l,%2c" .. ")",
-      { -- Separator
-        provider = function()
-          return " "
-        end,
-      },
     }
 
     local CwdComponent = {
@@ -78,17 +74,12 @@ add {
               )
         end
       end,
-      condition = function()
-        return not vim.bo.readonly
-      end,
+      -- condition = function()
+      --   return not vim.bo.readonly
+      -- end,
       provider = function(self)
-        return "@ " .. self.cwd
+        return self.cwd
       end,
-      { -- Separator
-        provider = function()
-          return " "
-        end,
-      },
     }
 
     local FileNameComponent = {
@@ -113,12 +104,6 @@ add {
         end
         return self.filename
       end,
-
-      { -- Separator
-        provider = function()
-          return " "
-        end,
-      },
     }
 
     local FileStatusComponent = {
@@ -135,11 +120,6 @@ add {
 
         return "[-]"
       end,
-      { -- Separator
-        provider = function()
-          return " "
-        end,
-      },
     }
 
     local GitComponent = {
@@ -152,7 +132,7 @@ add {
 
       { -- Git Repo Name
         provider = function(self)
-          return "> " .. self.statusdict.head
+          return " " .. self.statusdict.head
         end,
       },
 
@@ -171,10 +151,9 @@ add {
               .. ")"
         end,
       },
-      { -- Separator
-        provider = function()
-          return " "
-        end,
+
+      {
+        provider = " < ",
       },
     }
 
@@ -187,16 +166,39 @@ add {
           bold = true,
         },
         { provider = " " },
-        FileNameComponent,
-        FileStatusComponent,
-        CwdComponent,
-        GitComponent,
-        { provider = "%=" },
         PositionComponent,
+        { provider = "%=" },
+        GitComponent,
+        CwdComponent,
+        { provider = " " },
       },
-      -- winbar = {
-      --   heirline.winbar.
-      -- },
+      ---@diagnostic disable-next-line: missing-fields
+      winbar = {
+        hl = {
+          bg = colors.gruvbox.dark0_hard,
+          bold = true,
+        },
+        { provider = " " },
+        FileNameComponent,
+        { provider = " " },
+        FileStatusComponent,
+        { provider = "%=" },
+      },
+      opts = {
+        disable_winbar_cb = function(args)
+          return conditions.buffer_matches({
+            buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
+            filetype = {
+              "^git.*",
+              "fugitive",
+              "Trouble",
+              "dashboard",
+              "yazi",
+              "fzf",
+            },
+          }, args.buf)
+        end,
+      },
     }
   end,
 }

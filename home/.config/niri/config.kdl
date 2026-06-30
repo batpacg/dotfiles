@@ -184,9 +184,15 @@ animations {
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 
 window-rule {
+  match title=r#" - Schematic Editor$"#
+  match title=r#" - AC Bode[0-9]*$"#
+  open-floating false
+  default-column-width { proportion 0.33333; }
+}
+
+window-rule {
   match app-id=r#"^com.hypixel.HytaleLauncher$"#
   match app-id=r#"PrismLauncher"#
-  match title=r#"Schematic Editor$"#
   open-floating false
 }
 
@@ -205,6 +211,12 @@ window-rule {
 window-rule {
   match app-id=r#"^HytaleClient$"#
   default-column-width { proportion 0.66667; }
+}
+
+window-rule {
+  match app-id=r#"^barony.x86_64$"#
+  open-fullscreen true
+  open-maximized true
 }
 
 // Keybinds ====================================================================
