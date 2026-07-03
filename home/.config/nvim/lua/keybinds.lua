@@ -19,29 +19,27 @@ vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
 
-function toggle_terminal()
-  for i, buffer in ipairs(vim.api.nvim_list_bufs()) do
-    local buffer_name = vim.api.nvim_buf_get_name(buffer)
-    if string.sub(buffer_name, 1, 7) == "term://" then
-      -- if not vim.fn.getbufinfo(buffer).windows then
-      --   return
-      -- end
-      vim.api.nvim_open_win(buffer, true, { split = "below" })
+local function toggleterm()
+  -- Terminal already exists.
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_name(bufnr):find(vim.o.shell) then
+      vim.api.nvim_open_win(bufnr, true, { split = "below" })
       vim.api.nvim_feedkeys("i", "n", false)
       return
     end
   end
+  -- Terminal does not exist yet.
   vim.api.nvim_command ":split | terminal"
+  vim.bo.buflisted = false
   vim.api.nvim_feedkeys("i", "n", false)
 end
 
-vim.keymap.set({ "n" }, "<C-j>", toggle_terminal)
+vim.keymap.set({ "n" }, "<C-j>", toggleterm)
 vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
 
 vim.keymap.set({ "x" }, "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set({ "x" }, "K", ":m '<-2<CR>gv=gv")
 
--- Automatically center the screen when possible.
 vim.keymap.set({ "n" }, "n", "nzz")
 vim.keymap.set({ "n" }, "N", "Nzz")
 
@@ -100,7 +98,7 @@ local smart_bd = function(args)
   end
   local cbuf = vim.api.nvim_get_current_buf()
   local ft =
-    vim.api.nvim_get_option_value("filetype", { scope = "local", buf = cbuf })
+      vim.api.nvim_get_option_value("filetype", { scope = "local", buf = cbuf })
 
   -- Decide close command
   local close_cmd = args.force and "bd!" or "bd"
@@ -152,6 +150,10 @@ vim.keymap.set({ "v", "x" }, "s ", "c" .. "  " .. "<Esc>P")
 vim.keymap.set({ "v", "x" }, "s*", "c" .. "**" .. "<Esc>P")
 
 vim.keymap.set({ "v", "x" }, "s_", "c" .. "__" .. "<Esc>P")
+
+vim.keymap.set({ "v", "x" }, "s$", "c" .. "$$" .. "<Esc>P")
+
+vim.keymap.set({ "v", "x" }, "s!", "c" .. "!!" .. "<Esc>P")
 
 -- Toggle ======================================================================
 

@@ -28,9 +28,12 @@ vim.opt.rtp:prepend(lazypath)
 vim.keymap.set("n", "<Leader>ip", ":Lazy<CR>")
 
 local plugin_list = {}
+
 local add = function(args)
   table.insert(plugin_list, args)
 end
+
+add { "nvim-mini/mini.splitjoin", version = "*", opts = {} }
 
 add {
   "zenbones-theme/zenbones.nvim",
@@ -53,7 +56,7 @@ add {
     -- local utils = require "heirline.utils"
 
     local PositionComponent = {
-      provider = "(" .. "%3l,%2c" .. ")",
+      provider = "%l:%c",
     }
 
     local CwdComponent = {
@@ -153,18 +156,17 @@ add {
       },
 
       {
-        provider = " < ",
+        provider = " | ",
       },
     }
 
     local colors = require "colors"
+    local bg = colors.gruvbox.light3
+    local fg = colors.gruvbox.dark0
     heirline.setup {
       ---@diagnostic disable-next-line: missing-fields
       statusline = {
-        hl = {
-          bg = colors.gruvbox.dark0_hard,
-          bold = true,
-        },
+        hl = { bg = bg, fg = fg, bold = true },
         { provider = " " },
         PositionComponent,
         { provider = "%=" },
@@ -174,10 +176,7 @@ add {
       },
       ---@diagnostic disable-next-line: missing-fields
       winbar = {
-        hl = {
-          bg = colors.gruvbox.dark0_hard,
-          bold = true,
-        },
+        hl = { bg = bg, fg = fg, bold = true },
         { provider = " " },
         FileNameComponent,
         { provider = " " },
@@ -230,7 +229,7 @@ add {
 add {
   "folke/which-key.nvim",
   event = "VeryLazy",
-  opts = {},
+  opts = { preset = "helix", win = { border = "single" }, delay = 1000 },
   keys = {
     {
       "<leader>?",

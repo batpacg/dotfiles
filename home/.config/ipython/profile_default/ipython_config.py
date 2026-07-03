@@ -10,6 +10,7 @@ config.TerminalIPythonApp.exec_PYTHONSTARTUP = False
 config.TerminalIPythonApp.display_banner = False
 
 config.InteractiveShellApp.exec_lines = [
+    "import math as m",
     "import numpy as np",
     "import matplotlib.pyplot as plt",
     "import scipy as sc",

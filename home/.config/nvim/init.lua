@@ -6,7 +6,6 @@ require "settings"
 require "keybinds"
 require "autocommands"
 require "plugins"
-
 require "kitty"
 
 if vim.g.neovide then

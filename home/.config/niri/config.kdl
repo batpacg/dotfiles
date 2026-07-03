@@ -245,6 +245,7 @@ binds {
   Mod+E hotkey-overlay-title="Open a File Explorer" { spawn "nautilus"; }
   Mod+S hotkey-overlay-title="Open a Browser" { spawn "zen-browser"; }
   Mod+A hotkey-overlay-title="Open a Terminal" { spawn "kitty"; }
+  Mod+D hotkey-overlay-title="Open a Quick Terminal" { spawn-sh "kitten quick-access-terminal"; }
 
   Mod+O repeat=false { toggle-overview; }
   Mod+C repeat=false { close-window; }
