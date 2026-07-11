@@ -16,7 +16,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
+      { out, "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -50,155 +50,7 @@ add {
   "rebelot/heirline.nvim",
   event = "UIEnter",
   config = function()
-    -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md
-    local heirline = require "heirline"
-    local conditions = require "heirline.conditions"
-    -- local utils = require "heirline.utils"
-
-    local PositionComponent = {
-      provider = "%l:%c",
-    }
-
-    local CwdComponent = {
-      init = function(self)
-        self.cwd = vim.fn.getcwd()
-        self.cwd = self.cwd:gsub(vim.fn.getenv "HOME", "~")
-
-        self.dirs = vim.split(self.cwd, "/")
-        self.dirs_max = 3
-        if #self.dirs >= 7 then
-          self.cwd = self.dirs[1]
-              .. "/.../"
-              .. table.concat(
-                self.dirs,
-                "/",
-                #self.dirs - self.dirs_max + 1,
-                #self.dirs
-              )
-        end
-      end,
-      -- condition = function()
-      --   return not vim.bo.readonly
-      -- end,
-      provider = function(self)
-        return self.cwd
-      end,
-    }
-
-    local FileNameComponent = {
-      init = function(self)
-        local cwd = vim.fn.getcwd()
-        local filename = vim.api.nvim_buf_get_name(0)
-        if string.sub(filename, 1, 4) == "term" then
-          self.filename = "term"
-          return
-        end
-        local maybe_cwd = filename:sub(1, #cwd)
-        if maybe_cwd == cwd then
-          self.filename = filename:sub(#cwd + 2, #filename)
-        else
-          self.filename = filename:gsub(vim.fn.getenv "HOME", "~")
-        end
-      end,
-
-      provider = function(self)
-        if self.filename == "" then
-          return "[No Name]"
-        end
-        return self.filename
-      end,
-    }
-
-    local FileStatusComponent = {
-      init = function(self)
-        self.modified = vim.bo.modified
-        self.readonly = vim.bo.readonly
-      end,
-      provider = function(self)
-        if self.readonly then
-          return "[R]"
-        elseif self.modified then
-          return "[+]"
-        end
-
-        return "[-]"
-      end,
-    }
-
-    local GitComponent = {
-      condition = conditions.is_git_repo,
-
-      init = function(self)
-        self.statusdict = vim.b.gitsigns_status_dict
-        self.has_changes = self.statusdict ~= 0 or self.statusdict.removed
-      end,
-
-      { -- Git Repo Name
-        provider = function(self)
-          return " " .. self.statusdict.head
-        end,
-      },
-
-      { -- Git Diff
-        condition = function(self)
-          return self.has_changes
-        end,
-        provider = function(self)
-          return "("
-              .. "+"
-              .. (self.statusdict.added or 0)
-              .. "-"
-              .. (self.statusdict.removed or 0)
-              .. "~"
-              .. (self.statusdict.changed or 0)
-              .. ")"
-        end,
-      },
-
-      {
-        provider = " | ",
-      },
-    }
-
-    local colors = require "colors"
-    local bg = colors.gruvbox.light3
-    local fg = colors.gruvbox.dark0
-    heirline.setup {
-      ---@diagnostic disable-next-line: missing-fields
-      statusline = {
-        hl = { bg = bg, fg = fg, bold = true },
-        { provider = " " },
-        PositionComponent,
-        { provider = "%=" },
-        GitComponent,
-        CwdComponent,
-        { provider = " " },
-      },
-      ---@diagnostic disable-next-line: missing-fields
-      winbar = {
-        hl = { bg = bg, fg = fg, bold = true },
-        { provider = " " },
-        FileNameComponent,
-        { provider = " " },
-        FileStatusComponent,
-        { provider = "%=" },
-      },
-      opts = {
-        disable_winbar_cb = function(args)
-          return conditions.buffer_matches({
-            buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-            filetype = {
-              "^git.*",
-              "fugitive",
-              "Trouble",
-              "dashboard",
-              "yazi",
-              "fzf",
-            },
-          }, args.buf)
-        end,
-      },
-    }
+    require "config.heirline"
   end,
 }
 
@@ -307,87 +159,14 @@ add {
   dependencies = { { "nvim-lua/plenary.nvim", lazy = true } },
   keys = { { mode = { "n", "v" }, "<Leader>e", "<cmd>Yazi<CR>" } },
   opts = {
-    yazi_floating_window_border = "none",
-    floating_window_scaling_factor = 1.0,
+    yazi_floating_window_border = "single",
+    floating_window_scaling_factor = 0.85,
     keymaps = { change_working_directory = "<C-.>" },
     highlight_groups = {
       hovered_buffer = {},
       hovered_buffer_in_same_directory = {},
     },
   },
-}
-
-add {
-  "Vigemus/iron.nvim",
-  keys = {
-    {
-      mode = { "n" },
-      "<Leader>is",
-      function()
-        require("iron.core").send_file()
-      end,
-    },
-    {
-      mode = { "v" },
-      "<Leader>is",
-      function()
-        require("iron.core").visual_send()
-      end,
-    },
-    {
-      mode = { "n" },
-      "<Leader>ii",
-      ":IronFocus<CR>",
-    },
-    {
-      mode = { "n" },
-      "<Leader>ir",
-      ":IronRestart<CR>",
-    },
-    {
-      mode = { "n" },
-      "<Leader>il",
-      function()
-        require("iron.core").send_line()
-      end,
-    },
-    {
-      mode = { "n" },
-      "<Leader>ic",
-      function()
-        require("iron.core").send(nil, string.char(12))
-      end,
-    },
-    {
-      mode = { "n" },
-      "<Leader>iC",
-      function()
-        require("iron.core").send(nil, string.char(03))
-      end,
-    },
-    {
-      mode = { "n" },
-      "<Leader>i<CR>",
-      function()
-        require("iron.core").send(nil, string.char(13))
-      end,
-    },
-  },
-  config = function()
-    local view = require "iron.view"
-    require("iron").setup {
-      config = {
-        repl_open_cmd = view.split "30%",
-        repl_definition = {
-          python = {
-            command = { "ipython", "--no-autoindent" },
-            format = require("iron.fts.common").bracketed_paste,
-            block_dividers = { "#%%", "# %%" },
-          },
-        },
-      },
-    }
-  end,
 }
 
 -- https://github.com/amitds1997/remote-nvim.nvim
@@ -413,8 +192,13 @@ add {
     {
       "s.",
       function()
-        -- require("fzf-lua").files { cwd = "~/.config" }
         require("fzf-lua").files { cwd = "~/Projects/dotfiles/home" }
+      end,
+    },
+    {
+      "sl",
+      function()
+        require("fzf-lua").files { cwd = "~/.local/share/nvim" }
       end,
     },
   },
@@ -517,73 +301,6 @@ add {
 add {
   "lewis6991/gitsigns.nvim",
   opts = {},
-}
-
-add {
-  "stevearc/overseer.nvim",
-  cmd = { "OverseerRun" },
-  keys = {
-    { "<Leader>r",     ":OverseerReRun<CR>" },
-    { "<CR>",          ":OverseerReRun<CR>" },
-    { "<Leader><S-r>", ":OverseerToggle!<CR>" },
-    { "<Leader><C-r>", ":OverseerTaskAction<CR>" },
-  },
-  opts = {
-    actions = {
-      ["open tab"] = false,
-      ["open float"] = false,
-      ["open hsplit"] = false,
-      ["open vsplit"] = false,
-      ["open output in quickfix"] = false,
-    },
-    component_aliases = {
-      default = {
-        "open_output",
-        "on_exit_set_status",
-        "on_complete_notify",
-        {
-          "on_complete_dispose",
-          require_view = { "SUCCESS", "FAILURE" },
-        },
-      },
-    },
-    task_list = {
-      direction = "bottom",
-      min_width = 1,
-      max_width = 15,
-      render = function(task)
-        return require("overseer.render").format_compact(task)
-      end,
-      keymaps = {
-        ["<C-l>"] = false,
-        ["<C-h>"] = false,
-        ["<C-j>"] = false,
-        ["<C-k>"] = false,
-      },
-    },
-    form = { border = "single" },
-    confirm = { border = "single" },
-    task_win = { border = "single" },
-    help_win = { border = "single" },
-  },
-  config = function(_, opts)
-    local overseer = require "overseer"
-
-    overseer.setup(opts)
-
-    -- New command to run last task or to start a new task if there is no
-    -- task to be restarted.
-    vim.api.nvim_create_user_command("OverseerReRun", function()
-      local tasks = overseer.list_tasks()
-      -- local buf = vim.api.nvim_win_get_buf(0)
-      if vim.tbl_isempty(tasks) then
-        vim.cmd "OverseerRun"
-      else
-        vim.fn.execute "write"
-        overseer.run_action(tasks[1], "restart")
-      end
-    end, {})
-  end,
 }
 
 add {
@@ -725,17 +442,18 @@ add {
     "nvimtools/none-ls.nvim",
   },
   config = function()
-    require "lsp"
+    require "config.lsp"
   end,
 }
 
 add {
   "HakonHarnes/img-clip.nvim",
   event = "VeryLazy",
+  ft = { "markdown", "text", "typst", "latex", "asciidoc", "lsp_markdown" },
   opts = { dir_path = "assets/attachments" },
   keys = {
     {
-      "<LocalLeaderr>p",
+      "<LocalLeader>p",
       "<cmd>PasteImage<cr>",
       desc = "Paste image from system clipboard",
     },

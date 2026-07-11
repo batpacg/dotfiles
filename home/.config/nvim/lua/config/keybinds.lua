@@ -9,33 +9,15 @@ vim.opt.ttimeoutlen = 100
 
 -- QoL =========================================================================
 
-vim.keymap.set({ "n" }, "<Leader>q", ":quitall!<CR>")
+vim.keymap.set({ "n" }, "<C-q>", ":quitall!<CR>")
 vim.keymap.set({ "n", "v", "i" }, "<Esc>", "<CMD>noh<CR><Esc>")
 vim.keymap.set({ "t" }, "<Esc>", "<C-\\><C-n>")
 vim.keymap.set({ "n", "x" }, "x", "<Nop>")
 vim.keymap.set({ "n", "x" }, "s", "<Nop>")
--- vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
+vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
 vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
-
-local function toggleterm()
-  -- Terminal already exists.
-  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_get_name(bufnr):find(vim.o.shell) then
-      vim.api.nvim_open_win(bufnr, true, { split = "below" })
-      vim.api.nvim_feedkeys("i", "n", false)
-      return
-    end
-  end
-  -- Terminal does not exist yet.
-  vim.api.nvim_command ":split | terminal"
-  vim.bo.buflisted = false
-  vim.api.nvim_feedkeys("i", "n", false)
-end
-
-vim.keymap.set({ "n" }, "<C-j>", toggleterm)
-vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
 
 vim.keymap.set({ "x" }, "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set({ "x" }, "K", ":m '<-2<CR>gv=gv")
@@ -43,15 +25,42 @@ vim.keymap.set({ "x" }, "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set({ "n" }, "n", "nzz")
 vim.keymap.set({ "n" }, "N", "Nzz")
 
+-- Terminal ====================================================================
+
+-- local function toggleterm()
+--   -- Terminal already exists.
+--   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+--     if vim.api.nvim_buf_get_name(bufnr):find(vim.o.shell) then
+--       vim.api.nvim_open_win(bufnr, true, { split = "below" })
+--       vim.api.nvim_feedkeys("i", "n", false)
+--       return
+--     end
+--   end
+--   -- Terminal does not exist yet.
+--   vim.api.nvim_command ":split | terminal"
+--   vim.bo.buflisted = false
+--   vim.api.nvim_feedkeys("i", "n", false)
+-- end
+--
+-- vim.keymap.set({ "n" }, "<C-j>", toggleterm)
+-- vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
+
+-- Quickfix ====================================================================
+
+vim.keymap.set({ "n" }, "<Leader>qo", "<CMD>copen<CR>")
+vim.keymap.set({ "n" }, "<Leader>qc", "<CMD>cclose<CR>")
+vim.keymap.set({ "n" }, "<Leader>qn", "<CMD>cnext<CR>")
+vim.keymap.set({ "n" }, "<Leader>qp", "<CMD>cprevious<CR>")
+
 -- Marks =======================================================================
 
-vim.keymap.set({ "n" }, "m", "`")
-vim.keymap.set({ "n" }, "M", "m")
+-- vim.keymap.set({ "n" }, "m", "`")
+-- vim.keymap.set({ "n" }, "M", "m")
 
 -- Macros ======================================================================
 
-vim.keymap.set({ "n" }, "q", "@")
-vim.keymap.set({ "n" }, "<C-q>", "q")
+-- vim.keymap.set({ "n" }, "q", "@")
+-- vim.keymap.set({ "n" }, "<S-q>", "q")
 
 -- Windows =====================================================================
 
@@ -118,12 +127,11 @@ local smart_bd = function(args)
   end
 end
 
+vim.keymap.set({ "n" }, "<C-s>", ":silent w<CR>", { silent = true })
 vim.keymap.set({ "n" }, "<Leader><Leader>", ":b#<CR>")
 vim.keymap.set({ "n" }, "<Leader>d", function()
   smart_bd { force = true }
 end)
-vim.keymap.set({ "n" }, "<Leader>s", ":silent w<CR>", { silent = true })
-vim.keymap.set({ "n" }, "<Leader><C-s>", ":write ++p<CR>")
 vim.keymap.set({ "n" }, "<S-h>", ":bp<CR>")
 vim.keymap.set({ "n" }, "<S-l>", ":bn<CR>")
 
@@ -175,7 +183,6 @@ vim.keymap.set({ "n" }, "<Leader>tn", function()
 end)
 
 vim.keymap.set({ "n" }, "<Leader>ts", function()
-  -- scl
   if vim.o.signcolumn == "yes" then
     vim.cmd "setlocal signcolumn=no"
   else

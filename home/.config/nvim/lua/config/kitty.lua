@@ -55,16 +55,3 @@ vim.keymap.set({ "n" }, "<M-j>", function() SmartNavigate "j" end)
 vim.keymap.set({ "n" }, "<M-k>", function() SmartNavigate "k" end)
 vim.keymap.set({ "n" }, "<M-l>", function() SmartNavigate "l" end)
 -- stylua: ignore end
-
--- add {
---   "knubie/vim-kitty-navigator",
---   init = function()
---     vim.g.kitty_navigator_no_mappings = 1
---   end,
---   keys = {
---     { "<M-h>", ":KittyNavigateLeft<CR>",  silent = true },
---     { "<M-j>", ":KittyNavigateDown<CR>",  silent = true },
---     { "<M-k>", ":KittyNavigateUp<CR>",    silent = true },
---     { "<M-l>", ":KittyNavigateRight<CR>", silent = true },
---   },
--- }

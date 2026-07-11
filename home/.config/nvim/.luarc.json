@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "diagnostics": {
+    "disable": [
+      "unused-function",
+      "unused-argument",
+      "unused-local",
+    ]
+  },
+  "runtime": {
+    "version": "LuaJIT",
+    "pathStrict": true
+  }
+}

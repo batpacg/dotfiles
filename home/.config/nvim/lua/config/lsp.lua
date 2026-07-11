@@ -35,7 +35,6 @@ LspConfig.servers = {
   ["bashls"] = {},
   ["ts_ls"] = {},
   ["tombi"] = {},
-  ["tinymist"] = {},
 }
 
 local NoneLS = {}
