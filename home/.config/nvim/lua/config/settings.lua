@@ -91,6 +91,12 @@ vim.opt.clipboard:append("unnamedplus")
 vim.opt.iskeyword:append("-")
 vim.opt.path:append("**")
 
+-- Disable "Press Enter to continue..."
+require("vim._core.ui2").enable {
+  enable = true,
+  msg = { targets = "cmd", cmd = { height = 0.5 } },
+}
+
 -- Splits ----------------------------------------------------------------------
 
 vim.opt.splitbelow = true

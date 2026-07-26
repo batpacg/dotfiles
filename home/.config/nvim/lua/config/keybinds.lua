@@ -9,13 +9,14 @@ vim.opt.ttimeoutlen = 100
 
 -- QoL =========================================================================
 
+vim.keymap.set({ "n", "x", "v" }, "<C-p>", ":")
 vim.keymap.set({ "n" }, "<C-q>", ":quitall!<CR>")
 vim.keymap.set({ "n", "v", "i" }, "<Esc>", "<CMD>noh<CR><Esc>")
 vim.keymap.set({ "t" }, "<Esc>", "<C-\\><C-n>")
 vim.keymap.set({ "n", "x" }, "x", "<Nop>")
 vim.keymap.set({ "n", "x" }, "s", "<Nop>")
 vim.keymap.set({ "n" }, "<Leader>e", ":Ex<CR>")
-vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>make<CR>")
+vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>messages<CR>")
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
 
@@ -27,23 +28,23 @@ vim.keymap.set({ "n" }, "N", "Nzz")
 
 -- Terminal ====================================================================
 
--- local function toggleterm()
---   -- Terminal already exists.
---   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
---     if vim.api.nvim_buf_get_name(bufnr):find(vim.o.shell) then
---       vim.api.nvim_open_win(bufnr, true, { split = "below" })
---       vim.api.nvim_feedkeys("i", "n", false)
---       return
---     end
---   end
---   -- Terminal does not exist yet.
---   vim.api.nvim_command ":split | terminal"
---   vim.bo.buflisted = false
---   vim.api.nvim_feedkeys("i", "n", false)
--- end
---
--- vim.keymap.set({ "n" }, "<C-j>", toggleterm)
--- vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
+local function toggleterm()
+  -- Terminal already exists.
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_name(bufnr):find(vim.o.shell) then
+      vim.api.nvim_open_win(bufnr, true, { split = "below" })
+      vim.api.nvim_feedkeys("i", "n", false)
+      return
+    end
+  end
+  -- Terminal does not exist yet.
+  vim.api.nvim_command ":split | terminal"
+  vim.bo.buflisted = false
+  vim.api.nvim_feedkeys("i", "n", false)
+end
+
+vim.keymap.set({ "n" }, "<C-j>", toggleterm)
+vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
 
 -- Quickfix ====================================================================
 

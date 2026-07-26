@@ -306,6 +306,9 @@ binds {
   Mod+Q {
     spawn-sh "sed -i --follow-symlinks 's/center-focused-column \"never\"/center-focused-column \"always\"/; t; s/center-focused-column \"always\"/center-focused-column \"never\"/' ~/.config/niri/config.kdl"
   }
+  Mod+Shift+Q {
+    spawn-sh "kill -9 `niri msg pick-window | grep PID | awk '{print $2}'`"
+  }
   Mod+Semicolon hotkey-overlay-title="center column" { center-column; }
 
   Mod+Ctrl+C { center-visible-columns; }

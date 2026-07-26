@@ -21,6 +21,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export EDITOR=nvim
 export VISUAL=neovide
 export PAGER="less -R"
+export PSQL_PAGER="less -R"
 export BROWSER=zen-browser
 export TERMINAL=kitty
 export TERMINAL_PROG=kitty

@@ -7,8 +7,8 @@
 
 local heirline = require "heirline"
 local conditions = require "heirline.conditions"
-local colors = require "colors"
 
+local colors = require "colors"
 local bg = colors.gruvbox.light3
 local fg = colors.gruvbox.dark0
 
@@ -158,6 +158,40 @@ local GitBranch = {
   end,
 }
 
+-- Buffers ---------------------------------------------------------------------
+
+local Buffers = {
+  init = function(self)
+    self.buffers = {}
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if
+          vim.api.nvim_buf_is_loaded(buf)
+          and vim.api.nvim_buf_get_option(buf, "bufhidden") == ""
+          and (vim.api.nvim_buf_get_option(buf, "buftype") ~= "help")
+      then
+        table.insert(self.buffers, buf)
+      end
+    end
+  end,
+  provider = function(self)
+    return "[bufs|" .. table.concat(self.buffers, ":") .. "]"
+  end,
+}
+
+-- Tabs ---------------------------------------------------------------------
+
+local Tabs = {
+  init = function(self)
+    self.tabs = {}
+    for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+      table.insert(self.tabs, tab)
+    end
+  end,
+  provider = function(self)
+    return "[tabs|" .. table.concat(self.tabs, ":") .. "]"
+  end,
+}
+
 -- Setup =======================================================================
 
 heirline.setup {
@@ -165,37 +199,52 @@ heirline.setup {
   statusline = {
     hl = { bg = bg, fg = fg, bold = true },
     { provider = " " },
-    CursorPosition,
+    CurrentBuffer,
+    GitBranch,
+    { provider = "%=" },
     MacroRec,
     SearchCount,
-
-    { provider = "%=" },
-    GitBranch,
-    CwdComponent,
+    CursorPosition,
     { provider = " " },
   },
 
   ---@diagnostic disable-next-line: missing-fields
-  winbar = {
+  tabline = {
     hl = { bg = bg, fg = fg, bold = true },
     { provider = " " },
-    CurrentBuffer,
+    Buffers,
     { provider = "%=" },
+    CwdComponent,
+    Tabs,
+    { provider = " " },
   },
 
-  opts = {
-    disable_winbar_cb = function(args)
-      return conditions.buffer_matches({
-        buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-        filetype = {
-          "^git.*",
-          "fugitive",
-          "Trouble",
-          "dashboard",
-          "yazi",
-          "fzf",
-        },
-      }, args.buf)
-    end,
-  },
+  -- ---@diagnostic disable-next-line: missing-fields
+  -- winbar = {
+  --   hl = { bg = bg, fg = fg, bold = true },
+  --   { provider = " " },
+  --   CurrentBuffer,
+  --   { provider = "%=" },
+  --   GitBranch,
+  --   { provider = " " },
+  -- },
+  --
+  -- opts = {
+  --   disable_winbar_cb = function(args)
+  --     return conditions.buffer_matches({
+  --       buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
+  --       filetype = {
+  --         "^git.*",
+  --         "fugitive",
+  --         "Trouble",
+  --         "dashboard",
+  --         "yazi",
+  --         "fzf",
+  --       },
+  --     }, args.buf)
+  --   end,
+  -- },
 }
+
+vim.o.showtabline = 2
+vim.cmd [[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]]
