@@ -101,9 +101,9 @@ M.run_task_list = function(task_list)
   local final_task_list = {}
   for k, task in pairs(task_list) do
     if
-      type(k) ~= "number"
-      and (not task.ft or vim.tbl_contains(task.ft, vim.bo.ft))
-      and (not task.cond or task.cond())
+        type(k) ~= "number"
+        and (not task.ft or vim.tbl_contains(task.ft, vim.bo.ft))
+        and (not task.cond or task.cond())
     then
       final_task_list[k] = task
     end
@@ -112,7 +112,12 @@ M.run_task_list = function(task_list)
   for i = 1, #task_list, 1 do
     local generated_tasks = task_list[i]()
     for _, task in ipairs(generated_tasks) do
-      local task_name = table.concat(task.cmd, " ")
+      local task_name = "default task name"
+      if type(task.cmd) == "table" then
+        task_name = table.concat(task.cmd, " ")
+      elseif type(task.cmd) == "string" then
+        task_name = task.cmd
+      end
       final_task_list[task_name] = task
     end
   end

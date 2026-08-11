@@ -98,7 +98,6 @@ vim.keymap.set({ "n" }, "<Leader>w>", "<C-w>><Leader>w", { remap = true })
 -- Buffers =====================================================================
 
 local smart_bd = function(args)
-  -- Get window and buffer info
   local winids = vim.api.nvim_list_wins()
   local listed_bufs = {}
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -110,10 +109,8 @@ local smart_bd = function(args)
   local ft =
       vim.api.nvim_get_option_value("filetype", { scope = "local", buf = cbuf })
 
-  -- Decide close command
   local close_cmd = args.force and "bd!" or "bd"
 
-  -- Close buffer
   if #winids == 1 or ft == "help" then
     vim.cmd(close_cmd)
   elseif #winids > 1 then
