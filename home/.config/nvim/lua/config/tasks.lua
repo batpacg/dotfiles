@@ -58,7 +58,7 @@ local task_list = {
 
   ["C: Compile & Run"] = {
     ft = { "c" },
-    cmd = "gcc % -o %:r && ./%:r",
+    cmd = "gcc % -o %:p:r && %:p:r",
   },
 }
 
