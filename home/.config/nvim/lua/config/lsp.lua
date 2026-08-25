@@ -24,6 +24,7 @@ LspConfig.servers = {
     filetypes = { "html", "htmldjango" },
   },
   ["cssls"] = {},
+  ["tailwindcss"] = {},
   ["emmet_ls"] = {},
   ["clangd"] = {
     cmd = {

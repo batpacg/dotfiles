@@ -25,11 +25,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- Keep cursor vertically centered.
-vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-  group = user_augroup,
-  callback = function()
-    local pos = vim.fn.getpos "."
-    vim.cmd.normal { "zz", bang = true }
-    vim.fn.setpos(".", pos)
-  end,
-})
+-- vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+--   group = user_augroup,
+--   callback = function()
+--     local pos = vim.fn.getpos "."
+--     vim.cmd.normal { "zz", bang = true }
+--     vim.fn.setpos(".", pos)
+--   end,
+-- })

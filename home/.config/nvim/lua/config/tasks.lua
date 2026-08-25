@@ -60,6 +60,10 @@ local task_list = {
     ft = { "c" },
     cmd = "gcc % -o %:p:r && %:p:r",
   },
+  ["TypeScript: npm run dev"] = {
+    ft = { "typescriptreact" },
+    cmd = "npm run dev",
+  },
 }
 
 vim.keymap.set({ "n" }, "<Leader>r", function()
