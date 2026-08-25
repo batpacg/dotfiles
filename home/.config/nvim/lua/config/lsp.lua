@@ -1,5 +1,7 @@
 -- Documentation for LSP configuration:
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
+-- Documentation for NoneLS configuration:
+-- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
 
 -- local lspconfig = require "lspconfig"
 local nonels = require "null-ls"
@@ -16,6 +18,7 @@ LspConfig.default.capabilities.textDocument.completion.completionItem.snippetSup
     true
 
 LspConfig.servers = {
+  ["vhdl_ls"] = {},
   ["lua_ls"] = {},
   ["html"] = {
     filetypes = { "html", "htmldjango" },

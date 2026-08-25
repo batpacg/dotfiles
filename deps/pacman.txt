@@ -33,6 +33,7 @@ yazi
 htop
 btop
 rclone
+wget
 
 tar
 gzip
