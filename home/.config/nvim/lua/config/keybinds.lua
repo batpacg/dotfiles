@@ -190,7 +190,7 @@ end)
 
 -- G Commands ==================================================================
 
-vim.keymap.set({ "n" }, "gs", 'viwy:%s/\\<<C-r>"\\>//g<Left><Left>')
-vim.keymap.set({ "v", "x" }, "gs", 'y:%s/\\<<C-r>"\\>//g<Left><Left>')
+vim.keymap.set({ "n" }, "gs", 'viwy:%s/\\<<C-r>"\\>//<Left>')
+vim.keymap.set({ "v", "x" }, "gs", 'y:%s/\\<<C-r>"\\>//<Left>')
 vim.keymap.set({ "n" }, "ga", "ggVG")
 vim.keymap.set({ "n" }, "g.", "ga")
