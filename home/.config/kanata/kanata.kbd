@@ -1,7 +1,9 @@
 ;; vim: set ft=lisp:
 ;; Docs: https://jtroo.github.io/config.html
 
-(defcfg process-unmapped-keys yes)
+(defcfg
+  windows-altgr cancel-lctl-press
+  process-unmapped-keys yes)
 
 (defsrc
   pause

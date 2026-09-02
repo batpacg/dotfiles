@@ -16,6 +16,8 @@ hotkey-overlay {
 
 environment {
   QT_QPA_PLATFORMTHEME "gtk3"
+  QT_IM_MODULE "xim"
+  GTK_IM_MODULE "xim"
 }
 
 // Input =======================================================================
