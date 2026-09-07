@@ -19,13 +19,15 @@ LspConfig.default.capabilities.textDocument.completion.completionItem.snippetSup
 
 LspConfig.servers = {
   ["vhdl_ls"] = {},
+
   ["lua_ls"] = {},
-  ["html"] = {
-    filetypes = { "html", "htmldjango" },
-  },
-  ["cssls"] = {},
-  ["tailwindcss"] = {},
+
+  ["html"] = { filetypes = { "html", "htmldjango" } },
   ["emmet_ls"] = {},
+  ["ts_ls"] = {},
+  ["tailwindcss"] = {},
+  ["cssls"] = {},
+
   ["clangd"] = {
     cmd = {
       "clangd",
@@ -33,11 +35,13 @@ LspConfig.servers = {
       "--fallback-style=llvm",
     },
   },
-  ["pyright"] = {},
-  ["shellcheck"] = {},
-  ["ruff"] = {},
+
   ["bashls"] = {},
-  ["ts_ls"] = {},
+  ["shellcheck"] = {},
+
+  ["pyright"] = {},
+  ["ruff"] = {},
+
   ["tombi"] = {},
 }
 
@@ -50,8 +54,11 @@ NoneLS.formatters = {
       PRETTIERD_DEFAULT_CONFIG = vim.fn.expand "~/.config/nvim/utils/.prettierrc.json",
     },
   },
+
   ["stylua"] = {},
+
   ["shfmt"] = { extra_args = { "-ci", "-sr" } },
+
   ["typstyle"] = {},
 }
 

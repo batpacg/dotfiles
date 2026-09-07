@@ -116,6 +116,10 @@ if command -v tmux > /dev/null 2>&1; then
 	alias tls="tmux list-sessions"
 fi
 
+if command -v nvim > /dev/null 2>&1; then
+	alias vi="nvim"
+fi
+
 if command -v eza > /dev/null 2>&1; then
 	alias ls='eza -1 --icons=always --group-directories-first'
 	alias ll='eza -a -lg --no-time --icons=always --group-directories-first'
@@ -257,7 +261,6 @@ yank_like_to_cb() {
 bind -x '"\C-y": yank_like_to_cb'
 
 # bind "set keyseq-timeout 5"
-# bind '"\e":   "yacd; clear\n"'
 bind '"\C-f": "yacd; clear\n"'
 bind '"\C-o": "nvim +Yazi; clear\n"'
 

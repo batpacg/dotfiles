@@ -1,0 +1,19 @@
+theme = Gruvbox Material Dark
+
+font-family  = "MapleMono NF"
+font-size    = 9.0
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+cursor-style       = "block"
+cursor-style-blink = false
+
+confirm-close-surface = false
+gtk-tabs-location     = bottom
+
+keybind = clear
+
+keybind = alt+comma=reload_config
+keybind = performable:ctrl+shift+c=copy_to_clipboard
+keybind = performable:ctrl+shift+v=paste_from_clipboard

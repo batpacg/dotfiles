@@ -397,3 +397,4 @@ x-scheme-handler/mailto=zen.desktop;
 x-scheme-handler/ror2mm=r2modman.desktop;
 x-scheme-handler/unknown=zen.desktop;
 x-scheme-handler/rootapp=rootapp.desktop
+x-scheme-handler/codex=chatgpt.desktop
