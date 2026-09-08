@@ -12,6 +12,11 @@ cursor-style-blink = false
 confirm-close-surface = false
 gtk-tabs-location     = bottom
 
+window-padding-balance = true
+window-padding-x = 2
+window-padding-y = 0
+window-vsync = false
+
 keybind = clear
 
 keybind = alt+comma=reload_config

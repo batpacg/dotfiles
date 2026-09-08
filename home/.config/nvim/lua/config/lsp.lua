@@ -20,6 +20,8 @@ LspConfig.default.capabilities.textDocument.completion.completionItem.snippetSup
 LspConfig.servers = {
   ["vhdl_ls"] = {},
 
+  ["tinymist"] = {},
+
   ["lua_ls"] = {},
 
   ["html"] = { filetypes = { "html", "htmldjango" } },
