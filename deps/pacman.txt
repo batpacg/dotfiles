@@ -15,6 +15,7 @@ man-db
 man-pages
 pacman-contrib
 
+strace
 github-cli
 aria2
 lazygit
@@ -75,6 +76,7 @@ noto-fonts
 gnu-free-fonts
 ttf-liberation
 ttf-jetbrains-mono-nerd
+ttf-ibmplex-mono-nerd
 
 cups
 cups-pdf

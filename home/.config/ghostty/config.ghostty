@@ -1,24 +1,36 @@
+# vim:set ft=dosini:
 theme = Gruvbox Material Dark
 
-font-family  = "MapleMono NF"
-font-size    = 9.0
+# font-family  = "Maple Mono NF"
+# font-size    = 9.0
+
+font-family  = "BlexMono Nerd Font"
+font-style  = "Medium"
+font-style-italic  = "Medium Italic"
+font-size    = 9.25
+
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
 cursor-style       = "block"
 cursor-style-blink = false
+# https://github.com/ghostty-org/ghostty/discussions/3836
+shell-integration-features = no-cursor
 
 confirm-close-surface = false
 gtk-tabs-location     = bottom
 
 window-padding-balance = true
 window-padding-x = 2
-window-padding-y = 0
+window-padding-y = 1
 window-vsync = false
 
 keybind = clear
 
 keybind = alt+comma=reload_config
+keybind = alt+equal=increase_font_size:1
+keybind = alt+minus=decrease_font_size:1
+keybind = alt+0=reset_font_size
 keybind = performable:ctrl+shift+c=copy_to_clipboard
 keybind = performable:ctrl+shift+v=paste_from_clipboard

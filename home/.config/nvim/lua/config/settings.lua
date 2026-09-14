@@ -92,10 +92,10 @@ vim.opt.iskeyword:append("-")
 vim.opt.path:append("**")
 
 -- Disable "Press Enter to continue..."
-require("vim._core.ui2").enable {
-  enable = true,
-  msg = { targets = "cmd", cmd = { height = 0.5 } },
-}
+-- require("vim._core.ui2").enable {
+--   enable = true,
+--   msg = { targets = "cmd", cmd = { height = 0.5 } },
+-- }
 
 -- Splits ----------------------------------------------------------------------
 

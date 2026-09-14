@@ -16,7 +16,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
+      { out, "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -32,6 +32,41 @@ local plugin_list = {}
 local add = function(args)
   table.insert(plugin_list, args)
 end
+
+add {
+  "kristijanhusak/vim-dadbod-ui",
+  dependencies = {
+    {
+      "tpope/vim-dadbod",
+      lazy = true,
+    },
+    {
+      "kristijanhusak/vim-dadbod-completion",
+      ft = { "sql", "mysql", "plsql" },
+      lazy = true,
+    },
+  },
+  cmd = {
+    "DBUI",
+    "DBUIToggle",
+    "DBUIAddConnection",
+    "DBUIFindBuffer",
+  },
+  init = function()
+    vim.g.db_ui_use_nerd_fonts = 1
+    vim.g.db_ui_env_variable_url = "DATABASE_URL"
+    vim.g.db_ui_env_variable_name = "DATABASE_NAME"
+  end,
+  config = function()
+    -- Disable dadbod folding
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "dbout",
+      callback = function()
+        vim.opt_local.foldenable = false
+      end,
+    })
+  end,
+}
 
 add { "nvim-mini/mini.splitjoin", version = "*", opts = {} }
 
@@ -81,7 +116,7 @@ add {
 add {
   "folke/which-key.nvim",
   event = "VeryLazy",
-  opts = { preset = "helix", win = { border = "single" }, delay = 1000 },
+  opts = { preset = "helix", win = { border = "single" }, delay = 500 },
   keys = {
     {
       "<leader>?",
@@ -446,9 +481,33 @@ add {
   end,
 }
 
+add { "lukas-reineke/virt-column.nvim", opts = { char = "│", } }
+
 add {
   "MeanderingProgrammer/render-markdown.nvim",
   ft = { "markdown", "quarto" },
+  opts = {
+    sign = { enabled = false },
+    heading = {
+      width = "block",
+      right_pad = 2,
+    },
+    code = {
+      border = "thick",
+      width = "block",
+    },
+  },
+}
+
+add {
+  "3rd/image.nvim",
+  build = false,
+  ft = { "markdown", "asciidoc", "typst", "neorg", "rst" },
+  opts = {
+    processor = "magick_cli",
+    max_width_window_percentage = 80,
+    tmux_show_only_in_active_window = true,
+  },
 }
 
 add {

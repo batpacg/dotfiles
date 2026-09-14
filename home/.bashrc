@@ -266,6 +266,12 @@ bind '"\C-o": "nvim +Yazi; clear\n"'
 
 # Plugins ======================================================================
 
+if command -v tmux > /dev/null && ! tmux ls > /dev/null 2>&1; then
+	tmux new-session -s main
+elif command -v tmux > /dev/null && [ -z "$(tmux list-clients -t main)" ]; then
+	tmux attach -t main
+fi
+
 eval "$(fzf --bash)"
 eval "$(direnv hook bash)"
 eval "$(zoxide init bash)"

@@ -9,8 +9,8 @@ local heirline = require "heirline"
 local conditions = require "heirline.conditions"
 
 local colors = require "colors"
-local bg = colors.gruvbox.dark0
-local fg = colors.gruvbox.light1
+local bg = colors.gruvbox.dark0_hard
+local fg = colors.gruvbox.light0
 
 -- Components ==================================================================
 

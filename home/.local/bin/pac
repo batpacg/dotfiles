@@ -1,24 +1,26 @@
 #!/usr/bin/env bash
 
 fzf="fzf --reverse --wrap"
+pacman_query_cmd="pacman -Ss --color=always"
+pacman_sync_cmd="sudo pacman -S"
 
 main() {
 	local subcommand="$1"
 	shift
 	case "$subcommand" in
 		-*) sudo pacman "$subcommand" "$@" ;;
-		q | query) pacman -Ss "$@" ;;
+		q | query) $pacman_query_cmd "$@" ;;
 		fq | fquery)
-			pacman -Ss "$@" --color=always | paste - - | $fzf
+			$pacman_query_cmd "$@" --color=always | paste - - | $fzf
 			;;
-		s | sync) sudo pacman -S "$@" ;;
+		s | sync) $pacman_sync_cmd "$@" ;;
 		fs | fsync)
 			local pkg
-			pkg="$(pacman -Ss "$@" --color=always | paste - - | $fzf)"
+			pkg="$($pacman_query_cmd "$@" | paste - - | $fzf)"
 			[ -z "$pkg" ] && return
 			pkg="${pkg#*/}"  # trim left
 			pkg="${pkg%% *}" # trim right
-			sudo pacman -S "$pkg"
+			$pacman_sync_cmd "$pkg"
 			;;
 		u | update) sudo pacman -Syyu ;;
 		r | remove) sudo pacman -Rs "$@" ;;

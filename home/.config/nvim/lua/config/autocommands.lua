@@ -2,7 +2,7 @@
 -- ~/.config/nvim/lua/autocommands.lua
 --
 
-local user_augroup = vim.api.nvim_create_augroup("User", {})
+local user_augroup = vim.api.nvim_create_augroup("UserAuGroup", {})
 
 -- Try to move to the last editing position when opening a recent buffer.
 vim.api.nvim_create_autocmd("BufReadPost", {
