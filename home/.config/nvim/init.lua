@@ -2,7 +2,6 @@ require "config.settings"
 require "config.keybinds"
 require "config.autocommands"
 require "config.plugins"
--- require "config.kitty"
 require "config.tmux"
 require "config.tasks"
 

@@ -16,7 +16,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -481,7 +481,7 @@ add {
   end,
 }
 
-add { "lukas-reineke/virt-column.nvim", opts = { char = "│", } }
+add { "lukas-reineke/virt-column.nvim", opts = { char = "│" } }
 
 add {
   "MeanderingProgrammer/render-markdown.nvim",
@@ -490,6 +490,7 @@ add {
     sign = { enabled = false },
     heading = {
       width = "block",
+      left_pad = 1,
       right_pad = 2,
     },
     code = {

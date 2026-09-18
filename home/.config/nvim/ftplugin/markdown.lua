@@ -1,1 +1,1 @@
-vim.cmd "set nolist"
+vim.cmd "setlocal nolist"
