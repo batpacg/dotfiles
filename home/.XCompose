@@ -61,3 +61,8 @@ include "%L"
 
 <Multi_key> <a> <u> : "ù" ugrave
 <Multi_key> <a> <U> : "Ù" Ugrave
+
+# ==============================================================================
+
+<dead_acute> <c> : "ç" U00E7
+<dead_acute> <C> : "Ç" U00C7
