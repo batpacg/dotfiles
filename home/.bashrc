@@ -255,7 +255,11 @@ stty -ixon
 
 # To yank the current line to the system's clipboard using OSC52.
 yank_like_to_cb() {
-	printf "\e]52;c;%s\a" "$(printf %s "$READLINE_LINE" | openssl base64 -A)"
+	if [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy > /dev/null; then
+		printf %s "$READLINE_LINE" | wl-copy
+	elif [ -n "$DISPLAY" ] && command -v xclip > /dev/null; then
+		printf %s "$READLINE_LINE" | xclip -selection
+	fi
 }
 
 bind -x '"\C-y": yank_like_to_cb'
@@ -266,7 +270,7 @@ bind '"\C-o": "nvim +Yazi; clear\n"'
 
 # Plugins ======================================================================
 
-if command -v tmux > /dev/null && ! tmux ls > /dev/null 2>&1; then
+if command -v tmux > /dev/null && ! tmux list-sessions > /dev/null 2>&1; then
 	tmux new-session -s main
 elif command -v tmux > /dev/null && [ -z "$(tmux list-clients -t main)" ]; then
 	tmux attach -t main
