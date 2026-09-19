@@ -1,13 +1,10 @@
 # vim:set ft=dosini:
 theme = Gruvbox Material Dark
 
-# font-family  = "Maple Mono NF"
-# font-size    = 9.0
-
-font-family  = "BlexMono Nerd Font"
+font-family  = "JetBrainsMono Nerd Font"
 font-style  = "Medium"
 font-style-italic  = "Medium Italic"
-font-size    = 9.25
+font-size    = 9.0
 
 font-feature = -calt
 font-feature = -liga

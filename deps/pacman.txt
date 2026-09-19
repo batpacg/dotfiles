@@ -71,6 +71,8 @@ ghostty
 neovide
 discord
 chromium
+vlc-gui-qt
+vlc-plugins-all
 qalculate-gtk
 noto-fonts
 gnu-free-fonts
