@@ -78,7 +78,6 @@ noto-fonts
 gnu-free-fonts
 ttf-liberation
 ttf-jetbrains-mono-nerd
-ttf-ibmplex-mono-nerd
 
 cups
 cups-pdf
