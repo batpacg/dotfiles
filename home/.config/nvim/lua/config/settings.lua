@@ -36,6 +36,7 @@ vim.opt.grepprg        = "rg --vimgrep -uu --follow --hidden"
 -- Appearance ------------------------------------------------------------------
 
 vim.opt.termguicolors  = true
+vim.opt.guicursor      = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
 vim.opt.signcolumn     = "yes"
 vim.opt.colorcolumn    = "81"
 vim.opt.showmatch      = true
