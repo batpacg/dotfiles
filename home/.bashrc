@@ -258,7 +258,7 @@ yank_like_to_cb() {
 	if [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy > /dev/null; then
 		printf %s "$READLINE_LINE" | wl-copy
 	elif [ -n "$DISPLAY" ] && command -v xclip > /dev/null; then
-		printf %s "$READLINE_LINE" | xclip -selection
+		printf %s "$READLINE_LINE" | xclip -selection clipboard
 	fi
 }
 
