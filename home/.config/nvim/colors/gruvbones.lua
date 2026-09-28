@@ -94,6 +94,7 @@ local specs = lush.extends({ base_specs }).with(function()
     CursorLine { bg = palette.bg.lighten(5).hex },
     Pmenu { link = "Normal" },
     NormalFloat { link = "Normal" },
+    MsgArea { bg = "#1d2021", fg = "#fbf1c7" },
     ---@diagnostic enable: undefined-global
   }
 end)

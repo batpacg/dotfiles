@@ -42,7 +42,11 @@ LspConfig.servers = {
   ["shellcheck"] = {},
 
   ["pyright"] = {},
-  ["ruff"] = {},
+  ["ruff"] = {
+    init_options = {
+      settings = { lint = { enable = false }, lineLength = 80 },
+    },
+  },
 
   ["tombi"] = {},
 }
@@ -77,7 +81,7 @@ for name, opts in pairs(LspConfig.servers) do
   vim.lsp.enable(name)
 end
 
-vim.diagnostic.config { float = { border = "single" } }
+vim.diagnostic.config { float = { border = "single", source = true } }
 
 -- none-ls setup ===============================================================
 

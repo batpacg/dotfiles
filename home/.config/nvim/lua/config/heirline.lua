@@ -198,25 +198,21 @@ heirline.setup {
   ---@diagnostic disable-next-line: missing-fields
   statusline = {
     hl = { bg = bg, fg = fg, bold = true },
-    { provider = " " },
     CurrentBuffer,
     GitBranch,
     { provider = "%=" },
     MacroRec,
     SearchCount,
     CursorPosition,
-    { provider = " " },
   },
 
   ---@diagnostic disable-next-line: missing-fields
   tabline = {
     hl = { bg = bg, fg = fg, bold = true },
-    { provider = " " },
     Buffers,
     { provider = "%=" },
     CwdComponent,
     Tabs,
-    { provider = " " },
   },
 
   -- ---@diagnostic disable-next-line: missing-fields
