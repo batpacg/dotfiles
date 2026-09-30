@@ -15,12 +15,19 @@ LspConfig.default = {
 }
 
 LspConfig.default.capabilities.textDocument.completion.completionItem.snippetSupport =
-    true
+  true
 
 LspConfig.servers = {
   ["vhdl_ls"] = {},
 
-  ["tinymist"] = {},
+  ["tinymist"] = {
+    settings = {
+      formatterMode = "typstyle",
+      formatterProseWrap = "fill",
+      formatterPrintWidth = 80,
+      formatterIndentSize = 2,
+    },
+  },
 
   ["lua_ls"] = {},
 
@@ -64,8 +71,6 @@ NoneLS.formatters = {
   ["stylua"] = {},
 
   ["shfmt"] = { extra_args = { "-ci", "-sr" } },
-
-  ["typstyle"] = {},
 }
 
 -- lsp-config setup ============================================================
