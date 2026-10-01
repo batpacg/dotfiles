@@ -31,7 +31,7 @@ LspConfig.servers = {
 
   ["lua_ls"] = {},
 
-  ["html"] = { filetypes = { "html", "htmldjango" } },
+  ["html"] = { filetypes = { "html" } },
   ["emmet_ls"] = {},
   ["ts_ls"] = {},
   ["tailwindcss"] = {},
@@ -69,6 +69,16 @@ NoneLS.formatters = {
   },
 
   ["stylua"] = {},
+
+  ["djlint"] = {
+    extra_args = {
+      "--indent",
+      "2",
+      "--max-line-length",
+      "80",
+      "--no-indent-inner-html",
+    },
+  },
 
   ["shfmt"] = { extra_args = { "-ci", "-sr" } },
 }
