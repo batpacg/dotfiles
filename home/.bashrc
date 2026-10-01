@@ -266,7 +266,7 @@ bind -x '"\C-y": yank_like_to_cb'
 
 # bind "set keyseq-timeout 5"
 bind '"\C-f": "yacd; clear\n"'
-bind '"\C-o": "nvim +Yazi; clear\n"'
+bind '"\C-o": "nvim \"$(fd -H | fzf)\"; clear\n"'
 
 # Plugins ======================================================================
 
