@@ -48,6 +48,7 @@ zstd
 
 sddm
 niri
+noctalia
 wl-clipboard
 xwayland-satellite
 xdg-desktop-portal-gtk

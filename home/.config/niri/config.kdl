@@ -9,7 +9,7 @@
 
 prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/%Y-%m-%d__%H-%M-%S.png"
-spawn-at-startup "qs" "-c" "noctalia-shell"
+spawn-at-startup "noctalia"
 
 hotkey-overlay {
   skip-at-startup

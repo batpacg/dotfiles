@@ -197,7 +197,7 @@ local Tabs = {
 heirline.setup {
   ---@diagnostic disable-next-line: missing-fields
   statusline = {
-    hl = { bg = bg, fg = fg, bold = true },
+    hl = { bg = bg, fg = fg },
     CurrentBuffer,
     GitBranch,
     { provider = "%=" },
@@ -208,7 +208,7 @@ heirline.setup {
 
   ---@diagnostic disable-next-line: missing-fields
   tabline = {
-    hl = { bg = bg, fg = fg, bold = true },
+    hl = { bg = bg, fg = fg },
     Buffers,
     { provider = "%=" },
     CwdComponent,
@@ -217,7 +217,7 @@ heirline.setup {
 
   -- ---@diagnostic disable-next-line: missing-fields
   -- winbar = {
-  --   hl = { bg = bg, fg = fg, bold = true },
+  --   hl = { bg = bg, fg = fg },
   --   { provider = " " },
   --   CurrentBuffer,
   --   { provider = "%=" },

@@ -2,9 +2,6 @@ zen-browser-bin
 
 kanata-bin
 
-noctalia-qs
-noctalia-shell
-
 epson-inkjet-printer-escpr
 
 nvidia-580xx-dkms
