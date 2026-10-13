@@ -23,8 +23,8 @@ export VISUAL=neovide
 export PAGER="less -R"
 export PSQL_PAGER="less -R"
 export BROWSER=zen-browser
-export TERMINAL=kitty
-export TERMINAL_PROG=kitty
+export TERMINAL=ghostty
+export TERMINAL_PROG=ghostty
 
 export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
 
@@ -245,9 +245,7 @@ unset GREEN
 unset BOLD
 unset RESET
 
-# https://stackoverflow.com/questions/19609770/add-newline-after-output-of-every-bash-command
-PROMPT_COMMAND="export PROMPT_COMMAND=echo"
-alias clear="unset PROMPT_COMMAND; clear; PROMPT_COMMAND='export PROMPT_COMMAND=echo'"
+PROMPT_COMMAND+=(echo)
 
 # Keybinds =====================================================================
 

@@ -415,7 +415,7 @@ add {
     keymap = {
       preset = "none",
       -- Main
-      ["<C-f>"] = { "show", "hide", "fallback" },
+      ["<C-.>"] = { "show", "hide", "fallback" },
       ["<C-k>"] = { "select_prev", "fallback" },
       ["<C-j>"] = { "select_next", "fallback" },
       ["<C-l>"] = { "select_and_accept", "fallback" },
