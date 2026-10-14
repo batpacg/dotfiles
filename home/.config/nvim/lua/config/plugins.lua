@@ -345,20 +345,6 @@ add {
 }
 
 add {
-  "brenoprata10/nvim-highlight-colors",
-  ft = {
-    "lua",
-    "html",
-    "css",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-  },
-  opts = { render = "background" },
-}
-
-add {
   "L3MON4D3/LuaSnip",
   version = "v2.*",
   event = "VeryLazy",
