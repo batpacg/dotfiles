@@ -149,6 +149,8 @@ vim.keymap.set({ "v", "x" }, "s)", "c" .. "()" .. "<Esc>P")
 
 vim.keymap.set({ "v", "x" }, "s'", "c" .. "''" .. "<Esc>P")
 
+vim.keymap.set({ "v", "x" }, "s`", "c" .. "``" .. "<Esc>P")
+
 vim.keymap.set({ "v", "x" }, 's"', "c" .. '""' .. "<Esc>P")
 
 vim.keymap.set({ "v", "x" }, "s ", "c" .. "  " .. "<Esc>P")
