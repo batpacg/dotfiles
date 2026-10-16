@@ -224,6 +224,7 @@ add {
     { "sc", ":FzfLua zoxide<CR>" },
     { "so", ":FzfLua nvim_options<CR>" },
     { "sj", ":FzfLua buffers<CR>" },
+    { "sm", ":FzfLua manpages<CR>" },
     {
       "s.",
       function()

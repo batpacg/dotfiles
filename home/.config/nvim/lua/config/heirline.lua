@@ -9,8 +9,11 @@ local heirline = require "heirline"
 local conditions = require "heirline.conditions"
 
 local colors = require "colors"
-local bg = colors.gruvbox.dark0_hard
-local fg = colors.gruvbox.light0
+local hl_def = {
+  bg = colors.gruvbox.light4,
+  fg = colors.gruvbox.dark0,
+  bold = true,
+}
 
 -- Components ==================================================================
 
@@ -21,7 +24,7 @@ local MacroRec = {
     return vim.fn.reg_recording() ~= "" and vim.o.cmdheight == 0
   end,
   provider = function()
-    return "[rec|" .. vim.fn.reg_recording() .. "]"
+    return "rec: " .. vim.fn.reg_recording() .. " "
   end,
   update = {
     "RecordingEnter",
@@ -42,7 +45,7 @@ local SearchCount = {
   provider = function(self)
     local search = self.search
     return string.format(
-      "[search|%d/%d]",
+      "search: %d/%d ",
       search.current,
       math.min(search.total, search.maxcount)
     )
@@ -52,7 +55,7 @@ local SearchCount = {
 -- Cursor ----------------------------------------------------------------------
 
 local CursorPosition = {
-  provider = "[cpos|L%l:C%c]",
+  provider = "L%l:C%c",
 }
 
 -- Current Working Directory ---------------------------------------------------
@@ -66,17 +69,17 @@ local CwdComponent = {
     self.dirs_max = 3
     if #self.dirs >= 7 then
       self.cwd = self.dirs[1]
-          .. "/.../"
-          .. table.concat(
-            self.dirs,
-            "/",
-            #self.dirs - self.dirs_max + 1,
-            #self.dirs
-          )
+        .. "/.../"
+        .. table.concat(
+          self.dirs,
+          "/",
+          #self.dirs - self.dirs_max + 1,
+          #self.dirs
+        )
     end
   end,
   provider = function(self)
-    return "[cwd|" .. self.cwd .. "]"
+    return "cwd: " .. self.cwd .. " "
   end,
 }
 
@@ -114,22 +117,22 @@ local BufferStatus = {
   end,
   provider = function(self)
     if self.readonly then
-      return "R"
+      return "[R]"
     elseif self.modified then
-      return "+"
+      return "[+]"
     end
 
-    return "-"
+    return "[-]"
   end,
 }
 
 local CurrentBuffer = {
-  { provider = "[" },
-  { provider = "cbuf|" },
+  { provider = " " },
+  { provider = "cbuf: " },
   BufferName,
-  { provider = ":" },
+  { provider = " " },
   BufferStatus,
-  { provider = "]" },
+  { provider = " " },
 }
 
 -- Git -------------------------------------------------------------------------
@@ -143,18 +146,16 @@ local GitBranch = {
   end,
 
   provider = function(self)
-    return "[git|"
-        .. self.statusdict.head
-        .. ":"
-        .. "A"
-        .. (self.statusdict.added or 0)
-        .. ":"
-        .. "R"
-        .. (self.statusdict.removed or 0)
-        .. ":"
-        .. "C"
-        .. (self.statusdict.changed or 0)
-        .. "]"
+    return "git("
+      .. self.statusdict.head
+      .. "): "
+      .. "A"
+      .. (self.statusdict.added or 0)
+      .. "R"
+      .. (self.statusdict.removed or 0)
+      .. "C"
+      .. (self.statusdict.changed or 0)
+      .. " | "
   end,
 }
 
@@ -165,16 +166,16 @@ local Buffers = {
     self.buffers = {}
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if
-          vim.api.nvim_buf_is_loaded(buf)
-          and vim.api.nvim_buf_get_option(buf, "bufhidden") == ""
-          and (vim.api.nvim_buf_get_option(buf, "buftype") ~= "help")
+        vim.api.nvim_buf_is_loaded(buf)
+        and vim.api.nvim_buf_get_option(buf, "bufhidden") == ""
+        and (vim.api.nvim_buf_get_option(buf, "buftype") ~= "help")
       then
         table.insert(self.buffers, buf)
       end
     end
   end,
   provider = function(self)
-    return "[bufs|" .. table.concat(self.buffers, ":") .. "]"
+    return " bufs: " .. table.concat(self.buffers, ", ") .. " "
   end,
 }
 
@@ -188,7 +189,7 @@ local Tabs = {
     end
   end,
   provider = function(self)
-    return "[tabs|" .. table.concat(self.tabs, ":") .. "]"
+    return "tabs: " .. table.concat(self.tabs, ", ") .. " "
   end,
 }
 
@@ -197,22 +198,23 @@ local Tabs = {
 heirline.setup {
   ---@diagnostic disable-next-line: missing-fields
   statusline = {
-    hl = { bg = bg, fg = fg },
+    hl = hl_def,
     CurrentBuffer,
-    GitBranch,
     { provider = "%=" },
+    GitBranch,
     MacroRec,
     SearchCount,
     CursorPosition,
+    { provider = " " },
   },
 
   ---@diagnostic disable-next-line: missing-fields
   tabline = {
-    hl = { bg = bg, fg = fg },
+    hl = hl_def,
     Buffers,
     { provider = "%=" },
     CwdComponent,
-    Tabs,
+    -- Tabs,
   },
 
   -- ---@diagnostic disable-next-line: missing-fields
