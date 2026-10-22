@@ -30,5 +30,6 @@ keybind = alt+comma=reload_config
 keybind = alt+equal=increase_font_size:1
 keybind = alt+minus=decrease_font_size:1
 keybind = alt+0=reset_font_size
+copy-on-select = clipboard
 keybind = performable:ctrl+shift+c=copy_to_clipboard
 keybind = performable:ctrl+shift+v=paste_from_clipboard
