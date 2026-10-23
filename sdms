@@ -196,6 +196,12 @@ sdms_cd_cmd() {
 	(cd "$SDMS_SOURCE" && bash --rcfile "$temp_bashrc")
 }
 
+# Bootstrap Command ------------------------------------------------------------
+
+sdms_bootstrap_cmd() {
+	ln -srf "$full" "$HOME/.local/bin"
+}
+
 # Main =========================================================================
 
 if [ $# -eq 0 ]; then
@@ -237,6 +243,7 @@ case "$args" in
 	u | unlink) sdms_unlink_cmd "${args[@]:1}" ;;
 	a | add) sdms_add_cmd "${args[@]:1}" ;;
 	cd) sdms_cd_cmd ;;
+	bootstrap) sdms_bootstrap_cmd ;;
 	*) error "Unknown command: '${args[0]}'" ;;
 esac
 
