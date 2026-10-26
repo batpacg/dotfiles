@@ -1,0 +1,237 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2034,SC2329
+
+full="$(readlink -f "$0")"
+here="$(dirname "$full")"
+me="$(basename "$full")"
+cd "$here" || exit 1
+
+# ==============================================================================
+
+pacman=(
+	base
+	base-devel
+	linux
+	linux-firmware
+	bash-completion
+	networkmanager
+	modemmanager
+	sudo
+	vim
+	git
+	tmux
+	man-db
+	man-pages
+	pacman-contrib
+)
+
+pacman_cli=(
+	neovim
+	tree-sitter-cli
+	strace
+	github-cli
+	aria2
+	lazygit
+	which
+	fd
+	ripgrep
+	fzf
+	jq
+	yq
+	colordiff
+	tree
+	zoxide
+	eza
+	direnv
+	yazi
+	htop
+	btop
+	rclone
+	wget
+)
+
+pacman_compression=(
+	tar
+	gzip
+	bzip2
+	xz
+	7zip
+	zip
+	unrar
+	unzip
+	zstd
+
+)
+
+pacman_gui=(
+	sddm
+	niri
+	noctalia
+	wl-clipboard
+	xwayland-satellite
+	xdg-desktop-portal-gtk
+	xdg-desktop-portal-gnome
+	gnome-keyring
+	nwg-look
+	vimix-cursors
+	breeze-gtk
+	breeze-icons
+	adw-gtk-theme
+	nautilus
+	fuzzel
+	feh
+)
+
+pacman_gui_extra=(
+	ghostty
+	neovide
+	discord
+	chromium
+	vlc-gui-qt
+	vlc-plugins-all
+	qalculate-gtk
+	noto-fonts
+	gnu-free-fonts
+	ttf-liberation
+	ttf-jetbrains-mono-nerd
+)
+
+pacman_documents=(
+	cups
+	cups-pdf
+	zathura
+	zathura-djvu
+	zathura-pdf-mupdf
+	typst
+	libreoffice
+)
+
+pacman_audio=(
+	pipewire-alsa
+	pipewire-pulse
+	pipewire-jack
+	noise-suppression-for-voice
+)
+
+pacman_extra=(
+	scrcpy
+	flatpak
+)
+
+pacman_development=(
+	just
+	cmake
+
+	python
+	ipython
+	python-pip
+	python-numpy
+	python-sympy
+	python-scipy
+	python-pandas
+	python-matplotlib
+	python-pygame
+	python-pyserial
+	python-pynvim
+	python-pyperclip
+	python-jupyter-client
+	python-pillow
+	python-pypdf
+
+	nodejs
+	npm
+
+	lua
+	luajit
+	luarocks
+)
+
+pacman_gaming=(
+	steam
+	lutris
+	mangohud
+	gamescope
+	wine
+	wine-mono
+	wine-gecko
+	winetricks
+	protontricks
+
+	prismlauncher
+	jre17-openjdk
+	jre21-openjdk
+)
+
+pacman_video_drivers=(
+	linux-headers
+	mesa
+	mesa-utils
+	lib32-mesa
+	lib32-mesa-utils
+)
+
+flatpak=(
+	com.github.tchx84.Flatseal
+	com.github.taiko2k.tauonmb
+	net.pcsx2.PCSX2
+	org.vinegarhq.Sober
+)
+
+aur=(
+	zen-browser-bin
+	kanata-bin
+)
+
+aur_documents=(
+	epson-inkjet-printer-escpr
+)
+
+aur_video_drivers=(
+	nvidia-580xx-dkms
+	nvidia-580xx-utils
+	lib32-nvidia-580xx-utils
+)
+
+# ==============================================================================
+
+error() {
+	printf "\033[31merror: \033[0m%s" "$*"
+	exit 1
+}
+
+help() {
+	cat <<- EOF
+		Simple package management script.
+
+		Usage: $me [opstions] [args]
+	EOF
+}
+
+main() {
+	[ -z "$1" ] && error "Nothing specified. Use $me --help/-h for help."
+	case "$1" in
+		pacman)
+			install_cmd="sudo pacman -S"
+			;;
+		aur)
+			install_cmd="yay -S"
+			;;
+		flatpak)
+			install_cmd="flatpak install"
+			;;
+		*)
+			exit 1
+			;;
+	esac
+	arr_name="$*"
+	arr_name="${arr_name// /_}"
+	pkgs="$(eval "echo \"\${$arr_name[@]}\"")"
+	$install_cmd $pkgs
+	# awk -F '_' '/^.*=\($/ { print $0 }' "$full"
+}
+
+# ==============================================================================
+
+main "$@"
+
+exit
