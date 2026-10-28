@@ -79,7 +79,7 @@ local CwdComponent = {
     end
   end,
   provider = function(self)
-    return "cwd: " .. self.cwd .. " "
+    return " " .. self.cwd .. " "
   end,
 }
 
@@ -128,7 +128,6 @@ local BufferStatus = {
 
 local CurrentBuffer = {
   { provider = " " },
-  { provider = "cbuf: " },
   BufferName,
   { provider = " " },
   BufferStatus,
@@ -149,13 +148,13 @@ local GitBranch = {
     return "git("
       .. self.statusdict.head
       .. "): "
-      .. "A"
+      .. "+"
       .. (self.statusdict.added or 0)
-      .. "R"
+      .. "-"
       .. (self.statusdict.removed or 0)
-      .. "C"
+      .. "~"
       .. (self.statusdict.changed or 0)
-      .. " | "
+      .. " ▪ "
   end,
 }
 
@@ -175,7 +174,7 @@ local Buffers = {
     end
   end,
   provider = function(self)
-    return " bufs: " .. table.concat(self.buffers, ", ") .. " "
+    return " " .. table.concat(self.buffers, ", ") .. " "
   end,
 }
 
