@@ -207,6 +207,11 @@ fuserv() {
 	systemctl --user list-units | grep .service | sed 's/ \{2,\}/\t/g' | cut -d $'\t' -f 2- | fzf
 }
 
+ghdo() {
+	local id="$1"
+	gh pr ready "$id" && gh pr review "$id" && gh pr merge -s "$id"
+}
+
 # Prompt =======================================================================
 
 # shopt -s checkwinsize
