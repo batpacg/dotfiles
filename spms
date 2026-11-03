@@ -219,6 +219,15 @@ main() {
 		flatpak)
 			install_cmd="flatpak install"
 			;;
+		list | ls)
+			groups=()
+			for line in "$here"/deps/*; do
+				group="${line%%.*}"
+				group="${group##*/}"
+				groups+=("$group")
+			done
+			echo "${groups[@]}"
+			;;
 		*)
 			exit 1
 			;;

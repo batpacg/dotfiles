@@ -240,7 +240,7 @@ binds {
   Mod+Shift+E { quit; }
   Ctrl+Alt+Delete { quit; }
 
-  Print { screenshot; }
+  Print { screenshot show-pointer=false; }
   Ctrl+Print { screenshot-screen; }
   Alt+Print { screenshot-window; }
 

@@ -235,7 +235,7 @@ while [ -n "$1" ]; do
 done
 
 if [ -z "${args[*]}" ]; then
-	error "$me expects a command"
+	error "'$me' expects a command"
 fi
 
 case "$args" in
@@ -244,6 +244,7 @@ case "$args" in
 	a | add) sdms_add_cmd "${args[@]:1}" ;;
 	cd) sdms_cd_cmd ;;
 	bootstrap) sdms_bootstrap_cmd ;;
+	deps) sdms_deps_cmd "${args[@]:1}" ;;
 	*) error "Unknown command: '${args[0]}'" ;;
 esac
 

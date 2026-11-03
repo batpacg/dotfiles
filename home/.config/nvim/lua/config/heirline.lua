@@ -145,9 +145,9 @@ local GitBranch = {
   end,
 
   provider = function(self)
-    return "git("
+    return "git["
       .. self.statusdict.head
-      .. "): "
+      .. "]: "
       .. "+"
       .. (self.statusdict.added or 0)
       .. "-"
