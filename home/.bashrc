@@ -209,7 +209,7 @@ fuserv() {
 
 ghdo() {
 	local id="$1"
-	gh pr ready "$id" && gh pr review "$id" && gh pr merge -s "$id"
+	gh pr ready "$id" && gh pr review -a "$id" && gh pr merge -s "$id"
 }
 
 # Prompt =======================================================================
