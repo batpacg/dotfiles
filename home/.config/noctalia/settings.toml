@@ -1,6 +1,12 @@
-config_version = 14
+config_version = 16
+
+[audio]
+enable_overdrive = true
 
 [bar.default]
+capsule_padding = 4.0
+capsule_radius = 0
+capsule_thickness = 0.74999998696148396
 center = [
     "session",
     "launcher",
@@ -20,11 +26,30 @@ center = [
 compositor_blur = false
 end = []
 margin_ends = 0
-padding = 80
 position = "bottom"
 radius = 0
-shadow = false
 start = []
+thickness = 32
+
+[bluetooth]
+connect_when_enabled = true
+
+[dock]
+auto_hide = true
+background_opacity = 1.0
+border_width = 1.0
+compositor_blur = false
+concave_edge_corners = false
+icon_size = 32
+item_spacing = 0
+launcher_position = "start"
+magnification_scale = 1.2500000037252903
+main_axis_padding = 8
+pinned = [ "zen", "org.pwmt.zathura", "com.mitchellh.ghostty", "org.gnome.Nautilus" ]
+position = "top"
+radius = 0
+reserve_space = false
+show_dots = true
 
 [lockscreen_widgets]
 enabled = false
@@ -48,7 +73,7 @@ widget_order = [ "lockscreen-login-box@HDMI-A-1" ]
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
-        background_color = "surface_variant"
+        background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
         center_password_text = false
@@ -63,9 +88,43 @@ widget_order = [ "lockscreen-login-box@HDMI-A-1" ]
         show_unlock_hint = true
         show_weather = true
 
+[osd]
+enabled = false
+
 [shell]
+avatar_path = "/home/batpacg/Sync/pictures/capy-carbonara.jpg"
 corner_radius_scale = 0.0
 font_family = "JetBrainsMono Nerd Font"
+panel_anchor_bar = "default"
+
+    [shell.launcher]
+    compact = true
+    default_view = "all"
+    search_position = "top"
+    show_app_actions = true
+
+        [shell.launcher.providers.calculator]
+        prefix = "c"
+
+        [shell.launcher.providers.emoji]
+        prefix = "e"
+
+        [shell.launcher.providers.panels]
+        prefix = "p"
+
+        [shell.launcher.providers.session]
+        prefix = "s"
+
+        [shell.launcher.providers.wallpaper]
+        prefix = "wa"
+
+        [shell.launcher.providers.windows]
+        global = true
+        prefix = "w"
+
+    [shell.panel]
+    control_center_placement = "floating"
+    control_center_position = "center"
 
 [theme]
 builtin = "Gruvbox"

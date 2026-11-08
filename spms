@@ -47,6 +47,7 @@ pacman_cli=(
 	htop
 	btop
 	rclone
+	rsync
 	wget
 )
 
