@@ -19,7 +19,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 export EDITOR=nvim
-export VISUAL=neovide
+export VISUAL=nvim
 export PAGER="less -R"
 export PSQL_PAGER="less -R"
 export BROWSER=zen-browser
