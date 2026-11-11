@@ -2,7 +2,6 @@ require "config.settings"
 require "config.keybinds"
 require "config.autocommands"
 require "config.plugins"
-require "config.tmux"
 require "config.tasks"
 
 if vim.g.neovide then

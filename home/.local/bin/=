@@ -9,5 +9,3 @@ while [ -n "$prompt" ]; do
 	answer="$(qalc +u8 -color=never --terse "$prompt")"
 	prompt="$(echo "$answer" | $cmd)"
 done
-
-exit 0

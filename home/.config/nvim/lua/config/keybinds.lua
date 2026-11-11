@@ -2,6 +2,8 @@
 -- ~/.config/nvim/lua/keybinds.lua
 --
 
+local tmux = require "config.tmux"
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 vim.opt.timeoutlen = 2000
@@ -43,8 +45,11 @@ local function toggleterm()
   vim.api.nvim_feedkeys("i", "n", false)
 end
 
-vim.keymap.set({ "n" }, "<C-j>", toggleterm)
-vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
+vim.keymap.set({ "n" }, "<C-j>", function()
+  tmux.popup_pane "bash"
+end)
+-- vim.keymap.set({ "n" }, "<C-j>", toggleterm)
+-- vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
 
 -- Quickfix ====================================================================
 
@@ -94,6 +99,13 @@ vim.keymap.set({ "n" }, "<Leader>w<", "<C-w><<Leader>w", { remap = true })
 vim.keymap.set({ "n" }, "<Leader>w+", "<C-w>+<Leader>w", { remap = true })
 vim.keymap.set({ "n" }, "<Leader>w-", "<C-w>-<Leader>w", { remap = true })
 vim.keymap.set({ "n" }, "<Leader>w>", "<C-w>><Leader>w", { remap = true })
+
+-- stylua: ignore start
+vim.keymap.set({ "n" }, "<M-h>", function() tmux.move_window_focus "h" end)
+vim.keymap.set({ "n" }, "<M-j>", function() tmux.move_window_focus "j" end)
+vim.keymap.set({ "n" }, "<M-k>", function() tmux.move_window_focus "k" end)
+vim.keymap.set({ "n" }, "<M-l>", function() tmux.move_window_focus "l" end)
+-- stylua: ignore end
 
 -- Buffers =====================================================================
 

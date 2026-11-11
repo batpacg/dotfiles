@@ -2,7 +2,9 @@
 -- Neovim-Tmux Integration
 --
 
-local SmartNavigate = function(dir)
+local M = {}
+
+M.move_window_focus = function(dir)
   local winnr = vim.api.nvim_win_get_number(0)
   vim.cmd("wincmd " .. dir)
   local final_winnr = vim.api.nvim_win_get_number(0)
@@ -22,9 +24,18 @@ local SmartNavigate = function(dir)
   end
 end
 
--- stylua: ignore start
-vim.keymap.set({ "n" }, "<M-h>", function() SmartNavigate "h" end)
-vim.keymap.set({ "n" }, "<M-j>", function() SmartNavigate "j" end)
-vim.keymap.set({ "n" }, "<M-k>", function() SmartNavigate "k" end)
-vim.keymap.set({ "n" }, "<M-l>", function() SmartNavigate "l" end)
--- stylua: ignore end
+M.popup_pane = function(cmd)
+  local final_cmd = {
+    "tmux",
+    "display-popup",
+    "-E",
+    "-w",
+    "85%",
+    "-h",
+    "85%",
+    ("%s"):format(cmd),
+  }
+  vim.fn.jobstart(table.concat(final_cmd, " "))
+end
+
+return M
