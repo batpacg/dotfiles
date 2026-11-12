@@ -83,7 +83,7 @@ end
 -- Generate the lush specs using the generator util.
 local generator = require "zenbones.specs"
 local base_specs =
-  generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
+    generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
 
 -- Optionally extend specs using Lush.
 local specs = lush.extends({ base_specs }).with(function()

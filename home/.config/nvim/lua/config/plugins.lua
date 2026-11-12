@@ -471,23 +471,6 @@ add {
 add { "lukas-reineke/virt-column.nvim", opts = { char = "│" } }
 
 add {
-  "MeanderingProgrammer/render-markdown.nvim",
-  ft = { "markdown", "quarto" },
-  opts = {
-    sign = { enabled = false },
-    heading = {
-      width = "block",
-      left_pad = 1,
-      right_pad = 2,
-    },
-    code = {
-      border = "thick",
-      width = "block",
-    },
-  },
-}
-
-add {
   "3rd/image.nvim",
   build = false,
   ft = { "markdown", "asciidoc", "typst", "neorg", "rst" },
