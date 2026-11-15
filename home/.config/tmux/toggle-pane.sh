@@ -9,43 +9,41 @@
 #   The argument '<id>' is used to enable multiple toggable panes.
 
 SESSION="_hide"
-PBID="_P${1:-buf}"
-LBID="_L${1:-buf}"
+PBID="_P${1:-r}"
+LBID="_L${1:-r}"
 
-get_pid() {
-	local res
-	res="$(tmux showb -b "$PBID")"
-	echo "${res:-empty}"
+PID="$(tmux show -gqv "@$PBID")"
+PID="${PID:-empty}"
+LAYOUT="$(tmux show -gqv "@$LBID")"
+
+pane_visible() { [ -n "$(tmux lsp -F '#{pane_id}' | awk "/$PID/")" ]; }
+
+pane_exists() { [ -n "$(tmux lsp -a -F '#{pane_id}' | awk "/$PID/")" ]; }
+
+session_doesnt_exist() {
+	[ -z "$(tmux list-session -f "#{==:$SESSION,#{session_name}}")" ]
 }
-
-get_layout() {
-	local res
-	res="$(tmux showb -b "$LBID")"
-	echo "${res:-empty}"
-}
-
-pane_visible() { [ -n "$(tmux lsp -F '#{pane_id}' | awk "/$(get_pid)/")" ]; }
-
-pane_exists() { [ -n "$(tmux lsp -a -F '#{pane_id}' | awk "/$(get_pid)/")" ]; }
 
 break_pane() {
-	tmux breakp -d -s "$(get_pid)" -t "$SESSION" -n "$(get_pid)"
-	tmux select-layout "$(get_layout)"
+	tmux breakp -d -s "$PID" -t "$SESSION:" -n "$PID" \; \
+		select-layout "$LAYOUT"
 }
 
 create_pane() {
-	tmux setb -b "$LBID" "$(tmux display -p '#{window_layout}')"
-	tmux setb -b "$PBID" "$(tmux split-window -P -F '#{pane_id}')"
+	tmux set -g "@$LBID" "$(tmux display -p '#{window_layout}')" \; \
+		set -g "@$PBID" "$(tmux split-window -P -F '#{pane_id}')"
 }
 
 restore_pane() {
-	tmux setb -b "$LBID" "$(tmux display -p '#{window_layout}')"
-	tmux joinp -s "$(get_pid)"
+	tmux set -g "@$LBID" "$(tmux display -p '#{window_layout}')" \; \
+		joinp -s "$PID"
 }
 
 main() {
 	if pane_visible; then
-		tmux new -d -s "$SESSION"
+		if session_doesnt_exist; then
+			tmux new -d -s "$SESSION"
+		fi
 		break_pane
 	else
 		if pane_exists; then
