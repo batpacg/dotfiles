@@ -49,21 +49,6 @@ export GOPATH="$XDG_DATA_HOME/go"
 export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
 appendpath "$GOPATH/bin"
 
-export LUAROCKS_HOME="$XDG_DATA_HOME/luarocks"
-
-export LUA_PATH="$LUA_PATH;./?.lua"
-export LUA_PATH="$LUA_PATH;./?/init.lua"
-export LUA_PATH="$LUA_PATH;/usr/lib/lua/5.3/?.lua"
-export LUA_PATH="$LUA_PATH;/usr/share/lua/5.3/?/init.lua"
-export LUA_PATH="$LUA_PATH;/usr/lib/lua/5.3/?/init.lua"
-export LUA_PATH="$LUA_PATH;$LUAROCKS_HOME/share/lua/5.3/?.lua"
-export LUA_PATH="$LUA_PATH;$LUAROCKS_HOME/share/lua/5.3/?/init.lua"
-
-export LUA_CPATH="$LUA_CPATH;./?.so"
-export LUA_CPATH="$LUA_CPATH;/usr/lib/lua/5.3/?.so"
-export LUA_CPATH="$LUA_CPATH;/usr/lib/lua/5.3/loadall.so"
-export LUA_CPATH="$LUA_CPATH;$LUAROCKS_HOME/lib/lua/5.3/?.so"
-
 export npm_config_prefix="$XDG_DATA_HOME/npm"
 export npm_config_cache="$XDG_CACHE_HOME/npm"
 appendpath "${npm_config_prefix}/bin"
