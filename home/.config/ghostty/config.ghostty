@@ -4,6 +4,7 @@ theme = Gruvbox Material Dark
 font-family  = "JetBrainsMono Nerd Font"
 font-style  = "Medium"
 font-style-italic  = "Medium Italic"
+font-style-bold  = "ExtraBold"
 font-size    = 9.0
 
 font-feature = -calt
