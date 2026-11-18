@@ -9,10 +9,15 @@ local heirline = require "heirline"
 local conditions = require "heirline.conditions"
 
 local colors = require "colors"
-local hl_def = {
-  bg = colors.gruvbox.light4,
-  fg = colors.gruvbox.dark0,
-  bold = true,
+local statusline_hl = {
+  bg = colors.gruvbox.dark0,
+  fg = colors.gruvbox.light0,
+  overline = true,
+}
+local tabline_hl = {
+  bg = colors.gruvbox.dark0,
+  fg = colors.gruvbox.light0,
+  underline = true,
 }
 
 -- Components ==================================================================
@@ -197,7 +202,7 @@ local Tabs = {
 heirline.setup {
   ---@diagnostic disable-next-line: missing-fields
   statusline = {
-    hl = hl_def,
+    hl = statusline_hl,
     CurrentBuffer,
     { provider = "%=" },
     GitBranch,
@@ -209,7 +214,7 @@ heirline.setup {
 
   ---@diagnostic disable-next-line: missing-fields
   tabline = {
-    hl = hl_def,
+    hl = tabline_hl,
     Buffers,
     { provider = "%=" },
     CwdComponent,
