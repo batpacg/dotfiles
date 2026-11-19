@@ -11,13 +11,15 @@ local conditions = require "heirline.conditions"
 local colors = require "colors"
 local statusline_hl = {
   bg = colors.gruvbox.dark0,
-  fg = colors.gruvbox.light0,
+  fg = colors.gruvbox.light2,
   overline = true,
+  italic = true,
 }
 local tabline_hl = {
   bg = colors.gruvbox.dark0,
-  fg = colors.gruvbox.light0,
+  fg = colors.gruvbox.light2,
   underline = true,
+  italic = true,
 }
 
 -- Components ==================================================================
