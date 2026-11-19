@@ -14,12 +14,14 @@ local statusline_hl = {
   fg = colors.gruvbox.light2,
   overline = true,
   italic = true,
+  bold = true,
 }
 local tabline_hl = {
   bg = colors.gruvbox.dark0,
   fg = colors.gruvbox.light2,
   underline = true,
   italic = true,
+  bold = true,
 }
 
 -- Components ==================================================================
@@ -76,13 +78,13 @@ local CwdComponent = {
     self.dirs_max = 3
     if #self.dirs >= 7 then
       self.cwd = self.dirs[1]
-        .. "/.../"
-        .. table.concat(
-          self.dirs,
-          "/",
-          #self.dirs - self.dirs_max + 1,
-          #self.dirs
-        )
+          .. "/.../"
+          .. table.concat(
+            self.dirs,
+            "/",
+            #self.dirs - self.dirs_max + 1,
+            #self.dirs
+          )
     end
   end,
   provider = function(self)
@@ -153,15 +155,15 @@ local GitBranch = {
 
   provider = function(self)
     return "git["
-      .. self.statusdict.head
-      .. "]: "
-      .. "+"
-      .. (self.statusdict.added or 0)
-      .. "-"
-      .. (self.statusdict.removed or 0)
-      .. "~"
-      .. (self.statusdict.changed or 0)
-      .. " ▪ "
+        .. self.statusdict.head
+        .. "]: "
+        .. "+"
+        .. (self.statusdict.added or 0)
+        .. "-"
+        .. (self.statusdict.removed or 0)
+        .. "~"
+        .. (self.statusdict.changed or 0)
+        .. " ▪ "
   end,
 }
 
@@ -172,9 +174,9 @@ local Buffers = {
     self.buffers = {}
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if
-        vim.api.nvim_buf_is_loaded(buf)
-        and vim.api.nvim_buf_get_option(buf, "bufhidden") == ""
-        and (vim.api.nvim_buf_get_option(buf, "buftype") ~= "help")
+          vim.api.nvim_buf_is_loaded(buf)
+          and vim.api.nvim_buf_get_option(buf, "bufhidden") == ""
+          and (vim.api.nvim_buf_get_option(buf, "buftype") ~= "help")
       then
         table.insert(self.buffers, buf)
       end

@@ -83,10 +83,11 @@ end
 -- Generate the lush specs using the generator util.
 local generator = require "zenbones.specs"
 local base_specs =
-    generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
+  generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
 
 -- Optionally extend specs using Lush.
-local specs = lush.extends({ base_specs }).with(function()
+local specs = lush.extends({ base_specs }).with(function(injected)
+  local sym = injected.sym
   return {
     ---@diagnostic disable: undefined-global
     NonText { base_specs.NonText, fg = palette.bg.lighten(5).hex },
@@ -94,7 +95,12 @@ local specs = lush.extends({ base_specs }).with(function()
     CursorLine { bg = palette.bg.lighten(5).hex },
     Pmenu { link = "Normal" },
     NormalFloat { link = "Normal" },
-    Title { bold = true, underline = true }
+    sym "@markup.heading.1.markdown" { bold = true, underline = true },
+    sym "@markup.heading.2.markdown" { bold = true, underline = true },
+    sym "@markup.heading.3.markdown" { bold = true, underline = true },
+    sym "@markup.heading.4.markdown" { bold = true, underline = true },
+    sym "@markup.heading.5.markdown" { bold = true, underline = true },
+    sym "@markup.heading.6.markdown" { bold = true, underline = true },
     ---@diagnostic enable: undefined-global
   }
 end)
