@@ -45,8 +45,8 @@ local function toggleterm()
   vim.api.nvim_feedkeys("i", "n", false)
 end
 
--- vim.keymap.set({ "n" }, "<C-j>", toggleterm)
--- vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
+vim.keymap.set({ "n" }, "<C-j>", toggleterm)
+vim.keymap.set({ "t" }, "<C-j>", "<C-\\><C-n><C-w>q")
 
 -- Quickfix ====================================================================
 

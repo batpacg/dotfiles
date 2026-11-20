@@ -62,28 +62,27 @@ if bg == "light" then
   vim.g.terminal_color_15 = "#282828"
 else
   vim.g.terminal_color_0 = "#282828"
-  vim.g.terminal_color_1 = "#cc241d"
-  vim.g.terminal_color_2 = "#98971a"
-  vim.g.terminal_color_3 = "#d79921"
-  vim.g.terminal_color_4 = "#458588"
-  vim.g.terminal_color_5 = "#b16286"
-  vim.g.terminal_color_6 = "#689d6a"
-  vim.g.terminal_color_7 = "#a89984"
-
-  vim.g.terminal_color_8 = "#928374"
-  vim.g.terminal_color_9 = "#fb4934"
-  vim.g.terminal_color_10 = "#b8bb26"
-  vim.g.terminal_color_11 = "#fabd2f"
-  vim.g.terminal_color_12 = "#83a598"
+  vim.g.terminal_color_1 = "#ea6962"
+  vim.g.terminal_color_2 = "#a9b665"
+  vim.g.terminal_color_3 = "#d8a657"
+  vim.g.terminal_color_4 = "#7daea3"
+  vim.g.terminal_color_5 = "#d3869b"
+  vim.g.terminal_color_6 = "#89b482"
+  vim.g.terminal_color_7 = "#d4be98"
+  vim.g.terminal_color_8 = "#7c6f64"
+  vim.g.terminal_color_9 = "#ea6962"
+  vim.g.terminal_color_10 = "#a9b665"
+  vim.g.terminal_color_11 = "#d8a657"
+  vim.g.terminal_color_12 = "#7daea3"
   vim.g.terminal_color_13 = "#d3869b"
-  vim.g.terminal_color_14 = "#8ec07c"
-  vim.g.terminal_color_15 = "#ebdbb2"
+  vim.g.terminal_color_14 = "#89b482"
+  vim.g.terminal_color_15 = "#ddc7a1"
 end
 
 -- Generate the lush specs using the generator util.
 local generator = require "zenbones.specs"
 local base_specs =
-  generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
+    generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
 
 -- Optionally extend specs using Lush.
 local specs = lush.extends({ base_specs }).with(function(injected)
