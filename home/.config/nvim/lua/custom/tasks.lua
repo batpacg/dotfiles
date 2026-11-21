@@ -1,60 +1,80 @@
 local M = {}
 
--- =============================================================================
-
 M.state = {
   bufnr = nil,
+  winnr = nil,
   task = nil,
 }
 
--- =============================================================================
+-- = Private ===================================================================
 
-local function tbl_deep_copy(tbl)
+local function table_deep_copy(tbl)
   local copy = {}
   for k, v in pairs(tbl) do
     if type(v) ~= "table" then
       copy[k] = v
     else
-      copy[k] = tbl_deep_copy(v)
+      copy[k] = table_deep_copy(v)
     end
   end
   return copy
 end
 
--- =============================================================================
-
-M.get_cwd_files = function()
-  local files_glob = vim.fn.glob "**/*"
-  local files = {}
-  for line in string.gmatch(files_glob, "[^\n]+") do
-    table.insert(files, line)
-  end
-  return files
-end
-
-M.search_cwd_files = function(pattern)
-  local files = M.get_cwd_files()
-  for _, file in pairs(files) do
-    if string.match(file, pattern) then
+local function string_match_list(s, patterns)
+  for _, pattern in ipairs(patterns) do
+    if string.match(s, pattern) then
       return true
     end
   end
   return false
 end
 
--- =============================================================================
+-- = Public ====================================================================
+
+-- -- Files --------------------------------------------------------------------
+
+M.get_cwd_files = function()
+  return vim.fs.find(function(name, path)
+    return true
+  end, { limit = 1000 })
+end
+
+M.search_cwd_files = function(pattern)
+  for file_name, _ in
+  vim.fs.dir(".", {
+    skip = function(dir_name)
+      if
+          string_match_list(dir_name, { "node_modules", "%.git", "%.venv" })
+      then
+        return false
+      end
+      return true
+    end,
+  })
+  do
+    if string.match(file_name, pattern) then
+      return true
+    end
+  end
+  return false
+end
+
+-- -- Running Tasks ------------------------------------------------------------
 
 M.run_task = function(task)
+  -- Create a copy of the given task.
   local default_task = {
     enter = false,
-    win = {
+    win_opts = {
       height = 10,
       split = "below",
+      style = "minimal",
     },
   }
-  local tk = tbl_deep_copy(task)
+  local tk = table_deep_copy(task)
   tk = vim.tbl_deep_extend("force", tk, default_task)
 
+  -- Setup the command to run.
   local cmd
   if type(tk.cmd) == "table" then
     cmd = table.concat(tk.cmd, " ")
@@ -63,15 +83,26 @@ M.run_task = function(task)
   end
   cmd = vim.fn.expandcmd(cmd)
 
+  -- Create a buffer to serve as the interface of the task/command.
   local bufnr = vim.api.nvim_create_buf(false, true)
   local last_bufnr = M.state.bufnr
+  if M.state.task then
+    vim.fn.jobstop(M.state.task.jobid)
+    vim.fn.jobwait { M.state.task.jobid }
+  end
   M.state.bufnr = bufnr
 
+  -- Connect the task and the buffer, saving the buffer reference in global
+  -- scope.
   vim.api.nvim_buf_call(bufnr, function()
     tk.jobid = vim.fn.jobstart(cmd, { term = true })
   end)
   M.state.task = tk
 
+  M.window(tk, bufnr, last_bufnr)
+end
+
+M.window = function(tk, bufnr, last_bufnr)
   -- If a window with the last task buffer exists, change the window's buffer
   -- to the current task buffer and delete the old task.
   for _, win in pairs(vim.api.nvim_list_wins()) do
@@ -90,11 +121,11 @@ M.run_task = function(task)
   end
 
   -- Create a new window for the new task.
-  local winnr = vim.api.nvim_open_win(bufnr, tk.enter, { split = tk.win.split })
+  local winnr = vim.api.nvim_open_win(bufnr, tk.enter, tk.win_opts)
+  M.state.winnr = winnr
   vim.wo[winnr].winbar = ""
-  if tk.win.height then
-    vim.api.nvim_win_set_height(winnr, tk.win.height)
-  end
+  vim.wo[winnr].winfixheight = true
+  vim.wo[winnr].winfixwidth = true
 end
 
 M.run_task_list = function(task_list)
@@ -139,7 +170,7 @@ M.run_task_list = function(task_list)
   end
 end
 
-M.run_input = function()
+M.run_shell = function()
   vim.ui.input({ prompt = "Shell command to run: " }, function(input)
     M.run_task {
       cmd = input,
@@ -147,11 +178,7 @@ M.run_input = function()
   end)
 end
 
--- =============================================================================
-
 M.run_last_task = function()
-  vim.fn.jobstop(M.state.task.jobid)
-  vim.fn.jobwait { M.state.task.jobid }
   M.run_task(M.state.task)
 end
 
@@ -167,7 +194,5 @@ M.run_last_or_list = function(tasks)
     M.run_task_list(tasks)
   end
 end
-
--- =============================================================================
 
 return M

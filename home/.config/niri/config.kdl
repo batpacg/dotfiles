@@ -144,24 +144,24 @@ layout {
   }
 
   tab-indicator {
-    off
+    on
     hide-when-single-tab
     place-within-column
-    gap 0
-    width 10
-    length total-proportion=1.0
     position "bottom"
+    gap 4
+    width 8
+    length total-proportion=1.0
     gaps-between-tabs 0
     corner-radius 0
-    active-color "#7c6f64"
+    active-color "#a9b665"
     inactive-color "#3c3836"
     urgent-color "#9b0000"
   }
 
   shadow {
-    off
-    softness 30
-    spread 5
+    on
+    softness 8
+    spread 2
     offset x=0 y=5
     color "#0007"
   }

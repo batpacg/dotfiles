@@ -115,12 +115,14 @@ local smart_bd = function(args)
     end
   end
   local cbuf = vim.api.nvim_get_current_buf()
-  local ft =
-      vim.api.nvim_get_option_value("filetype", { scope = "local", buf = cbuf })
+  -- Help buffers are not listed. I'm assuming that closing the window that is
+  -- showing a not listed buffer is desired.
+  local buflisted =
+      vim.api.nvim_get_option_value("buflisted", { scope = "local", buf = cbuf })
 
   local close_cmd = args.force and "bd!" or "bd"
 
-  if #winids == 1 or ft == "help" then
+  if #winids == 1 or not buflisted then
     vim.cmd(close_cmd)
   elseif #winids > 1 then
     for _, winid in ipairs(winids) do

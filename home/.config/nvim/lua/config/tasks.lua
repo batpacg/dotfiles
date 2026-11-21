@@ -1,7 +1,8 @@
 local tasks = require "custom.tasks"
 
 local task_list = {
-  function() -- Generate tasks for shell scripts in CWD.
+  -- Generate tasks for shell scripts in CWD.
+  function()
     local files = tasks.get_cwd_files()
     local generated_tasks = {}
     for _, file in ipairs(files) do
@@ -72,7 +73,7 @@ vim.keymap.set({ "n" }, "<Leader>r", function()
 end)
 
 vim.keymap.set({ "n" }, "<Leader><S-r>", function()
-  tasks.run_input()
+  tasks.run_shell()
 end)
 
 vim.keymap.set({ "n" }, "<Leader><C-r>", function()
