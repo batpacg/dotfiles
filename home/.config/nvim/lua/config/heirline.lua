@@ -177,12 +177,16 @@ local Buffers = {
           and vim.api.nvim_buf_get_option(buf, "bufhidden") == ""
           and (vim.api.nvim_buf_get_option(buf, "buftype") ~= "help")
       then
-        table.insert(self.buffers, buf)
+        if vim.api.nvim_get_current_buf() == buf then
+          table.insert(self.buffers, ("[%s]"):format(tostring(buf)))
+        else
+          table.insert(self.buffers, (" %s "):format(tostring(buf)))
+        end
       end
     end
   end,
   provider = function(self)
-    return table.concat(self.buffers, ", ")
+    return table.concat(self.buffers, " ")
   end,
 }
 
