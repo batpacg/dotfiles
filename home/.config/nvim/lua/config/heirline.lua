@@ -88,7 +88,7 @@ local CwdComponent = {
     end
   end,
   provider = function(self)
-    return " " .. self.cwd .. " "
+    return self.cwd
   end,
 }
 
@@ -136,7 +136,6 @@ local BufferStatus = {
 }
 
 local CurrentBuffer = {
-  { provider = " " },
   BufferName,
   { provider = " " },
   BufferStatus,
@@ -183,7 +182,7 @@ local Buffers = {
     end
   end,
   provider = function(self)
-    return " " .. table.concat(self.buffers, ", ") .. " "
+    return table.concat(self.buffers, ", ")
   end,
 }
 
@@ -213,7 +212,6 @@ heirline.setup {
     MacroRec,
     SearchCount,
     CursorPosition,
-    { provider = " " },
   },
 
   ---@diagnostic disable-next-line: missing-fields
@@ -228,11 +226,9 @@ heirline.setup {
   -- ---@diagnostic disable-next-line: missing-fields
   -- winbar = {
   --   hl = { bg = bg, fg = fg },
-  --   { provider = " " },
   --   CurrentBuffer,
   --   { provider = "%=" },
   --   GitBranch,
-  --   { provider = " " },
   -- },
   --
   -- opts = {
