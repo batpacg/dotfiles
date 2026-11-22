@@ -31,7 +31,7 @@ break_pane() {
 
 create_pane() {
 	tmux set -g "@$LBID" "$(tmux display -p '#{window_layout}')" \; \
-		set -g "@$PBID" "$(tmux split-window -P -F '#{pane_id}')"
+		set -g "@$PBID" "$(tmux split-window -P -F '#{pane_id}' -c '#{pane_current_path}')"
 }
 
 restore_pane() {
