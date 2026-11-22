@@ -268,7 +268,7 @@ add {
       cwd_prompt = false,
       follow = true,
       hidden = true,
-      fd_opts = [[--color=never --hidden --type f --type l --exclude .git --exclude '*.pdf' --exclude '*.png' --exclude '*.jpg']],
+      fd_opts = [[--color=never --hidden --type f --type l --exclude .git --exclude '*.pdf' --exclude '*.png' --exclude '*.jpg' --exclude '.venv' --exclude 'node_modules']],
     },
     buffers = {
       ignore_current_buffer = false,
