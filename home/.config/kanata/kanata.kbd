@@ -62,7 +62,7 @@
   rsft (tap-hold 0 300 ralt rsft)
 
   [ '
-  ' (tap-hold 0 300 esc lmet)
+  ' esc
 
   tab (tap-hold-press 0 300 tab lalt)
 
