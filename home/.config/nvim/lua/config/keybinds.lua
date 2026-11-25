@@ -61,6 +61,7 @@ local function toggleterm()
   vim.api.nvim_buf_call(bufnr, function()
     vim.cmd "terminal"
   end)
+  vim.bo[bufnr].bufhidden = "hide"
   open_win(bufnr)
   vim.api.nvim_feedkeys("i", "n", false)
 end
