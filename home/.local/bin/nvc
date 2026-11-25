@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ -z "$NVIM" ]; then
+	exit 1
+fi
+
+if [ "$#" -le 1 ] || [ -d "$1" ]; then
+	nvim --server "$NVIM" --remote-send "<CMD>cd $(pwd)<CR>"
+else
+	nvim --server "$NVIM" --remote "$1"
+fi

@@ -94,6 +94,7 @@ local specs = lush.extends({ base_specs }).with(function(injected)
     CursorLine { bg = palette.bg.lighten(5).hex },
     Pmenu { link = "Normal" },
     NormalFloat { link = "Normal" },
+    FloatTitle { fg = "#fbf1c7", bg = "#282828", bold = true },
     sym "@markup.heading.1.markdown" { bold = true, underline = true },
     sym "@markup.heading.2.markdown" { bold = true, underline = true },
     sym "@markup.heading.3.markdown" { bold = true, underline = true },

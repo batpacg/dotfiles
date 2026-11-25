@@ -31,17 +31,37 @@ vim.keymap.set({ "n" }, "N", "Nzz")
 -- Terminal ====================================================================
 
 local function toggleterm()
+  local colors = require("colors").gruvbox
+  local ui = vim.api.nvim_list_uis()[1]
+  local width = math.floor(ui.width * 0.9)
+  local height = math.floor(ui.height * 0.9)
+  local open_win = function(bufnr)
+    vim.api.nvim_open_win(bufnr, true, {
+      relative = "editor",
+      border = "single",
+      title = " Terminal ",
+      title_pos = "center",
+      anchor = "NW",
+      width = width,
+      height = height,
+      row = (ui.height - height) / 2,
+      col = (ui.width - width) / 2,
+    })
+  end
   -- Terminal already exists.
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_get_name(bufnr):find(vim.o.shell) then
-      vim.api.nvim_open_win(bufnr, true, { split = "below" })
+      open_win(bufnr)
       vim.api.nvim_feedkeys("i", "n", false)
       return
     end
   end
   -- Terminal does not exist yet.
-  vim.api.nvim_command ":split | terminal"
-  vim.bo.buflisted = false
+  local bufnr = vim.api.nvim_create_buf(false, false)
+  vim.api.nvim_buf_call(bufnr, function()
+    vim.cmd "terminal"
+  end)
+  open_win(bufnr)
   vim.api.nvim_feedkeys("i", "n", false)
 end
 
@@ -57,8 +77,8 @@ vim.keymap.set({ "n" }, "<Leader>qp", "<CMD>cprevious<CR>")
 
 -- Marks =======================================================================
 
--- vim.keymap.set({ "n" }, "m", "`")
--- vim.keymap.set({ "n" }, "M", "m")
+vim.keymap.set({ "n" }, "m", "`")
+vim.keymap.set({ "n" }, "M", "m")
 
 -- Macros ======================================================================
 
