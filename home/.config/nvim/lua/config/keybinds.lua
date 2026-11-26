@@ -22,6 +22,9 @@ vim.keymap.set({ "n", "x" }, "<Leader>m", "<CMD>messages<CR>")
 vim.keymap.set({ "x" }, ">", ">gv")
 vim.keymap.set({ "x" }, "<", "<gv")
 
+vim.keymap.set({ "n" }, "j", "gj")
+vim.keymap.set({ "n" }, "k", "gk")
+
 vim.keymap.set({ "x" }, "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set({ "x" }, "K", ":m '<-2<CR>gv=gv")
 
