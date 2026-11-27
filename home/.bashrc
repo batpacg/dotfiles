@@ -56,6 +56,8 @@ appendpath "${npm_config_prefix}/bin"
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 appendpath "$PNPM_HOME"
 
+appendpath "${XDG_CACHE_HOME}/.bun/bin"
+
 export LOCAL_BIN="$HOME/.local/bin"
 appendpath "$LOCAL_BIN"
 for dir in "$LOCAL_BIN"/*; do
