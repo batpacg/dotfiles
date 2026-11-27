@@ -51,7 +51,7 @@ vim.opt.pumblend       = 10
 vim.opt.winblend       = 0
 vim.opt.lazyredraw     = true
 vim.opt.synmaxcol      = 300
-vim.opt.conceallevel   = 2
+vim.opt.conceallevel   = 1
 vim.opt.concealcursor:remove("n")
 
 -- Whitespaces -----------------------------------------------------------------
